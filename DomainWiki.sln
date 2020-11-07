@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainWiki.API", "DomainWiki.API\DomainWiki.API.csproj", "{82C7659D-8EDE-4209-8FCF-778D3AB733AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainWiki.Core", "DomainWiki.Core\DomainWiki.Core.csproj", "{92154726-A927-44E8-BBB9-07683190628F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82C7659D-8EDE-4209-8FCF-778D3AB733AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82C7659D-8EDE-4209-8FCF-778D3AB733AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82C7659D-8EDE-4209-8FCF-778D3AB733AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82C7659D-8EDE-4209-8FCF-778D3AB733AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92154726-A927-44E8-BBB9-07683190628F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92154726-A927-44E8-BBB9-07683190628F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92154726-A927-44E8-BBB9-07683190628F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92154726-A927-44E8-BBB9-07683190628F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A63651FC-9B59-4C7B-8E1D-BDB0B099951F}
+	EndGlobalSection
+EndGlobal
