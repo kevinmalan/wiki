@@ -5,5 +5,14 @@
     <UserSecretsId>c7405daf-bc21-4c20-b240-5418b83c8593</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DomainWiki.Core\DomainWiki.Core.csproj" />
+  </ItemGroup>
+
 
 </Project>
