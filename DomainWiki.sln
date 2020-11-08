@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainWiki.API", "DomainWik
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainWiki.Core", "DomainWiki.Core\DomainWiki.Core.csproj", "{92154726-A927-44E8-BBB9-07683190628F}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DomainWiki.SQL", "DomainWiki.SQL\DomainWiki.SQL.sqlproj", "{691A268F-E447-461F-B376-0910F08651A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{92154726-A927-44E8-BBB9-07683190628F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92154726-A927-44E8-BBB9-07683190628F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92154726-A927-44E8-BBB9-07683190628F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{691A268F-E447-461F-B376-0910F08651A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691A268F-E447-461F-B376-0910F08651A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691A268F-E447-461F-B376-0910F08651A1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{691A268F-E447-461F-B376-0910F08651A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691A268F-E447-461F-B376-0910F08651A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{691A268F-E447-461F-B376-0910F08651A1}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

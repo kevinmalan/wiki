@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[Project]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
+	[Name] NVARCHAR(MAX) NOT NULL,
+	[CreatedOn] DATETIMEOFFSET NOT NULL,
+	[DomainId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Domain]([Id]),
+	[GroupId] INT NULL FOREIGN KEY REFERENCES [dbo].[Group]([Id])
+);
+GO
+CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Project] ([UniqueId])

@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[Folder]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
+	[Name] NVARCHAR(100) NOT NULL,
+	[CreatedOn] DATETIMEOFFSET NOT NULL,
+	[FolderId] INT NULL FOREIGN KEY REFERENCES [dbo].[Folder]([Id]),
+	[WikiId] INT NULL FOREIGN KEY REFERENCES [dbo].[Wiki]([Id])
+);
+GO
+CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Folder] ([UniqueId])
