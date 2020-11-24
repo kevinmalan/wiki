@@ -5,7 +5,7 @@ namespace DomainWiki.API
     public class Policies
     {
         public const string Admin = "Admin";
-        public const string User = "User";
+        public const string Member = "Member";
 
         public static AuthorizationPolicy AdminPolicy()
         {
@@ -14,11 +14,11 @@ namespace DomainWiki.API
                 .RequireRole(Admin).Build();
         }
 
-        public static AuthorizationPolicy UserPolicy()
+        public static AuthorizationPolicy MemberPolicy()
         {
             return new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
-                .RequireRole(User).Build();
+                .RequireRole(Member).Build();
         }
     }
 }

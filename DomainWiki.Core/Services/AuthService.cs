@@ -42,9 +42,8 @@ namespace DomainWiki.Core.Services
         public async Task<LoginResponse> AuthenticateAsync(LoginRequest request)
         {
             var user = await userService.GetUserAsync(request.UserName);
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-            if (user is null || passwordHash != user.Password)
+            if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
                 throw new Exception($"No username and / or password match that criteria.");
             }

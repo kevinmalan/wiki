@@ -4,9 +4,9 @@
     {
         public static class Claims
         {
-            public static string UniqueId => "UniqueId";
-            public static string UserName => "UserName";
-            public static string Role => "Role";
+            public static string UniqueId => "uniqueId";
+            public static string UserName => "userName";
+            public static string Role => "role";
         }
 
         public static class Jwt
@@ -15,6 +15,11 @@
             public static string Audiance => "jwt:audiance";
             public static string ExpiresMinutes => "jwt:expiresMinutes";
             public static string SecretKey => "jwt:secretKey";
+        }
+
+        public class Db
+        {
+            public static string DomainWikiDbo => "Db:DomainWikiDbo";
         }
     }
 }
