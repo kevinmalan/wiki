@@ -3,5 +3,7 @@
 [Dd]ebug
 [Rr]elease
 .vs
+*.dbmdl
+*.jfm
 
 

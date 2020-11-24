@@ -17,5 +17,6 @@ namespace DomainWiki.Core.Contexts
         public DbSet<Document> Document { get; set; }
         public DbSet<Tag> Tag { get; set; }
         public DbSet<DocumentTagConnection> DocumentTagConnection { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }
