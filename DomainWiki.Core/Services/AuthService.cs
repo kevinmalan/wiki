@@ -41,7 +41,7 @@ namespace DomainWiki.Core.Services
 
             return new LoginResponse
             {
-                Jwt = GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role.ToString())
+                Jwt = GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role)
             };
         }
 
@@ -56,11 +56,11 @@ namespace DomainWiki.Core.Services
 
             return new LoginResponse
             {
-                Jwt = GenerateJwt(user.UniqueId, user.UserName, user.UserRole.Role.ToString())
+                Jwt = GenerateJwt(user.UniqueId, user.UserName, user.UserRole.Role)
             };
         }
 
-        private string GenerateJwt(Guid uniqueId, string userName, string role)
+        private string GenerateJwt(Guid uniqueId, string userName, Role role)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Jwt.SecretKey]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -68,7 +68,7 @@ namespace DomainWiki.Core.Services
             {
                 new Claim(Claims.UniqueId, uniqueId.ToString()),
                 new Claim(Claims.UserName, userName),
-                new Claim(Claims.Role, role)
+                new Claim(Claims.Role, role.ToString())
             };
 
             var token = new JwtSecurityToken(

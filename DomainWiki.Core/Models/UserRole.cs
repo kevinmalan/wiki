@@ -8,6 +8,6 @@ namespace DomainWiki.Core.Models
     {
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
-        public string Role { get; set; }
+        public Role Role { get; set; }
     }
 }

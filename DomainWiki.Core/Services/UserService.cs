@@ -10,9 +10,9 @@ namespace DomainWiki.Core.Services
 {
     public class UserService : IUserService
     {
-        private readonly DomainWikiDbContext dbContext;
+        private readonly Contexts.DataContext dbContext;
 
-        public UserService(DomainWikiDbContext dbContext)
+        public UserService(Contexts.DataContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -41,7 +41,7 @@ namespace DomainWiki.Core.Services
             return new UserCreatedResponse
             {
                 UserName = userName,
-                Role = userRole.Role.ToString(),
+                Role = userRole.Role,
                 UniqueId = uniqueId
             };
         }

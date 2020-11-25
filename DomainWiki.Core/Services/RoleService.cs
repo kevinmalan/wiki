@@ -1,5 +1,4 @@
 ﻿using DomainWiki.Common.Enums;
-using DomainWiki.Core.Contexts;
 using DomainWiki.Core.Models;
 using DomainWiki.Core.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +8,9 @@ namespace DomainWiki.Core.Services
 {
     public class RoleService : IRoleService
     {
-        private readonly DomainWikiDbContext domainWikiDbContext;
+        private readonly Contexts.DataContext domainWikiDbContext;
 
-        public RoleService(DomainWikiDbContext domainWikiDbContext)
+        public RoleService(Contexts.DataContext domainWikiDbContext)
         {
             this.domainWikiDbContext = domainWikiDbContext;
         }
@@ -20,7 +19,7 @@ namespace DomainWiki.Core.Services
         {
             return await domainWikiDbContext
                     .UserRole
-                    .SingleAsync(r => r.Role == role.ToString());
+                    .SingleAsync(r => r.Role == role);
         }
     }
 }

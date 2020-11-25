@@ -16,7 +16,7 @@ namespace DomainWiki.API
     {
         public static void RegisterServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<DomainWikiDbContext>(options => options.UseSqlServer(config.GetSection(Db.DomainWikiDbo).Value));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetSection(Db.DomainWikiDbo).Value));
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();

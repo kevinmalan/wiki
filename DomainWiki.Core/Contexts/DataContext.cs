@@ -1,12 +1,24 @@
-﻿using DomainWiki.Core.Models;
+﻿using DomainWiki.Common.Enums;
+using DomainWiki.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DomainWiki.Core.Contexts
 {
-    public class DomainWikiDbContext : DbContext
+    public class DataContext : DbContext
     {
-        public DomainWikiDbContext(DbContextOptions<DomainWikiDbContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<UserRole>()
+                .Property(u => u.Role)
+                .HasConversion(
+                    r => r.ToString(),
+                    r => (Role)Enum.Parse(typeof(Role), r));
         }
 
         public DbSet<Domain> Domain { get; set; }
