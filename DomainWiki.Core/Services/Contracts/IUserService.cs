@@ -8,6 +8,6 @@ namespace DomainWiki.Core.Services.Contracts
     {
         Task<User> GetUserAsync(string userName);
 
-        Task<UserCreatedResponse> AddUserAsync(string userName, string password, string role);
+        Task<UserCreatedResponse> AddUserAsync(string userName, string password, UserRole userRole);
     }
 }

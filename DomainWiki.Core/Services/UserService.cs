@@ -19,10 +19,12 @@ namespace DomainWiki.Core.Services
 
         public async Task<User> GetUserAsync(string userName)
         {
-            return await dbContext.User.SingleOrDefaultAsync(u => u.UserName == userName);
+            return await dbContext.User
+                            .Include(u => u.UserRole)
+                            .SingleOrDefaultAsync(u => u.UserName == userName);
         }
 
-        public async Task<UserCreatedResponse> AddUserAsync(string userName, string password, string role)
+        public async Task<UserCreatedResponse> AddUserAsync(string userName, string password, UserRole userRole)
         {
             var uniqueId = Guid.NewGuid();
 
@@ -31,7 +33,7 @@ namespace DomainWiki.Core.Services
                 UniqueId = uniqueId,
                 UserName = userName,
                 Password = password,
-                Role = role
+                UserRole = userRole
             });
 
             await dbContext.SaveChangesAsync();
@@ -39,7 +41,7 @@ namespace DomainWiki.Core.Services
             return new UserCreatedResponse
             {
                 UserName = userName,
-                Role = role,
+                Role = userRole.Role.ToString(),
                 UniqueId = uniqueId
             };
         }

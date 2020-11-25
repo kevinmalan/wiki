@@ -4,7 +4,9 @@
 	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
 	[UserName] NVARCHAR(100) NOT NULL,
 	[Password] NVARCHAR(MAX) NOT NULL,
-	[Role] NVARCHAR(100) NOT NULL,
+	[UserRoleId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[UserRole]([Id]),
 );
 GO
-CREATE NONCLUSTERED INDEX unique_id ON [dbo].[User] ([UniqueId])
+CREATE NONCLUSTERED INDEX unique_id ON [dbo].[User] ([UniqueId]);
+GO
+CREATE NONCLUSTERED INDEX user_role ON [dbo].[User]([UserRoleId]);

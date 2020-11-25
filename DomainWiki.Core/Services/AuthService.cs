@@ -1,4 +1,5 @@
-﻿using DomainWiki.Common.Requests;
+﻿using DomainWiki.Common.Enums;
+using DomainWiki.Common.Requests;
 using DomainWiki.Common.Responses;
 using DomainWiki.Core.Services.Contracts;
 using Microsoft.Extensions.Configuration;
@@ -16,11 +17,15 @@ namespace DomainWiki.Core.Services
     {
         private readonly IConfiguration configuration;
         private readonly IUserService userService;
+        private readonly IRoleService roleService;
 
-        public AuthService(IConfiguration configuration, IUserService userService)
+        public AuthService(IConfiguration configuration,
+                    IUserService userService,
+                    IRoleService roleService)
         {
             this.configuration = configuration;
             this.userService = userService;
+            this.roleService = roleService;
         }
 
         public async Task<LoginResponse> RegisterAsync(RegisterRequest request)
@@ -31,11 +36,12 @@ namespace DomainWiki.Core.Services
                 throw new Exception($"The username '{request.UserName}' is already taken.");
             }
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            var userCreated = await userService.AddUserAsync(request.UserName, passwordHash, "Member");
+            var userRole = await roleService.GetRoleAsync(Role.Member);
+            var userCreated = await userService.AddUserAsync(request.UserName, passwordHash, userRole);
 
             return new LoginResponse
             {
-                Jwt = GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role)
+                Jwt = GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role.ToString())
             };
         }
 
@@ -50,7 +56,7 @@ namespace DomainWiki.Core.Services
 
             return new LoginResponse
             {
-                Jwt = GenerateJwt(user.UniqueId, user.UserName, user.Role)
+                Jwt = GenerateJwt(user.UniqueId, user.UserName, user.UserRole.Role.ToString())
             };
         }
 

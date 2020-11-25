@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DomainWiki.Common.Enums;
+using System;
 
 namespace DomainWiki.Common.Responses
 {
