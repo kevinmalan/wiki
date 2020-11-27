@@ -48,15 +48,16 @@ namespace DomainWiki.Core.Services
         public async Task<LoginResponse> AuthenticateAsync(LoginRequest request)
         {
             var user = await userService.GetUserAsync(request.UserName);
+            var password = await userService.GetUserPasswordAsync(user.UniqueId);
 
-            if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, password))
             {
                 throw new Exception($"No username and / or password match that criteria.");
             }
 
             return new LoginResponse
             {
-                Jwt = GenerateJwt(user.UniqueId, user.UserName, user.UserRole.Role)
+                Jwt = GenerateJwt(user.UniqueId, user.UserName, user.Role)
             };
         }
 

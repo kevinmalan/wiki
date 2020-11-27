@@ -18,7 +18,7 @@ namespace DomainWiki.API.Controllers
         }
 
         [HttpGet("{username}")]
-        [Authorize(Policy = Policies.Member)]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<IActionResult> Get([FromRoute] string username)
         {
             return Ok(await userService.GetUserAsync(username));
