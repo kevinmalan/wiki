@@ -13,7 +13,7 @@ namespace DomainWiki.Core.Services
     {
         private readonly DataContext dbContext;
 
-        public UserService(Contexts.DataContext dbContext)
+        public UserService(DataContext dbContext)
         {
             this.dbContext = dbContext;
         }
