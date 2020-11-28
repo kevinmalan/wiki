@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
 
 namespace DomainWiki.API
 {
@@ -22,16 +22,18 @@ namespace DomainWiki.API
             services.ConfigureAuthorization();
             services.RegisterServices(Configuration);
 
-            services.AddControllers();
+            // Use the built in JSON serialization.
+            services.AddControllers()
+                        .AddJsonOptions(o =>
+                        {
+                            o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseExceptionHandler("/error");
 
             app.UseHttpsRedirection();
 

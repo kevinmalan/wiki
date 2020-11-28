@@ -4,25 +4,40 @@ using DomainWiki.Core.Models;
 using DomainWiki.Core.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DomainWiki.Core.Services
 {
     public class UserService : IUserService
     {
-        private readonly DomainWikiDbContext dbContext;
+        private readonly DataContext dbContext;
 
-        public UserService(DomainWikiDbContext dbContext)
+        public UserService(DataContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<User> GetUserAsync(string userName)
+        public async Task<UserResponse> GetUserAsync(string userName)
         {
-            return await dbContext.User.SingleOrDefaultAsync(u => u.UserName == userName);
+            var user = await dbContext.User
+                            .Include(u => u.UserRole)
+                            .SingleOrDefaultAsync(u => u.UserName == userName);
+
+            return new UserResponse
+            {
+                UniqueId = user.UniqueId,
+                UserName = user.UserName,
+                Role = user.UserRole.Role
+            };
         }
 
-        public async Task<UserCreatedResponse> AddUserAsync(string userName, string password, string role)
+        public async Task<string> GetUserPasswordAsync(Guid uniqueId)
+        {
+            return await dbContext.User.Where(u => u.UniqueId == uniqueId).Select(u => u.Password).FirstAsync();
+        }
+
+        public async Task<UserCreatedResponse> AddUserAsync(string userName, string password, UserRole userRole)
         {
             var uniqueId = Guid.NewGuid();
 
@@ -31,7 +46,7 @@ namespace DomainWiki.Core.Services
                 UniqueId = uniqueId,
                 UserName = userName,
                 Password = password,
-                Role = role
+                UserRole = userRole
             });
 
             await dbContext.SaveChangesAsync();
@@ -39,7 +54,7 @@ namespace DomainWiki.Core.Services
             return new UserCreatedResponse
             {
                 UserName = userName,
-                Role = role,
+                Role = userRole.Role,
                 UniqueId = uniqueId
             };
         }

@@ -1,4 +1,5 @@
-﻿using DomainWiki.Common.Requests;
+﻿using DomainWiki.Common.Enums;
+using DomainWiki.Common.Requests;
 using DomainWiki.Common.Responses;
 using DomainWiki.Core.Services.Contracts;
 using Microsoft.Extensions.Configuration;
@@ -16,11 +17,15 @@ namespace DomainWiki.Core.Services
     {
         private readonly IConfiguration configuration;
         private readonly IUserService userService;
+        private readonly IRoleService roleService;
 
-        public AuthService(IConfiguration configuration, IUserService userService)
+        public AuthService(IConfiguration configuration,
+                    IUserService userService,
+                    IRoleService roleService)
         {
             this.configuration = configuration;
             this.userService = userService;
+            this.roleService = roleService;
         }
 
         public async Task<LoginResponse> RegisterAsync(RegisterRequest request)
@@ -31,7 +36,8 @@ namespace DomainWiki.Core.Services
                 throw new Exception($"The username '{request.UserName}' is already taken.");
             }
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            var userCreated = await userService.AddUserAsync(request.UserName, passwordHash, "Member");
+            var userRole = await roleService.GetRoleAsync(Role.Member);
+            var userCreated = await userService.AddUserAsync(request.UserName, passwordHash, userRole);
 
             return new LoginResponse
             {
@@ -42,8 +48,9 @@ namespace DomainWiki.Core.Services
         public async Task<LoginResponse> AuthenticateAsync(LoginRequest request)
         {
             var user = await userService.GetUserAsync(request.UserName);
+            var password = await userService.GetUserPasswordAsync(user.UniqueId);
 
-            if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, password))
             {
                 throw new Exception($"No username and / or password match that criteria.");
             }
@@ -54,7 +61,7 @@ namespace DomainWiki.Core.Services
             };
         }
 
-        private string GenerateJwt(Guid uniqueId, string userName, string role)
+        private string GenerateJwt(Guid uniqueId, string userName, Role role)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Jwt.SecretKey]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -62,7 +69,7 @@ namespace DomainWiki.Core.Services
             {
                 new Claim(Claims.UniqueId, uniqueId.ToString()),
                 new Claim(Claims.UserName, userName),
-                new Claim(Claims.Role, role)
+                new Claim(Claims.Role, role.ToString())
             };
 
             var token = new JwtSecurityToken(

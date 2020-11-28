@@ -68,5 +68,7 @@
     <Build Include="dbo\Tables\Document.sql" />
     <Build Include="dbo\Tables\Tag.sql" />
     <Build Include="dbo\Tables\DocumentTagConnection.sql" />
+    <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Tables\UserRole.sql" />
   </ItemGroup>
 </Project>

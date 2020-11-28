@@ -3,10 +3,10 @@ using System;
 
 namespace DomainWiki.Common.Responses
 {
-    public class UserCreatedResponse
+    public class UserResponse
     {
+        public Guid UniqueId { get; set; }
         public string UserName { get; set; }
         public Role Role { get; set; }
-        public Guid UniqueId { get; set; }
     }
 }
