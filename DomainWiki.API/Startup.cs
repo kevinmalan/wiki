@@ -21,6 +21,7 @@ namespace DomainWiki.API
             services.ConfigureAuthentication(Configuration);
             services.ConfigureAuthorization();
             services.RegisterServices(Configuration);
+            services.AddSwaggerGen();
 
             // Use the built in JSON serialization.
             services.AddControllers()
@@ -34,6 +35,13 @@ namespace DomainWiki.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "DomainWiki.API");
+            });
 
             app.UseRouting();
 

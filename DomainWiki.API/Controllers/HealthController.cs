@@ -16,7 +16,7 @@ namespace DomainWiki.API.Controllers
         public IActionResult Get()
         {
             logger.LogInformation($"DomainWiki.API is running...");
-            return OkApiResponse($"DomainWiki.API is running...");
+            return OkApiResponse();
         }
     }
 }
