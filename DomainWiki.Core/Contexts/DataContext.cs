@@ -1,7 +1,7 @@
 ﻿using DomainWiki.Common.Enums;
 using DomainWiki.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DomainWiki.Core.Contexts
 {
@@ -14,11 +14,9 @@ namespace DomainWiki.Core.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<UserRole>()
-                .Property(u => u.Role)
-                .HasConversion(
-                    r => r.ToString(),
-                    r => (Role)Enum.Parse(typeof(Role), r));
+                  .Entity<UserRole>()
+                  .Property(u => u.Role)
+                  .HasConversion(new EnumToStringConverter<Role>());
         }
 
         public DbSet<Domain> Domain { get; set; }
