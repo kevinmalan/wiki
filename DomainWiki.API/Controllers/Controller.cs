@@ -9,7 +9,7 @@ namespace DomainWiki.API.Controllers
     [ApiExceptionFilter]
     public class Controller : ControllerBase
     {
-        protected IActionResult OkApiResponse(object payload)
+        protected IActionResult OkApiResponse(object payload = null)
         {
             return Ok(ApiResponse<object>.Format(payload));
         }
