@@ -1,4 +1,5 @@
 ﻿using DomainWiki.Common.Enums;
+using DomainWiki.Common.Exceptions;
 using DomainWiki.Common.Requests;
 using DomainWiki.Common.Responses;
 using DomainWiki.Core.Services.Contracts;
@@ -33,7 +34,7 @@ namespace DomainWiki.Core.Services
             var user = await userService.GetUserAsync(request.UserName);
             if (user is not null)
             {
-                throw new Exception($"The username '{request.UserName}' is already taken.");
+                throw new BadRequest($"The username '{request.UserName}' is already taken.");
             }
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var userRole = await roleService.GetRoleAsync(Role.Member);
@@ -52,7 +53,7 @@ namespace DomainWiki.Core.Services
 
             if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, password))
             {
-                throw new Exception($"No username and / or password match that criteria.");
+                throw new BadRequest($"No username and / or password match that criteria.");
             }
 
             return new LoginResponse

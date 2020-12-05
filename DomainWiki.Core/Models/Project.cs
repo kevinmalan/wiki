@@ -11,8 +11,6 @@ namespace DomainWiki.Core.Models
         public DateTimeOffset CreatedOn { get; set; }
         public Domain Domain { get; set; }
         public Guid DomainId { get; set; }
-        public Group Group { get; set; }
-        public Guid? GroupId { get; set; }
-        public ICollection<Wiki> Wikis { get; set; }
+        public ICollection<Document> Documents { get; set; }
     }
 }

@@ -7,4 +7,3 @@
 );
 GO
 CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Domain] ([UniqueId])
-

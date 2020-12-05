@@ -4,11 +4,11 @@
 	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
 	[Name] NVARCHAR(100) NOT NULL,
 	[CreatedOn] DATETIMEOFFSET NOT NULL,
-	[Title] NVARCHAR(100) NULL,
+	[Title] NVARCHAR(255) NULL,
 	[ContentUri] NVARCHAR(1000) NULL,
-	[FolderId] INT NULL FOREIGN KEY REFERENCES [dbo].[Folder]([Id]),
-	[WikiId] INT NULL FOREIGN KEY REFERENCES [dbo].[Wiki]([Id])
+	[ProjectId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Project] ([Id])
 );
 GO
 CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Document] ([UniqueId])
-
+GO
+CREATE NONCLUSTERED INDEX project_id ON [dbo].[Document] ([ProjectId])

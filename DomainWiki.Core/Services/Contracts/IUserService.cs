@@ -7,10 +7,10 @@ namespace DomainWiki.Core.Services.Contracts
 {
     public interface IUserService
     {
-        Task<UserResponse> GetUserAsync(string userName);
+        public Task<UserResponse> GetUserAsync(string userName);
 
-        Task<string> GetUserPasswordAsync(Guid uniqueId);
+        public Task<string> GetUserPasswordAsync(Guid uniqueId);
 
-        Task<UserCreatedResponse> AddUserAsync(string userName, string password, UserRole userRole);
+        public Task<UserCreatedResponse> AddUserAsync(string userName, string password, UserRole userRole);
     }
 }

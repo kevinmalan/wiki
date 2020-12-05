@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[DocumentTagConnection]
+﻿CREATE TABLE [dbo].[DocumentTag]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
@@ -6,4 +6,6 @@
 	[DocumentId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Document]([Id]),
 );
 GO
-CREATE NONCLUSTERED INDEX unique_id ON [dbo].[DocumentTagConnection] ([UniqueId])
+CREATE NONCLUSTERED INDEX unique_id ON [dbo].[DocumentTag] ([UniqueId]);
+GO
+CREATE NONCLUSTERED INDEX document_id ON [dbo].[DocumentTag] ([DocumentId]);
