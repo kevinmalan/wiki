@@ -1,23 +1,23 @@
-﻿using DomainWiki.Common.Requests;
-using DomainWiki.Core.Services.Contracts;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using static DomainWiki.Core.Maps.RequestMaps;
 
-namespace DomainWiki.API.Controllers
+namespace DomainWiki.API.Controllers.User
 {
     public class UserController : Controller
     {
-        private readonly IAuthService authService;
-        private readonly IUserService userService;
-        private readonly ILogger logger;
+        private readonly ILogger<UserController> logger;
+        private readonly IMediator mediator;
 
-        public UserController(IAuthService authService, IUserService userService, ILogger<UserController> logger)
+        public UserController(
+             ILogger<UserController> logger,
+             IMediator mediator)
         {
-            this.authService = authService;
-            this.userService = userService;
             this.logger = logger;
+            this.mediator = mediator;
         }
 
         [HttpGet("{username}")]
@@ -25,22 +25,7 @@ namespace DomainWiki.API.Controllers
         public async Task<IActionResult> Get([FromRoute] string username)
         {
             logger.LogInformation($"Username: {username} loading profile info.");
-            var user = await userService.GetUserAsync(username);
-
-            return OkApiResponse(user);
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request)
-        {
-            return OkApiResponse(await authService.RegisterAsync(request));
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
-        {
-            logger.LogInformation($"Username: {request.UserName} logging in.");
-            return OkApiResponse(await authService.AuthenticateAsync(request));
+            return OkApiResponse(await mediator.Send(ToUserDetailsInternal(username)));
         }
     }
 }

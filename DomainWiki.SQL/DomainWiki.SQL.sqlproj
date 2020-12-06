@@ -63,12 +63,12 @@
     <Build Include="dbo\Tables\Domain.sql" />
     <Build Include="dbo\Tables\Group.sql" />
     <Build Include="dbo\Tables\Project.sql" />
-    <Build Include="dbo\Tables\Wiki.sql" />
-    <Build Include="dbo\Tables\Folder.sql" />
     <Build Include="dbo\Tables\Document.sql" />
     <Build Include="dbo\Tables\Tag.sql" />
-    <Build Include="dbo\Tables\DocumentTagConnection.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\UserRole.sql" />
+    <Build Include="dbo\Tables\DocumentGroup.sql" />
+    <Build Include="dbo\Tables\DocumentTag.sql" />
+    <Build Include="dbo\Tables\ProjectGroup.sql" />
   </ItemGroup>
 </Project>
