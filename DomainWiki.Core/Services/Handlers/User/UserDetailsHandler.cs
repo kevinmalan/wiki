@@ -10,16 +10,16 @@ namespace DomainWiki.Core.Services.Handlers.User
 {
     public class UserDetailsHandler : IRequestHandler<UserDetailsRequestInternal, UserResponse>
     {
-        private readonly DataContext dataContext;
+        private readonly DataContext _dataContext;
 
         public UserDetailsHandler(DataContext dataContext)
         {
-            this.dataContext = dataContext;
+            _dataContext = dataContext;
         }
 
         public async Task<UserResponse> Handle(UserDetailsRequestInternal request, CancellationToken cancellationToken)
         {
-            var user = await dataContext.User
+            var user = await _dataContext.User
                 .Include(u => u.UserRole)
                 .SingleOrDefaultAsync(u => u.UserName == request.Username, cancellationToken: cancellationToken);
 

@@ -15,20 +15,20 @@ namespace DomainWiki.Core.Services.Handlers
 {
     public class UserRegisterHandler : IRequestHandler<UserRegisterRequestInternal, LoginResponse>
     {
-        private readonly IAuthService authService;
-        private readonly DataContext dataContext;
+        private readonly IAuthService _authService;
+        private readonly DataContext _dataContext;
 
         public UserRegisterHandler(
                     IAuthService authService,
                     DataContext dataContext)
         {
-            this.authService = authService;
-            this.dataContext = dataContext;
+            _authService = authService;
+            _dataContext = dataContext;
         }
 
         public async Task<LoginResponse> Handle(UserRegisterRequestInternal request, CancellationToken cancellationToken)
         {
-            var userExists = await dataContext.User
+            var userExists = await _dataContext.User
                 .AnyAsync(u => u.UserName == request.UserName, cancellationToken: cancellationToken);
 
             if (userExists)
@@ -37,13 +37,13 @@ namespace DomainWiki.Core.Services.Handlers
             }
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            var userRole = await dataContext.UserRole
+            var userRole = await _dataContext.UserRole
                 .SingleAsync(r => r.Role == Role.Member, cancellationToken: cancellationToken);
             var userCreated = await AddUserAsync(request.UserName, passwordHash, userRole);
 
             return new LoginResponse
             {
-                Jwt = authService.GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role)
+                Jwt = _authService.GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role)
             };
         }
 
@@ -51,7 +51,7 @@ namespace DomainWiki.Core.Services.Handlers
         {
             var uniqueId = Guid.NewGuid();
 
-            await dataContext.User.AddAsync(new Models.User
+            await _dataContext.User.AddAsync(new Models.User
             {
                 UniqueId = uniqueId,
                 UserName = userName,
@@ -59,7 +59,7 @@ namespace DomainWiki.Core.Services.Handlers
                 UserRole = userRole
             });
 
-            await dataContext.SaveChangesAsync();
+            await _dataContext.SaveChangesAsync();
 
             return new UserCreatedResponse
             {

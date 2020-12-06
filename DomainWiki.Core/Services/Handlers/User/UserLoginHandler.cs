@@ -13,20 +13,20 @@ namespace DomainWiki.Core.Services.Handlers
 {
     public class UserLoginHandler : IRequestHandler<UserLoginRequestInternal, LoginResponse>
     {
-        private readonly IAuthService authService;
-        private readonly DataContext dataContext;
+        private readonly IAuthService _authService;
+        private readonly DataContext _dataContext;
 
         public UserLoginHandler(
             IAuthService authService,
             DataContext dataContext)
         {
-            this.authService = authService;
-            this.dataContext = dataContext;
+            _authService = authService;
+            _dataContext = dataContext;
         }
 
         public async Task<LoginResponse> Handle(UserLoginRequestInternal request, CancellationToken cancellationToken)
         {
-            var user = await dataContext.User
+            var user = await _dataContext.User
                 .Include(u => u.UserRole)
                 .SingleOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken: cancellationToken);
 
@@ -35,7 +35,7 @@ namespace DomainWiki.Core.Services.Handlers
                 throw new BadRequest($"No username and / or password match that criteria.");
             }
 
-            var password = await dataContext.User
+            var password = await _dataContext.User
                 .Where(u => u.UniqueId == user.UniqueId)
                 .Select(u => u.Password)
                 .FirstAsync(cancellationToken: cancellationToken);
@@ -47,7 +47,7 @@ namespace DomainWiki.Core.Services.Handlers
 
             return new LoginResponse
             {
-                Jwt = authService.GenerateJwt(user.UniqueId, user.UserName, user.UserRole.Role)
+                Jwt = _authService.GenerateJwt(user.UniqueId, user.UserName, user.UserRole.Role)
             };
         }
     }
