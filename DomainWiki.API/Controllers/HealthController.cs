@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DomainWiki.API.Controllers
 {
+    [Route("api/[controller]")]
     public class HealthController : Controller
     {
         private readonly ILogger logger;

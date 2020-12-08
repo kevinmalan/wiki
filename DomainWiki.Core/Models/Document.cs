@@ -10,9 +10,7 @@ namespace DomainWiki.Core.Models
         public DateTimeOffset CreatedOn { get; set; }
         public string Title { get; set; }
         public Uri ContentUri { get; set; }
-        public Folder Folder { get; set; }
-        public Guid? FolderId { get; set; }
-        public Wiki Wiki { get; set; }
-        public Guid? WikiId { get; set; }
+        public Project Project { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }

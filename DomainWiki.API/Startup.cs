@@ -1,7 +1,10 @@
+using DomainWiki.Core.Services.Handlers;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace DomainWiki.API
@@ -22,6 +25,7 @@ namespace DomainWiki.API
             services.ConfigureAuthorization();
             services.RegisterServices(Configuration);
             services.AddSwaggerGen();
+            services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(UserRegisterHandler).Assembly);
 
             // Use the built in JSON serialization.
             services.AddControllers()

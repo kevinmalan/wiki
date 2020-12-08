@@ -1,13 +1,10 @@
-﻿using DomainWiki.Common.Requests;
-using DomainWiki.Common.Responses;
-using System.Threading.Tasks;
+﻿using DomainWiki.Common.Enums;
+using System;
 
 namespace DomainWiki.Core.Services.Contracts
 {
     public interface IAuthService
     {
-        Task<LoginResponse> RegisterAsync(RegisterRequest request);
-
-        Task<LoginResponse> AuthenticateAsync(LoginRequest request);
+        string GenerateJwt(Guid uniqueId, string userName, Role role);
     }
 }

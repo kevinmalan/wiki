@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DomainWiki.Core.Models
 {
-    public class DocumentTagConnection
+    public class DocumentTag
     {
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
