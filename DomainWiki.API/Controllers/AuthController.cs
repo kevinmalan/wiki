@@ -8,23 +8,23 @@ namespace DomainWiki.API.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
 
         public AuthController(IMediator mediator)
         {
-            this.mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] UserRegisterRequest request)
         {
-            return OkApiResponse(await mediator.Send(request.ToInternal()));
+            return OkApiResponse(await _mediator.Send(request.ToInternal()));
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginRequest request)
         {
-            return OkApiResponse(await mediator.Send(request.ToInternal()));
+            return OkApiResponse(await _mediator.Send(request.ToInternal()));
         }
     }
 }
