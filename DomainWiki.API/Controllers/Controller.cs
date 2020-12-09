@@ -7,7 +7,6 @@ using static DomainWiki.Common.Constants;
 
 namespace DomainWiki.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     [ApiExceptionFilter]
     public class Controller : ControllerBase

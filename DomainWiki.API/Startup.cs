@@ -24,7 +24,10 @@ namespace DomainWiki.API
             services.ConfigureAuthentication(Configuration);
             services.ConfigureAuthorization();
             services.RegisterServices(Configuration);
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.EnableAnnotations();
+            });
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(UserRegisterHandler).Assembly);
 
             // Use the built in JSON serialization.

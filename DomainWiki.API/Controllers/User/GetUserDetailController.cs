@@ -3,24 +3,25 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using static DomainWiki.Common.Constants;
 using static DomainWiki.Core.Maps.RequestMaps;
 
 namespace DomainWiki.API.Controllers.User
 {
-    public class UserController : Controller
+    public class GetUserDetailController : Controller
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<GetUserDetailController> _logger;
         private readonly IMediator _mediator;
 
-        public UserController(
-             ILogger<UserController> logger,
+        public GetUserDetailController(
+             ILogger<GetUserDetailController> logger,
              IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
         }
 
-        [HttpGet("{username}")]
+        [HttpGet(Routes.User.ByUsername)]
         [Authorize(Policy = Policies.Admin)]
         public async Task<IActionResult> Get([FromRoute] string username)
         {
