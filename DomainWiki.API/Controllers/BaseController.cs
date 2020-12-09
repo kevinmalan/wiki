@@ -1,19 +1,24 @@
 ﻿using DomainWiki.API.Attributes;
+using DomainWiki.Common;
 using DomainWiki.Common.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
-using static DomainWiki.Common.Constants;
 
 namespace DomainWiki.API.Controllers
 {
     [ApiController]
     [ApiExceptionFilter]
-    public class Controller : ControllerBase
+    public class BaseController : ControllerBase
     {
         protected IActionResult OkApiResponse(object payload = null)
         {
             return Ok(ApiResponse<object>.Format(payload));
+        }
+
+        protected IActionResult OkApiResponse<T>(T payload = null) where T : class
+        {
+            return Ok(ApiResponse<T>.Format(payload));
         }
 
         protected IActionResult BadRequestApiResponse(string message)

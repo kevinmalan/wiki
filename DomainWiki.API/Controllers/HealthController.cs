@@ -1,22 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DomainWiki.Common;
+using DomainWiki.Common.Responses;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace DomainWiki.API.Controllers
 {
     [Route("api/[controller]")]
-    public class HealthController : Controller
+    public class HealthController : BaseController
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public HealthController(ILogger<HealthController> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet(Routes.Health.Get)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
-            logger.LogInformation($"DomainWiki.API is running...");
+            _logger.LogInformation($"DomainWiki.API is running...");
             return OkApiResponse();
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
-using static DomainWiki.Common.Constants;
+using DomainWiki.Common;
 
 namespace DomainWiki.API
 {

@@ -1,4 +1,5 @@
-﻿using DomainWiki.Common.Enums;
+﻿using DomainWiki.Common;
+using DomainWiki.Common.Enums;
 using DomainWiki.Core.Services.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -6,7 +7,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static DomainWiki.Common.Constants;
 
 namespace DomainWiki.Core.Services
 {

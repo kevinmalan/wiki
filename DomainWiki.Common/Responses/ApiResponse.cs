@@ -9,12 +9,20 @@
         {
             return new ApiResponse<T>
             {
-                Payload = payload ??  (T)new object(),
+                Payload = payload ?? (T)new object(),
                 Error = errorMessage is null ? null : new Error
                 {
                     Message = errorMessage
                 }
             };
         }
+    }
+
+    public class Payload { }
+
+    public class ApiResponse
+    {
+        public Payload Payload { get; set; }
+        public Error Error { get; set; }
     }
 }

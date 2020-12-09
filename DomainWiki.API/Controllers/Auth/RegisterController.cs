@@ -1,14 +1,16 @@
-﻿using DomainWiki.Common.Requests;
+﻿using DomainWiki.Common;
+using DomainWiki.Common.Requests;
+using DomainWiki.Common.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
-using static DomainWiki.Common.Constants;
 using static DomainWiki.Core.Maps.RequestMaps;
 
 namespace DomainWiki.API.Controllers.Auth
 {
-    public class RegisterController : Controller
+    public class RegisterController : BaseController
     {
         private readonly IMediator _mediator;
 
@@ -18,6 +20,7 @@ namespace DomainWiki.API.Controllers.Auth
         }
 
         [HttpPost(Routes.Auth.Register)]
+        [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { Swagger.Auth })]
         public async Task<IActionResult> RegisterAsync([FromBody] UserRegisterRequest request)
         {
