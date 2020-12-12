@@ -1,9 +1,9 @@
 ﻿using DomainWiki.Common.Responses;
 using MediatR;
 
-namespace DomainWiki.Core.Requests
+namespace DomainWiki.Common.Requests
 {
-    public class UserLoginRequestInternal : IRequest<LoginResponse>
+    public class SignInRequest
     {
         public string UserName { get; set; }
         public string Password { get; set; }

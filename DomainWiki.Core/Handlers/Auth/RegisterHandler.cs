@@ -2,8 +2,8 @@
 using DomainWiki.Common.Exceptions;
 using DomainWiki.Common.Responses;
 using DomainWiki.Core.Contexts;
+using DomainWiki.Core.HandlerRequests.Auth;
 using DomainWiki.Core.Models;
-using DomainWiki.Core.Requests;
 using DomainWiki.Core.Services.Contracts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace DomainWiki.Core.Services.Handlers
 {
-    public class UserRegisterHandler : IRequestHandler<UserRegisterRequestInternal, LoginResponse>
+    public class RegisterHandler : IRequestHandler<RegisterHandlerRequest, SignInResponse>
     {
         private readonly IAuthService _authService;
         private readonly DataContext _dataContext;
 
-        public UserRegisterHandler(
+        public RegisterHandler(
                     IAuthService authService,
                     DataContext dataContext)
         {
@@ -26,7 +26,7 @@ namespace DomainWiki.Core.Services.Handlers
             _dataContext = dataContext;
         }
 
-        public async Task<LoginResponse> Handle(UserRegisterRequestInternal request, CancellationToken cancellationToken)
+        public async Task<SignInResponse> Handle(RegisterHandlerRequest request, CancellationToken cancellationToken)
         {
             var userExists = await _dataContext.User
                 .AnyAsync(u => u.UserName == request.UserName, cancellationToken: cancellationToken);
@@ -41,7 +41,7 @@ namespace DomainWiki.Core.Services.Handlers
                 .SingleAsync(r => r.Role == Role.Member, cancellationToken: cancellationToken);
             var userCreated = await AddUserAsync(request.UserName, passwordHash, userRole);
 
-            return new LoginResponse
+            return new SignInResponse
             {
                 Jwt = _authService.GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role)
             };

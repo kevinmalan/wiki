@@ -18,7 +18,7 @@
             public const string ByUsername = "api/user/{username}/detail";
         }
 
-        public static class Domain
+        public static class Company
         {
             public const string Create = "api/domain/create";
         }

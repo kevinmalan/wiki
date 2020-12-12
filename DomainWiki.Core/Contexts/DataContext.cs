@@ -19,7 +19,7 @@ namespace DomainWiki.Core.Contexts
                   .HasConversion(new EnumToStringConverter<Role>());
         }
 
-        public DbSet<Domain> Domain { get; set; }
+        public DbSet<Company> Domain { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<Document> Document { get; set; }

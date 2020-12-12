@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DomainWiki.Core.Requests
 {
-    public class UserDetailsRequestInternal : IRequest<UserResponse>
+    public class GetUserDetailHandlerRequest : IRequest<UserResponse>
     {
         public string Username { get; set; }
     }

@@ -1,5 +1,5 @@
 ﻿using DomainWiki.Core.Contexts;
-using DomainWiki.Core.Requests.Domain;
+using DomainWiki.Core.HandlerRequests.Company;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,25 +7,25 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DomainWiki.Core.Services.Handlers.Domain
+namespace DomainWiki.Core.Handlers.Domain
 {
-    public class DomainCreateHandler : IRequestHandler<DomainCreateRequestInternal>
+    public class CreateCompanyHandler : IRequestHandler<CreateCompanyHandlerRequest>
     {
         private readonly DataContext _dataContext;
 
-        public DomainCreateHandler(DataContext dataContext)
+        public CreateCompanyHandler(DataContext dataContext)
         {
             _dataContext = dataContext;
         }
 
-        async Task<Unit> IRequestHandler<DomainCreateRequestInternal, Unit>.Handle(DomainCreateRequestInternal request, CancellationToken cancellationToken)
+        async Task<Unit> IRequestHandler<CreateCompanyHandlerRequest, Unit>.Handle(CreateCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
             var userId = await _dataContext.User
                   .Where(u => u.UniqueId == request.CreatorUniqueId)
                   .Select(u => u.Id)
                   .FirstAsync(cancellationToken: cancellationToken);
 
-            await _dataContext.Domain.AddAsync(new Models.Domain
+            await _dataContext.Domain.AddAsync(new Models.Company
             {
                 UniqueId = Guid.NewGuid(),
                 CreatedOn = DateTimeOffset.UtcNow,

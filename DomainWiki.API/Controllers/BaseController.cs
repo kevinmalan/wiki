@@ -11,9 +11,9 @@ namespace DomainWiki.API.Controllers
     [ApiExceptionFilter]
     public class BaseController : ControllerBase
     {
-        protected IActionResult OkApiResponse(object payload = null)
+        protected IActionResult OkEmptyApiResponse()
         {
-            return Ok(ApiResponse<object>.Format(payload));
+            return Ok(new EmptyApiResponse());
         }
 
         protected IActionResult OkApiResponse<T>(T payload = null) where T : class

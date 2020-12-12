@@ -11,6 +11,6 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Requests\User\" />
   </ItemGroup>
-
 </Project>

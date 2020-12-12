@@ -3,6 +3,7 @@ using DomainWiki.Common.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace DomainWiki.API.Controllers
 {
@@ -17,11 +18,12 @@ namespace DomainWiki.API.Controllers
         }
 
         [HttpGet(Routes.Health.Get)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyApiResponse), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
             _logger.LogInformation($"DomainWiki.API is running...");
-            return OkApiResponse();
+
+            return OkEmptyApiResponse();
         }
     }
 }

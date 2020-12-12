@@ -4,9 +4,9 @@
 	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
 	[Name] NVARCHAR(100) NOT NULL,
 	[CreatedOn] DATETIMEOFFSET NOT NULL,
-	[DomainId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Domain]([Id])
+	[CompanyId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Company]([Id])
 );
 GO
 CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Project] ([UniqueId]);
 GO
-CREATE NONCLUSTERED INDEX domain_id ON [dbo].[Project] ([DomainId]);
+CREATE NONCLUSTERED INDEX domain_id ON [dbo].[Project] ([CompanyId]);

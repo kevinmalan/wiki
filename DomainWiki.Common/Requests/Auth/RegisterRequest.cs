@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DomainWiki.Common.Requests
 {
-    public class UserRegisterRequest
+    public class RegisterRequest
     {
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Username length must be between 5 and 100 characters.")]
         public string UserName { get; set; }

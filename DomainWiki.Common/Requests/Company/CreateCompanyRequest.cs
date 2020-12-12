@@ -1,6 +1,6 @@
 ﻿namespace DomainWiki.Common.Requests.Domain
 {
-    public class DomainCreateRequest
+    public class CreateCompanyRequest
     {
         public string Name { get; set; }
     }

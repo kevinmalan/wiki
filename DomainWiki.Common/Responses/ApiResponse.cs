@@ -9,20 +9,12 @@
         {
             return new ApiResponse<T>
             {
-                Payload = payload ?? (T)new object(),
-                Error = errorMessage is null ? null : new Error
+                Payload = !string.IsNullOrEmpty(errorMessage) ? null : payload ?? (T)new object(),
+                Error = string.IsNullOrEmpty(errorMessage) ? null : new Error
                 {
                     Message = errorMessage
                 }
             };
         }
-    }
-
-    public class Payload { }
-
-    public class ApiResponse
-    {
-        public Payload Payload { get; set; }
-        public Error Error { get; set; }
     }
 }

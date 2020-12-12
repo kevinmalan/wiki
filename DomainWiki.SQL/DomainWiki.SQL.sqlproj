@@ -60,8 +60,7 @@
     <Folder Include="dbo\Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Domain.sql" />
-    <Build Include="dbo\Tables\Group.sql" />
+    <Build Include="dbo\Tables\Company.sql" />
     <Build Include="dbo\Tables\Project.sql" />
     <Build Include="dbo\Tables\Document.sql" />
     <Build Include="dbo\Tables\Tag.sql" />
@@ -70,5 +69,6 @@
     <Build Include="dbo\Tables\DocumentGroup.sql" />
     <Build Include="dbo\Tables\DocumentTag.sql" />
     <Build Include="dbo\Tables\ProjectGroup.sql" />
+    <Build Include="dbo\Tables\Group.sql" />
   </ItemGroup>
 </Project>

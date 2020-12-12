@@ -10,27 +10,27 @@ using System.Threading.Tasks;
 
 namespace DomainWiki.API.Controllers.Auth
 {
-    public class RegisterController : BaseController
+    public class SignInController : BaseController
     {
         private readonly IMediator _mediator;
 
-        public RegisterController(IMediator mediator)
+        public SignInController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost(Routes.Auth.Register)]
+        [HttpPost(Routes.Auth.Login)]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { Swagger.Auth })]
-        public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request)
+        public async Task<IActionResult> SignInAsync([FromBody] SignInRequest request)
         {
             var response = await _mediator.Send(
-                 new RegisterHandlerRequest
-                 {
-                     UserName = request.UserName,
-                     Password = request.Password
-                 }
-            );
+                new SignInHandlerRequest
+                {
+                    UserName = request.UserName,
+                    Password = request.Password
+                }
+           );
 
             return OkApiResponse(response);
         }

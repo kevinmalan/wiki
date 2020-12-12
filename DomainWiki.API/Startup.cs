@@ -28,7 +28,7 @@ namespace DomainWiki.API
             {
                 c.EnableAnnotations();
             });
-            services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(UserRegisterHandler).Assembly);
+            services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(RegisterHandler).Assembly);
 
             // Use the built in JSON serialization.
             services.AddControllers()

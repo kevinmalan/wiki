@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace DomainWiki.Core.Services.Handlers.User
 {
-    public class UserDetailsHandler : IRequestHandler<UserDetailsRequestInternal, UserResponse>
+    public class GetUserDetailHandler : IRequestHandler<GetUserDetailHandlerRequest, UserResponse>
     {
         private readonly DataContext _dataContext;
 
-        public UserDetailsHandler(DataContext dataContext)
+        public GetUserDetailHandler(DataContext dataContext)
         {
             _dataContext = dataContext;
         }
 
-        public async Task<UserResponse> Handle(UserDetailsRequestInternal request, CancellationToken cancellationToken)
+        public async Task<UserResponse> Handle(GetUserDetailHandlerRequest request, CancellationToken cancellationToken)
         {
             var user = await _dataContext.User
                 .Include(u => u.UserRole)

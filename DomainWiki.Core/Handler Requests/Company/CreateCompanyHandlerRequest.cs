@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using System;
 
-namespace DomainWiki.Core.Requests.Domain
+namespace DomainWiki.Core.HandlerRequests.Company
 {
-    public class DomainCreateRequestInternal : IRequest
+    public class CreateCompanyHandlerRequest : IRequest
     {
         public string Name { get; set; }
         public Guid CreatorUniqueId { get; set; }

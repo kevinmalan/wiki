@@ -1,12 +1,12 @@
 ﻿using DomainWiki.Common;
 using DomainWiki.Common.Responses;
+using DomainWiki.Core.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using static DomainWiki.Core.Maps.RequestMaps;
 
 namespace DomainWiki.API.Controllers.User
 {
@@ -26,11 +26,16 @@ namespace DomainWiki.API.Controllers.User
         [HttpGet(Routes.User.ByUsername)]
         [Authorize(Policy = Policies.Admin)]
         [ProducesResponseType(typeof(ApiResponse<UserResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get([FromRoute] string username)
+        public async Task<IActionResult> GetUserDetailAsync([FromRoute] string username)
         {
-            _logger.LogInformation($"Username: {username} loading profile info.");
+            var response = await _mediator.Send(
+                new GetUserDetailHandlerRequest
+                {
+                    Username = username
+                }
+           );
 
-            return OkApiResponse(await _mediator.Send(ToUserDetailsInternal(username)));
+            return OkApiResponse(response);
         }
     }
 }
