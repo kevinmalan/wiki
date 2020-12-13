@@ -20,7 +20,7 @@
 
         public static class Company
         {
-            public const string Create = "api/domain/create";
+            public const string Create = "api/company/create";
         }
     }
 }

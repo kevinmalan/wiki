@@ -1,4 +1,4 @@
-﻿namespace Wiki.Common.Requests.Domain
+﻿namespace Wiki.Common.Requests.Company
 {
     public class CreateCompanyRequest
     {

@@ -1,5 +1,5 @@
 ﻿using Wiki.Common;
-using Wiki.Common.Requests.Domain;
+using Wiki.Common.Requests.Company;
 using Wiki.Common.Responses;
 using Wiki.Core.HandlerRequests.Company;
 using MediatR;

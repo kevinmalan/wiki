@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Wiki.Core.Handlers.Domain
+namespace Wiki.Core.Handlers.Company
 {
     public class CreateCompanyHandler : IRequestHandler<CreateCompanyHandlerRequest>
     {
@@ -25,7 +25,7 @@ namespace Wiki.Core.Handlers.Domain
                   .Select(u => u.Id)
                   .FirstAsync(cancellationToken: cancellationToken);
 
-            await _dataContext.Domain.AddAsync(new Models.Company
+            await _dataContext.Company.AddAsync(new Models.Company
             {
                 UniqueId = Guid.NewGuid(),
                 CreatedOn = DateTimeOffset.UtcNow,
