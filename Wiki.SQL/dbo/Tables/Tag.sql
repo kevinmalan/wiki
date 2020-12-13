@@ -5,4 +5,5 @@
 	[Name] NVARCHAR(15) NOT NULL
 );
 GO
-CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Tag] ([UniqueId])
+CREATE INDEX IX_UniqueId 
+ON [dbo].[Tag] ([UniqueId])

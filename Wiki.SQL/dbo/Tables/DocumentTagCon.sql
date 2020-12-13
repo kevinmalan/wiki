@@ -5,8 +5,8 @@
 	[DocumentId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Document]([Id]),
 );
 GO
-CREATE NONCLUSTERED INDEX IX_TagId
+CREATE INDEX IX_TagId
 ON [dbo].[DocumentTagCon]([TagId])
 GO
-CREATE NONCLUSTERED INDEX IX_DocumentId
+CREATE INDEX IX_DocumentId
 ON [dbo].[DocumentTagCon]([DocumentId])

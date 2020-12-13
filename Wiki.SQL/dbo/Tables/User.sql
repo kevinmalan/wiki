@@ -7,6 +7,8 @@
 	[UserRoleId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[UserRole]([Id]),
 );
 GO
-CREATE NONCLUSTERED INDEX unique_id ON [dbo].[User] ([UniqueId]);
+CREATE NONCLUSTERED INDEX IX_UniqueId 
+ON [dbo].[User] ([UniqueId]);
 GO
-CREATE NONCLUSTERED INDEX user_role ON [dbo].[User]([UserRoleId]);
+CREATE NONCLUSTERED INDEX IX_UserRoleId 
+ON [dbo].[User]([UserRoleId]);

@@ -5,8 +5,8 @@
 	[GroupId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Group] ([Id])
 );
 GO
-CREATE NONCLUSTERED INDEX IX_ProjectId 
+CREATE INDEX IX_ProjectId 
 ON [dbo].[ProjectGroupCon] ([ProjectId]);
 GO
-CREATE NONCLUSTERED INDEX IX_GroupId 
+CREATE INDEX IX_GroupId 
 ON [dbo].[ProjectGroupCon] ([GroupId]);

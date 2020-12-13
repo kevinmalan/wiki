@@ -5,6 +5,6 @@ namespace Wiki.Core.Services.Contracts
 {
     public interface IAuthService
     {
-        string GenerateJwt(Guid uniqueId, string userName, Role role);
+        string GenerateJwt(Guid uniqueId, string userName, SystemRole role);
     }
 }

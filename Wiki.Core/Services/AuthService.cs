@@ -19,7 +19,7 @@ namespace Wiki.Core.Services
             this.configuration = configuration;
         }
 
-        public string GenerateJwt(Guid uniqueId, string userName, Role role)
+        public string GenerateJwt(Guid uniqueId, string userName, SystemRole role)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Jwt.SecretKey]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

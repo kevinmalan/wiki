@@ -9,11 +9,11 @@ GO
 CREATE UNIQUE INDEX Unique_DocumentId_GroupId
 ON [dbo].[DocumentGroupCon]([DocumentId], [GroupId])
 GO
-CREATE NONCLUSTERED INDEX IX_ProjectId
+CREATE INDEX IX_ProjectId
 ON [dbo].[DocumentGroupCon]([ProjectId])
 GO
-CREATE NONCLUSTERED INDEX IX_GroupId
+CREATE INDEX IX_GroupId
 ON [dbo].[DocumentGroupCon]([GroupId])
 GO
-CREATE NONCLUSTERED INDEX IX_Documentid
+CREATE INDEX IX_Documentid
 ON [dbo].[DocumentGroupCon]([DocumentId])

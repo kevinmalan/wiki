@@ -38,7 +38,7 @@ namespace Wiki.Core.Services.Handlers
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var userRole = await _dataContext.UserRole
-                .SingleAsync(r => r.Role == Role.Member, cancellationToken: cancellationToken);
+                .SingleAsync(r => r.Role == SystemRole.Member, cancellationToken: cancellationToken);
             var userCreated = await AddUserAsync(request.UserName, passwordHash, userRole);
 
             return new SignInResponse

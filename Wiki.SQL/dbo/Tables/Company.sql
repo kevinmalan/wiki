@@ -7,6 +7,8 @@
 	[CreatedById] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[User]([Id])
 );
 GO
-CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Company] ([UniqueId])
+CREATE INDEX IX_UniqueId 
+ON [dbo].[Company] ([UniqueId])
 GO
-CREATE NONCLUSTERED INDEX user_id ON [dbo].[Company] ([CreatedById])
+CREATE INDEX IX_CreatedById
+ON [dbo].[Company] ([CreatedById])

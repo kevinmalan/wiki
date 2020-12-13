@@ -6,4 +6,5 @@
 	[CreatedOn] DATETIMEOFFSET NOT NULL,
 );
 GO
-CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Group] ([UniqueId])
+CREATE NONCLUSTERED INDEX IX_UniqueId 
+ON [dbo].[Group] ([UniqueId])

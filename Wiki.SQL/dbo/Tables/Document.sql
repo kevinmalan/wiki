@@ -9,6 +9,8 @@
 	[ProjectId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Project] ([Id])
 );
 GO
-CREATE NONCLUSTERED INDEX unique_id ON [dbo].[Document] ([UniqueId])
+CREATE INDEX IX_UniqueId 
+ON [dbo].[Document] ([UniqueId])
 GO
-CREATE NONCLUSTERED INDEX project_id ON [dbo].[Document] ([ProjectId])
+CREATE INDEX IX_ProjectId 
+ON [dbo].[Document] ([ProjectId])

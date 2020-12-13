@@ -16,7 +16,7 @@ namespace Wiki.Core.Contexts
             modelBuilder
                   .Entity<UserRole>()
                   .Property(u => u.Role)
-                  .HasConversion(new EnumToStringConverter<Role>());
+                  .HasConversion(new EnumToStringConverter<SystemRole>());
         }
 
         public DbSet<Company> Domain { get; set; }
@@ -24,10 +24,12 @@ namespace Wiki.Core.Contexts
         public DbSet<Project> Project { get; set; }
         public DbSet<Document> Document { get; set; }
         public DbSet<Tag> Tag { get; set; }
-        public DbSet<DocumentTagCon> DocumentTag { get; set; }
-        public DbSet<DocumentGroupCon> DocumentGroup { get; set; }
-        public DbSet<ProjectGroupCon> ProjectGroup { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<Models.CompanyRole> CompanyRole { get; set; }
+        public DbSet<DocumentTagCon> DocumentTagCon { get; set; }
+        public DbSet<DocumentGroupCon> DocumentGroupCon { get; set; }
+        public DbSet<ProjectGroupCon> ProjectGroupCon { get; set; }
+        public DbSet<CompanyUserCon> CompanyUserCon { get; set; }
     }
 }
