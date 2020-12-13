@@ -17,6 +17,11 @@ namespace Wiki.Core.Contexts
                   .Entity<UserRole>()
                   .Property(u => u.Role)
                   .HasConversion(new EnumToStringConverter<SystemRole>());
+
+            modelBuilder
+                .Entity<Models.CompanyRole>()
+                .Property(c => c.Role)
+                .HasConversion(new EnumToStringConverter<Common.Enums.CompanyRole>());
         }
 
         public DbSet<Company> Company { get; set; }

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[ProjectGroupCon]
 (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[ProjectId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Project] ([Id]),
 	[GroupId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Group] ([Id])
 );

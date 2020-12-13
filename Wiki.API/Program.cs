@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Wiki.Core.Contexts;
+using Wiki.Core.Extensions;
 
 namespace Wiki.API
 {
@@ -8,6 +11,14 @@ namespace Wiki.API
     {
         public static void Main(string[] args)
         {
+            CreateHostBuilder(args)
+                .Build()
+                .Services
+                .CreateScope()
+                .ServiceProvider
+                .GetRequiredService<DataContext>()
+                .Seed();
+
             CreateHostBuilder(args).Build().Run();
         }
 

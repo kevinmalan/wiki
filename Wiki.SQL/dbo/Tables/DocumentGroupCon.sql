@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[DocumentGroupCon]
 (
-    [Id] INT PRIMARY KEY IDENTITY(1,1),
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [DocumentId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Document]([Id]),
 	[GroupId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Group]([Id]),
 	[ProjectId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Project]([Id])
