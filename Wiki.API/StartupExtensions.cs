@@ -16,7 +16,7 @@ namespace Wiki.API
     {
         public static void RegisterServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetSection(Db.WikiDbo).Value));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetSection(Db.Wiki).Value));
             services.AddTransient<IAuthService, AuthService>();
         }
 

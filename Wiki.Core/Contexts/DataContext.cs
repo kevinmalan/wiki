@@ -24,9 +24,9 @@ namespace Wiki.Core.Contexts
         public DbSet<Project> Project { get; set; }
         public DbSet<Document> Document { get; set; }
         public DbSet<Tag> Tag { get; set; }
-        public DbSet<DocumentTag> DocumentTag { get; set; }
-        public DbSet<DocumentGroup> DocumentGroup { get; set; }
-        public DbSet<ProjectGroup> ProjectGroup { get; set; }
+        public DbSet<DocumentTagCon> DocumentTag { get; set; }
+        public DbSet<DocumentGroupCon> DocumentGroup { get; set; }
+        public DbSet<ProjectGroupCon> ProjectGroup { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
     }

@@ -2,6 +2,6 @@
 {
     public static class Db
     {
-        public static string WikiDbo => "Db:WikiDbo";
+        public static string Wiki => "Db:wiki";
     }
 }
