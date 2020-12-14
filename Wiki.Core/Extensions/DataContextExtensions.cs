@@ -48,16 +48,19 @@ namespace Wiki.Core.Extensions
                     new Models.CompanyRole
                     {
                         Role = Common.Enums.CompanyRole.Editor,
+                        AllowCreateProject = true,
                         UniqueId = Guid.NewGuid()
                     },
                     new Models.CompanyRole
                     {
                         Role = Common.Enums.CompanyRole.Contributor,
+                        AllowCreateProject = false,
                         UniqueId = Guid.NewGuid()
                     },
                     new Models.CompanyRole
                     {
                         Role = Common.Enums.CompanyRole.Reader,
+                        AllowCreateProject = false,
                         UniqueId = Guid.NewGuid()
                     }
                 }

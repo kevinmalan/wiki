@@ -22,5 +22,10 @@
         {
             public const string Create = "api/company/create";
         }
+
+        public static class Project
+        {
+            public const string Create = "api/company/{companyUniqueId}/project/create";
+        }
     }
 }

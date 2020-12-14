@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wiki.Common.Enums;
 
 namespace Wiki.Core.Models
 {
@@ -12,5 +7,6 @@ namespace Wiki.Core.Models
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
         public Common.Enums.CompanyRole Role { get; set; }
+        public bool AllowCreateProject { get; set; }
     }
 }

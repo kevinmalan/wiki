@@ -45,7 +45,7 @@ namespace Wiki.Core.Handlers.Company
 
         private async Task CreateCompanyUserCon(int creatorId, int companyId)
         {
-            var editorRole = await _dataContext.CompanyRole
+            var editorRoleId = await _dataContext.CompanyRole
                 .Where(cr => cr.Role == Common.Enums.CompanyRole.Editor)
                 .Select(cr => cr.Id)
                 .FirstAsync();
@@ -54,7 +54,7 @@ namespace Wiki.Core.Handlers.Company
             {
                 UserId = creatorId,
                 CompanyId = companyId,
-                CompanyRoleId = editorRole
+                CompanyRoleId = editorRoleId
             });
         }
     }

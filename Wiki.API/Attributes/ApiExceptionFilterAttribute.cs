@@ -30,9 +30,19 @@ namespace Wiki.API.Attributes
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 context.Result = new JsonResult(apiResponse);
             }
+            else if (context.Exception is UnAuthorized ua)
+            {
+                var apiResponse = new ApiResponse<UnAuthorized>
+                {
+                    Error = GetError(ua.Message)
+                };
+
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                context.Result = new JsonResult(apiResponse);
+            }
             else
             {
-                var apiResponse = new ApiResponse<NotFound>
+                var apiResponse = new ApiResponse<BadRequest>
                 {
                     Error = GetError("Something bad happened. Please contact customer support.")
                 };
