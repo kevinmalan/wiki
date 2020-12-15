@@ -45,7 +45,7 @@ namespace Wiki.API.Filters
 
             if (connection is null || !connection.AllowCreateProject)
             {
-                throw new UnAuthorized("The current user lacks the required priviledges to create a project for this company.");
+                throw new UnAuthorizedException("The current user lacks the required priviledges to create a project for this company.");
             }
 
             await next(); // Executes Action

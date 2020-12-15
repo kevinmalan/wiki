@@ -33,7 +33,7 @@ namespace Wiki.Core.Services.Handlers
 
             if (userExists)
             {
-                throw new BadRequest($"The username '{request.UserName}' is already taken.");
+                throw new BadRequestException($"The username '{request.UserName}' is already taken.");
             }
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);

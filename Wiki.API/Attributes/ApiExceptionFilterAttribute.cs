@@ -8,59 +8,37 @@ namespace Wiki.API.Attributes
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
+        private ExceptionContext _context;
+
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception is BadRequest br)
+            _context = context;
+
+            switch (context.Exception)
             {
-                var apiResponse = new ApiResponse<BadRequest>
-                {
-                    Error = GetError(br.Message)
-                };
+                case BadRequestException br:
+                    ToErrorResponse(HttpStatusCode.BadRequest, br.Message);
+                    break;
 
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                context.Result = new JsonResult(apiResponse);
+                case NotFoundException nf:
+                    ToErrorResponse(HttpStatusCode.NotFound, nf.Message);
+                    break;
+
+                case UnAuthorizedException ua:
+                    ToErrorResponse(HttpStatusCode.Unauthorized, ua.Message);
+                    break;
+
+                default:
+                    ToErrorResponse(HttpStatusCode.BadRequest, "Something bad happened. Please contact customer support.");
+                    break;
             }
-            else if (context.Exception is NotFound nf)
-            {
-                var apiResponse = new ApiResponse<NotFound>
-                {
-                    Error = GetError(nf.Message)
-                };
-
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                context.Result = new JsonResult(apiResponse);
-            }
-            else if (context.Exception is UnAuthorized ua)
-            {
-                var apiResponse = new ApiResponse<UnAuthorized>
-                {
-                    Error = GetError(ua.Message)
-                };
-
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                context.Result = new JsonResult(apiResponse);
-            }
-            else
-            {
-                var apiResponse = new ApiResponse<BadRequest>
-                {
-                    Error = GetError("Something bad happened. Please contact customer support.")
-                };
-
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                context.Result = new JsonResult(apiResponse);
-            }
-
-            context.ExceptionHandled = true;
-            //base.OnException(context);
         }
 
-        private Error GetError(string message)
+        public void ToErrorResponse(HttpStatusCode code, string message)
         {
-            return new Error
-            {
-                Message = message
-            };
+            _context.HttpContext.Response.StatusCode = (int)code;
+            _context.Result = new JsonResult(ApiResponse<object>.Format(errorMessage: message));
+            _context.ExceptionHandled = true;
         }
     }
 }

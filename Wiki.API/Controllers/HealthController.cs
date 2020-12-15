@@ -3,7 +3,6 @@ using Wiki.Common.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace Wiki.API.Controllers
 {

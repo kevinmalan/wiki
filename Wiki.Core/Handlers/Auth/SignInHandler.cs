@@ -32,7 +32,7 @@ namespace Wiki.Core.Services.Handlers
 
             if (user is null)
             {
-                throw new BadRequest($"No username and / or password match that criteria.");
+                throw new BadRequestException($"No username and / or password match that criteria.");
             }
 
             var password = await _dataContext.User
@@ -42,7 +42,7 @@ namespace Wiki.Core.Services.Handlers
 
             if (!BCrypt.Net.BCrypt.Verify(request.Password, password))
             {
-                throw new BadRequest($"No username and / or password match that criteria.");
+                throw new BadRequestException($"No username and / or password match that criteria.");
             }
 
             return new SignInResponse

@@ -20,7 +20,6 @@ namespace Wiki.API.Controllers.Project
             _mediator = mediator;
         }
 
-        // Add: [AllowCreateProject]
         [HttpPost(Routes.Project.Create)]
         [ServiceFilter(typeof(AllowCreateProjectFilter))]
         [ProducesResponseType(typeof(EmptyApiResponse), StatusCodes.Status200OK)]

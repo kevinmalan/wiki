@@ -3,7 +3,7 @@
     public class ApiResponse<T> where T : class
     {
         public T Payload { get; set; }
-        public Error Error { get; set; }
+        public Error Error { get; set; } // Create non generic ApiResponse that handles error. The generic one will never assign errors.
 
         public static ApiResponse<T> Format(T payload = null, string errorMessage = null)
         {
