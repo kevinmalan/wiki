@@ -21,7 +21,7 @@ namespace Wiki.API.Controllers
         }
 
         [HttpPost(Routes.Company.Create)]
-        [ProducesResponseType(typeof(EmptyApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCompanyAsync(CreateCompanyRequest request)
         {
             await _mediator.Send(

@@ -3,14 +3,30 @@
     public class ApiResponse<T> where T : class
     {
         public T Payload { get; set; }
-        public Error Error { get; set; } // Create non generic ApiResponse that handles error. The generic one will never assign errors.
+        public Error Error => null;
 
-        public static ApiResponse<T> Format(T payload = null, string errorMessage = null)
+        public static ApiResponse<T> ToPayload(T payload = null)
         {
             return new ApiResponse<T>
             {
-                Payload = !string.IsNullOrEmpty(errorMessage) ? null : payload ?? (T)new object(),
-                Error = string.IsNullOrEmpty(errorMessage) ? null : new Error
+                Payload = payload ?? (T)new object()
+            };
+        }
+    }
+
+    public class ApiResponse
+    {
+        public class PayloadModel { }
+
+        public PayloadModel Payload { get; set; } = new PayloadModel();
+        public Error Error { get; set; }
+
+        public static ApiResponse ToError(string errorMessage)
+        {
+            return new ApiResponse
+            {
+                Payload = null,
+                Error = new Error
                 {
                     Message = errorMessage
                 }

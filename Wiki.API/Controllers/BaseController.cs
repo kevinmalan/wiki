@@ -13,17 +13,17 @@ namespace Wiki.API.Controllers
     {
         protected IActionResult OkEmptyApiResponse()
         {
-            return Ok(new EmptyApiResponse());
+            return Ok(new ApiResponse());
         }
 
         protected IActionResult OkApiResponse<T>(T payload = null) where T : class
         {
-            return Ok(ApiResponse<T>.Format(payload));
+            return Ok(ApiResponse<T>.ToPayload(payload));
         }
 
         protected IActionResult BadRequestApiResponse(string message)
         {
-            return BadRequest(ApiResponse<object>.Format(null, message));
+            return BadRequest(ApiResponse.ToError(message));
         }
 
         protected Guid GetUserUniqueId()

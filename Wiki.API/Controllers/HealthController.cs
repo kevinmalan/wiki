@@ -3,6 +3,7 @@ using Wiki.Common.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Wiki.Common.Exceptions;
 
 namespace Wiki.API.Controllers
 {
@@ -17,7 +18,7 @@ namespace Wiki.API.Controllers
         }
 
         [HttpGet(Routes.Health.Get)]
-        [ProducesResponseType(typeof(EmptyApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
             _logger.LogInformation($"Wiki.API is running...");

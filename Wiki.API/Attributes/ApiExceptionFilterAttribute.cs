@@ -37,7 +37,7 @@ namespace Wiki.API.Attributes
         public void ToErrorResponse(HttpStatusCode code, string message)
         {
             _context.HttpContext.Response.StatusCode = (int)code;
-            _context.Result = new JsonResult(ApiResponse<object>.Format(errorMessage: message));
+            _context.Result = new JsonResult(ApiResponse.ToError(message));
             _context.ExceptionHandled = true;
         }
     }

@@ -22,7 +22,7 @@ namespace Wiki.API.Controllers.Project
 
         [HttpPost(Routes.Project.Create)]
         [ServiceFilter(typeof(AllowCreateProjectFilter))]
-        [ProducesResponseType(typeof(EmptyApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCompanyAsync([FromRoute] Guid companyUniqueId, [FromBody] CreateProjectRequest request)
         {
             // TODO:
