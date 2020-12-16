@@ -30,20 +30,25 @@ namespace Wiki.API.Filters
             var userUniqueId = new Guid(_httpContextAccessor.HttpContext.User.FindFirst(Claims.UniqueId).Value);
             var companyUniqueId = (Guid)context.ActionArguments.First(a => a.Key == "companyUniqueId").Value;
 
-            var connection = await
-                (from cc in _dataContext.CompanyUserCon
-                 join c in _dataContext.Company
+            var createProjectPrivilege = await
+                (from cc in _dataContext.CompanyUserCon // User and Company Role in a Company (FK-FK-FK)
+                 join c in _dataContext.Company // The Company (PK)
                  on cc.CompanyId equals c.Id
-                 join u in _dataContext.User
+                 join u in _dataContext.User // The User (PK)
                  on cc.UserId equals u.Id
-                 join cr in _dataContext.CompanyRole
+                 join cr in _dataContext.CompanyRole // Company Roles (PK)
                  on cc.CompanyRoleId equals cr.Id
-                 where u.UniqueId == userUniqueId
-                 && c.UniqueId == companyUniqueId
-                 select new { cr.AllowCreateProject })
+                 join crp in _dataContext.CompanyRolePrivilege // Company Role Privileges (FK-FK)
+                 on cr.Id equals crp.CompanyRoleId
+                 join p in _dataContext.Privilege // Privileges (PK)
+                 on crp.PrivilegeId equals p.Id
+                 where u.UniqueId == userUniqueId // Particular User
+                 && c.UniqueId == companyUniqueId // Particular Company
+                 && p.Action == Common.Enums.Action.CreateProject // Particular Prvilege
+                 select new { p.Id })
                 .FirstOrDefaultAsync();
 
-            if (connection is null || !connection.AllowCreateProject)
+            if (createProjectPrivilege is null)
             {
                 throw new UnAuthorizedException("The current user lacks the required priviledges to create a project for this company.");
             }

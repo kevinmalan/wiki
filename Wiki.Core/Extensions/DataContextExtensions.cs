@@ -18,6 +18,7 @@ namespace Wiki.Core.Extensions
             SeedUserRoles();
             SeedCompanyRoles();
             SeedProjectScopes();
+            SeedPrivileges();
 
             _dataContext.SaveChanges();
         }
@@ -53,25 +54,21 @@ namespace Wiki.Core.Extensions
                     new Models.CompanyRole
                     {
                         Role = Common.Enums.CompanyRole.Chief,
-                        AllowCreateProject = true,
                         UniqueId = Guid.NewGuid()
                     },
                     new Models.CompanyRole
                     {
                         Role = Common.Enums.CompanyRole.Tier3,
-                        AllowCreateProject = false,
                         UniqueId = Guid.NewGuid()
                     },
                     new Models.CompanyRole
                     {
                         Role = Common.Enums.CompanyRole.Tier2,
-                        AllowCreateProject = false,
                         UniqueId = Guid.NewGuid()
                     },
                    new Models.CompanyRole
                     {
                         Role = Common.Enums.CompanyRole.Tier1,
-                        AllowCreateProject = false,
                         UniqueId = Guid.NewGuid()
                     }
                 }
@@ -103,5 +100,40 @@ namespace Wiki.Core.Extensions
                 }
              );
         }
+
+        private static void SeedPrivileges()
+        {
+            if (_dataContext.Privilege.Any()) return;
+
+            _dataContext.Privilege.AddRange(
+                new List<Privilege>
+                {
+                    new Privilege
+                    {
+                        UniqueId = Guid.NewGuid(),
+                        Action = Common.Enums.Action.CreateProject
+                    },
+                    new Privilege
+                    {
+                        UniqueId = Guid.NewGuid(),
+                        Action = Common.Enums.Action.CreateDocument
+                    }
+                }
+              );
+        }
+
+        /*
+
+         Seeding CompanyRolePrivilege:
+        insert into [CompanyRolePrivilege]
+        ([UniqueId], [CompanyRoleId], [PrivilegeId])
+        values
+        (
+            NEWID(),
+           <company_role_id>,
+           <privilege_id>
+        )
+
+         */
     }
 }

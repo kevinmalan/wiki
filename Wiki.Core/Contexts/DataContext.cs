@@ -22,6 +22,16 @@ namespace Wiki.Core.Contexts
                 .Entity<Models.CompanyRole>()
                 .Property(c => c.Role)
                 .HasConversion(new EnumToStringConverter<Common.Enums.CompanyRole>());
+
+            modelBuilder
+                .Entity<Models.ProjectScope>()
+                .Property(p => p.Scope)
+                .HasConversion(new EnumToStringConverter<Common.Enums.ProjectScope>());
+
+            modelBuilder
+                .Entity<Privilege>()
+                .Property(p => p.Action)
+                .HasConversion(new EnumToStringConverter<Action>());
         }
 
         public DbSet<Company> Company { get; set; }
@@ -38,5 +48,7 @@ namespace Wiki.Core.Contexts
         public DbSet<CompanyUserCon> CompanyUserCon { get; set; }
         public DbSet<Models.ProjectScope> ProjectScope { get; set; }
         public DbSet<ProjectUserCon> ProjectUserCon { get; set; }
+        public DbSet<Privilege> Privilege { get; set; }
+        public DbSet<CompanyRolePrivilege> CompanyRolePrivilege { get; set; }
     }
 }
