@@ -46,13 +46,13 @@ namespace Wiki.Core.Handlers.Company
 
         private async Task CreateCompanyUserCon(int creatorId, int companyId, CancellationToken cancellationToken)
         {
-            var editorRoleId = await _queryService.GetCompanyRoleIdAsync(Common.Enums.CompanyRole.Editor, cancellationToken);
+            var chiefRoleId = await _queryService.GetCompanyRoleIdAsync(Common.Enums.CompanyRole.Chief, cancellationToken);
 
             await _mediator.Send(new CreateCompanyUserConHandlerRequest
             {
                 UserId = creatorId,
                 CompanyId = companyId,
-                CompanyRoleId = editorRoleId
+                CompanyRoleId = chiefRoleId
             }, cancellationToken);
         }
     }

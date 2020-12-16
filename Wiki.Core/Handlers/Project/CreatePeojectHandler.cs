@@ -1,9 +1,5 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Wiki.Core.Contexts;
@@ -16,34 +12,49 @@ namespace Wiki.Core.Handlers.Project
     {
         private readonly DataContext _dataContext;
         private readonly IQueryService _queryService;
+        private readonly IMediator _mediator;
 
         public CreatePeojectHandler(
             DataContext dataContext,
-            IQueryService queryService
+            IQueryService queryService,
+            IMediator mediator
             )
         {
             _dataContext = dataContext;
             _queryService = queryService;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateProjectHandlerRequest request, CancellationToken cancellationToken)
         {
             var userId = await _queryService.GetUserIdAsync(request.CreatorUniqueId, cancellationToken);
             var companyId = await _queryService.GetCompanyIdAsync(request.CompanyUniqeId, cancellationToken);
+            var project = new Models.Project
+            {
+                UniqueId = Guid.NewGuid(),
+                CreatedOn = DateTimeOffset.UtcNow,
+                CreatedById = userId,
+                Name = request.Name,
+                CompanyId = companyId
+            };
 
-            await _dataContext.AddAsync(
-               new Models.Project
-               {
-                   UniqueId = Guid.NewGuid(),
-                   CreatedOn = DateTimeOffset.UtcNow,
-                   CreatedById = userId,
-                   Name = request.Name,
-                   CompanyId = companyId
-               }, cancellationToken);
-
+            await _dataContext.AddAsync(project, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
+            await CreateProjectUserConAsync(userId, project.Id);
 
             return Unit.Value;
+        }
+
+        private async Task CreateProjectUserConAsync(int userId, int projectId)
+        {
+            var editorScopeId = await _queryService.GetProjectScopeIdAsync(Common.Enums.ProjectScope.Editor);
+
+            await _mediator.Send(new CreateProjectUserConHandlerRequest
+            {
+                UserId = userId,
+                ProjectId = projectId,
+                ProjectScopeId = editorScopeId
+            });
         }
     }
 }

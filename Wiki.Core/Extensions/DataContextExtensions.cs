@@ -9,17 +9,24 @@ namespace Wiki.Core.Extensions
 {
     public static class DataContextExtensions
     {
+        private static DataContext _dataContext;
+
         public static void Seed(this DataContext dataContext)
         {
-            SeedUserRoles(dataContext);
-            SeedCompanyRoles(dataContext);
+            _dataContext = dataContext;
+
+            SeedUserRoles();
+            SeedCompanyRoles();
+            SeedProjectScopes();
+
+            _dataContext.SaveChanges();
         }
 
-        private static void SeedUserRoles(DataContext dataContext)
+        private static void SeedUserRoles()
         {
-            if (dataContext.UserRole.Any()) return;
+            if (_dataContext.UserRole.Any()) return;
 
-            dataContext.UserRole.AddRange(
+            _dataContext.UserRole.AddRange(
                 new List<UserRole>
                 {
                     new UserRole
@@ -34,39 +41,67 @@ namespace Wiki.Core.Extensions
                     }
                 }
               );
-
-            dataContext.SaveChanges();
         }
 
-        private static void SeedCompanyRoles(DataContext dataContext)
+        private static void SeedCompanyRoles()
         {
-            if (dataContext.CompanyRole.Any()) return;
+            if (_dataContext.CompanyRole.Any()) return;
 
-            dataContext.CompanyRole.AddRange(
+            _dataContext.CompanyRole.AddRange(
                 new List<Models.CompanyRole>
                 {
                     new Models.CompanyRole
                     {
-                        Role = Common.Enums.CompanyRole.Editor,
+                        Role = Common.Enums.CompanyRole.Chief,
                         AllowCreateProject = true,
                         UniqueId = Guid.NewGuid()
                     },
                     new Models.CompanyRole
                     {
-                        Role = Common.Enums.CompanyRole.Contributor,
+                        Role = Common.Enums.CompanyRole.Tier3,
                         AllowCreateProject = false,
                         UniqueId = Guid.NewGuid()
                     },
                     new Models.CompanyRole
                     {
-                        Role = Common.Enums.CompanyRole.Reader,
+                        Role = Common.Enums.CompanyRole.Tier2,
+                        AllowCreateProject = false,
+                        UniqueId = Guid.NewGuid()
+                    },
+                   new Models.CompanyRole
+                    {
+                        Role = Common.Enums.CompanyRole.Tier1,
                         AllowCreateProject = false,
                         UniqueId = Guid.NewGuid()
                     }
                 }
               );
+        }
 
-            dataContext.SaveChanges();
+        private static void SeedProjectScopes()
+        {
+            if (_dataContext.ProjectScope.Any()) return;
+
+            _dataContext.ProjectScope.AddRange(
+                new List<Models.ProjectScope>
+                {
+                    new Models.ProjectScope
+                    {
+                        UniqueId = Guid.NewGuid(),
+                        Scope = Common.Enums.ProjectScope.Editor
+                    },
+                    new Models.ProjectScope
+                    {
+                        UniqueId = Guid.NewGuid(),
+                        Scope = Common.Enums.ProjectScope.Contributor
+                    },
+                    new Models.ProjectScope
+                    {
+                        UniqueId = Guid.NewGuid(),
+                        Scope = Common.Enums.ProjectScope.Reader
+                    }
+                }
+             );
         }
     }
 }

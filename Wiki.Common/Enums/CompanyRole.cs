@@ -8,8 +8,9 @@ namespace Wiki.Common.Enums
 {
     public enum CompanyRole
     {
-        Editor = 1,
-        Contributor,
-        Reader
+        Chief,
+        Tier3,
+        Tier2,
+        Tier1
     }
 }

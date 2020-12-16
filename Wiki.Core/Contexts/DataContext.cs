@@ -36,5 +36,7 @@ namespace Wiki.Core.Contexts
         public DbSet<DocumentGroupCon> DocumentGroupCon { get; set; }
         public DbSet<ProjectGroupCon> ProjectGroupCon { get; set; }
         public DbSet<CompanyUserCon> CompanyUserCon { get; set; }
+        public DbSet<Models.ProjectScope> ProjectScope { get; set; }
+        public DbSet<ProjectUserCon> ProjectUserCon { get; set; }
     }
 }

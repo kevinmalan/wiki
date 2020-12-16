@@ -55,5 +55,13 @@ namespace Wiki.Core.Services
                 .Include(u => u.UserRole)
                 .SingleOrDefaultAsync(u => u.UserName == username, cancellationToken: cancellationToken);
         }
+
+        public async Task<int> GetProjectScopeIdAsync(Common.Enums.ProjectScope scope)
+        {
+            return await _dataContext.ProjectScope
+                .Where(ps => ps.Scope == scope)
+                .Select(ps => ps.Id)
+                .FirstAsync();
+        }
     }
 }

@@ -17,5 +17,7 @@ namespace Wiki.Core.Services.Contracts
         Task<UserRole> GetUserRoleAsync(SystemRole role, CancellationToken cancellationToken);
 
         Task<User> GetUserAndRoleAsync(string username, CancellationToken cancellationToken);
+
+        Task<int> GetProjectScopeIdAsync(Common.Enums.ProjectScope scope);
     }
 }
