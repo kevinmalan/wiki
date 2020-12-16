@@ -1,11 +1,8 @@
 ﻿using Wiki.Common.Exceptions;
 using Wiki.Common.Responses;
-using Wiki.Core.Contexts;
 using Wiki.Core.HandlerRequests.Auth;
 using Wiki.Core.Services.Contracts;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,33 +11,26 @@ namespace Wiki.Core.Services.Handlers
     public class SignInHandler : IRequestHandler<SignInHandlerRequest, SignInResponse>
     {
         private readonly IAuthService _authService;
-        private readonly DataContext _dataContext;
+        private readonly IQueryService _queryService;
 
         public SignInHandler(
             IAuthService authService,
-            DataContext dataContext)
+            IQueryService queryService)
         {
             _authService = authService;
-            _dataContext = dataContext;
+            _queryService = queryService;
         }
 
         public async Task<SignInResponse> Handle(SignInHandlerRequest request, CancellationToken cancellationToken)
         {
-            var user = await _dataContext.User
-                .Include(u => u.UserRole)
-                .SingleOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken: cancellationToken);
+            var user = await _queryService.GetUserAndRoleAsync(request.UserName, cancellationToken);
 
             if (user is null)
             {
                 throw new BadRequestException($"No username and / or password match that criteria.");
             }
 
-            var password = await _dataContext.User
-                .Where(u => u.UniqueId == user.UniqueId)
-                .Select(u => u.Password)
-                .FirstAsync(cancellationToken: cancellationToken);
-
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, password))
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
                 throw new BadRequestException($"No username and / or password match that criteria.");
             }

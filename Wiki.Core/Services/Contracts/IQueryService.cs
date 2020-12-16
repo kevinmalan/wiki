@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Wiki.Common.Enums;
+using Wiki.Core.Models;
 
 namespace Wiki.Core.Services.Contracts
 {
@@ -11,6 +12,10 @@ namespace Wiki.Core.Services.Contracts
 
         Task<int> GetCompanyIdAsync(Guid uniqueId, CancellationToken cancellationToken);
 
-        Task<int> GetCompanyRoleIdAsync(CompanyRole role, CancellationToken cancellationToken);
+        Task<int> GetCompanyRoleIdAsync(Common.Enums.CompanyRole role, CancellationToken cancellationToken);
+
+        Task<UserRole> GetUserRoleAsync(SystemRole role, CancellationToken cancellationToken);
+
+        Task<User> GetUserAndRoleAsync(string username, CancellationToken cancellationToken);
     }
 }

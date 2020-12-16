@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Wiki.API.Controllers
 {
@@ -22,14 +23,17 @@ namespace Wiki.API.Controllers
 
         [HttpPost(Routes.Company.Create)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateCompanyAsync(CreateCompanyRequest request)
+        public async Task<IActionResult> CreateCompanyAsync(
+            [FromBody] CreateCompanyRequest request,
+            CancellationToken cancellationToken)
         {
             await _mediator.Send(
                 new CreateCompanyHandlerRequest
                 {
                     Name = request.Name,
                     CreatorUniqueId = GetUserUniqueId()
-                }
+                },
+                cancellationToken
               );
 
             return OkEmptyApiResponse();

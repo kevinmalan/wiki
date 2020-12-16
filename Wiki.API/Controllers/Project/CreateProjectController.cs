@@ -9,6 +9,7 @@ using Wiki.Core.Handler_Requests.Project;
 using System;
 using Wiki.API.Filters;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading;
 
 namespace Wiki.API.Controllers.Project
 {
@@ -25,7 +26,10 @@ namespace Wiki.API.Controllers.Project
         [HttpPost(Routes.Project.Create)]
         [ServiceFilter(typeof(AllowCreateProjectFilter))]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateProjectAsync([FromRoute] Guid companyUniqueId, [FromBody] CreateProjectRequest request)
+        public async Task<IActionResult> CreateProjectAsync(
+            [FromRoute] Guid companyUniqueId,
+            [FromBody] CreateProjectRequest request,
+            CancellationToken cancellationToken)
         {
             await _mediator.Send(
                 new CreateProjectHandlerRequest
@@ -33,7 +37,8 @@ namespace Wiki.API.Controllers.Project
                     Name = request.Name,
                     CompanyUniqeId = companyUniqueId,
                     CreatorUniqueId = GetUserUniqueId()
-                }
+                },
+                cancellationToken
               );
 
             return OkEmptyApiResponse();

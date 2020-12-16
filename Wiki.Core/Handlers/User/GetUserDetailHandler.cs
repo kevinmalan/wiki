@@ -1,27 +1,24 @@
 ﻿using Wiki.Common.Responses;
-using Wiki.Core.Contexts;
 using Wiki.Core.Requests;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using Wiki.Core.Services.Contracts;
 
 namespace Wiki.Core.Services.Handlers.User
 {
     public class GetUserDetailHandler : IRequestHandler<GetUserDetailHandlerRequest, UserResponse>
     {
-        private readonly DataContext _dataContext;
+        private readonly IQueryService _queryService;
 
-        public GetUserDetailHandler(DataContext dataContext)
+        public GetUserDetailHandler(IQueryService queryService)
         {
-            _dataContext = dataContext;
+            _queryService = queryService;
         }
 
         public async Task<UserResponse> Handle(GetUserDetailHandlerRequest request, CancellationToken cancellationToken)
         {
-            var user = await _dataContext.User
-                .Include(u => u.UserRole)
-                .SingleOrDefaultAsync(u => u.UserName == request.Username, cancellationToken: cancellationToken);
+            var user = await _queryService.GetUserAndRoleAsync(request.Username, cancellationToken);
 
             return user is null ? null : new UserResponse
             {

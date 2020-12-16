@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Wiki.Common.Enums;
 using Wiki.Core.Contexts;
+using Wiki.Core.Models;
 using Wiki.Core.Services.Contracts;
 
 namespace Wiki.Core.Services
@@ -34,12 +35,25 @@ namespace Wiki.Core.Services
                   .FirstAsync(cancellationToken);
         }
 
-        public async Task<int> GetCompanyRoleIdAsync(CompanyRole role, CancellationToken cancellationToken)
+        public async Task<int> GetCompanyRoleIdAsync(Common.Enums.CompanyRole role, CancellationToken cancellationToken)
         {
             return await _dataContext.CompanyRole
                 .Where(cr => cr.Role == role)
                 .Select(cr => cr.Id)
                 .FirstAsync(cancellationToken);
+        }
+
+        public async Task<UserRole> GetUserRoleAsync(SystemRole role, CancellationToken cancellationToken)
+        {
+            return await _dataContext.UserRole
+                .FirstAsync(ur => ur.Role == role, cancellationToken);
+        }
+
+        public async Task<User> GetUserAndRoleAsync(string username, CancellationToken cancellationToken)
+        {
+            return await _dataContext.User
+                .Include(u => u.UserRole)
+                .SingleOrDefaultAsync(u => u.UserName == username, cancellationToken: cancellationToken);
         }
     }
 }

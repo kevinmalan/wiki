@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Wiki.API.Controllers.Auth
 {
@@ -22,14 +23,17 @@ namespace Wiki.API.Controllers.Auth
         [HttpPost(Routes.Auth.Login)]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { Swagger.Auth })]
-        public async Task<IActionResult> SignInAsync([FromBody] SignInRequest request)
+        public async Task<IActionResult> SignInAsync(
+            [FromBody] SignInRequest request,
+            CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(
                 new SignInHandlerRequest
                 {
                     UserName = request.UserName,
                     Password = request.Password
-                }
+                },
+                cancellationToken
            );
 
             return OkApiResponse(response);

@@ -39,9 +39,9 @@ namespace Wiki.Core.Handlers.Project
                    CreatedById = userId,
                    Name = request.Name,
                    CompanyId = companyId
-               });
+               }, cancellationToken);
 
-            await _dataContext.SaveChangesAsync();
+            await _dataContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

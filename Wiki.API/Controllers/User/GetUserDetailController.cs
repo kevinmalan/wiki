@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Wiki.API.Controllers.User
 {
@@ -26,13 +27,16 @@ namespace Wiki.API.Controllers.User
         [HttpGet(Routes.User.ByUsername)]
         [Authorize(Policy = Policies.Admin)]
         [ProducesResponseType(typeof(ApiResponse<UserResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetUserDetailAsync([FromRoute] string username)
+        public async Task<IActionResult> GetUserDetailAsync(
+            [FromRoute] string username,
+            CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(
                 new GetUserDetailHandlerRequest
                 {
                     Username = username
-                }
+                },
+                cancellationToken
            );
 
             return OkApiResponse(response);

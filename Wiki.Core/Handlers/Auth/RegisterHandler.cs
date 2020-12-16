@@ -17,13 +17,16 @@ namespace Wiki.Core.Services.Handlers
     {
         private readonly IAuthService _authService;
         private readonly DataContext _dataContext;
+        private readonly IQueryService _queryService;
 
         public RegisterHandler(
-                    IAuthService authService,
-                    DataContext dataContext)
+           IAuthService authService,
+           DataContext dataContext,
+           IQueryService queryService)
         {
             _authService = authService;
             _dataContext = dataContext;
+            _queryService = queryService;
         }
 
         public async Task<SignInResponse> Handle(RegisterHandlerRequest request, CancellationToken cancellationToken)
@@ -37,9 +40,8 @@ namespace Wiki.Core.Services.Handlers
             }
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            var userRole = await _dataContext.UserRole
-                .SingleAsync(r => r.Role == SystemRole.Member, cancellationToken: cancellationToken);
-            var userCreated = await AddUserAsync(request.UserName, passwordHash, userRole);
+            var userRole = await _queryService.GetUserRoleAsync(SystemRole.Member, cancellationToken);
+            var userCreated = await AddUserAsync(request.UserName, passwordHash, userRole, cancellationToken);
 
             return new SignInResponse
             {
@@ -47,7 +49,11 @@ namespace Wiki.Core.Services.Handlers
             };
         }
 
-        private async Task<UserCreatedResponse> AddUserAsync(string userName, string password, UserRole userRole)
+        private async Task<UserCreatedResponse> AddUserAsync(
+            string userName,
+            string password,
+            UserRole userRole,
+            CancellationToken cancellationToken)
         {
             var uniqueId = Guid.NewGuid();
 
@@ -57,9 +63,9 @@ namespace Wiki.Core.Services.Handlers
                 UserName = userName,
                 Password = password,
                 UserRole = userRole
-            });
+            }, cancellationToken);
 
-            await _dataContext.SaveChangesAsync();
+            await _dataContext.SaveChangesAsync(cancellationToken);
 
             return new UserCreatedResponse
             {
