@@ -8,9 +8,11 @@ using Wiki.Common.Requests.Project;
 using Wiki.Core.Handler_Requests.Project;
 using System;
 using Wiki.API.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Wiki.API.Controllers.Project
 {
+    [Authorize]
     public class CreateProjectController : BaseController
     {
         private readonly IMediator _mediator;
@@ -23,11 +25,8 @@ namespace Wiki.API.Controllers.Project
         [HttpPost(Routes.Project.Create)]
         [ServiceFilter(typeof(AllowCreateProjectFilter))]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateCompanyAsync([FromRoute] Guid companyUniqueId, [FromBody] CreateProjectRequest request)
+        public async Task<IActionResult> CreateProjectAsync([FromRoute] Guid companyUniqueId, [FromBody] CreateProjectRequest request)
         {
-            // TODO:
-            // Add a row on CompanyRole: AllowCreateProject (boolean)
-            // Then Add validation attribute here
             await _mediator.Send(
                 new CreateProjectHandlerRequest
                 {

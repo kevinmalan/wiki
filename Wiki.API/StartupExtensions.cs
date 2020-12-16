@@ -19,8 +19,13 @@ namespace Wiki.API
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetSection(Db.Wiki).Value));
             services.AddHttpContextAccessor();
-            services.AddTransient<IAuthService, AuthService>();
+
+            // Filters
             services.AddScoped<AllowCreateProjectFilter>();
+
+            // Custom Services
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IQueryService, QueryService>();
         }
 
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration config)

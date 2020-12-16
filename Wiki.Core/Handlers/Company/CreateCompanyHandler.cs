@@ -1,12 +1,11 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Wiki.Core.Contexts;
 using Wiki.Core.Handler_Requests.Company;
 using Wiki.Core.HandlerRequests.Company;
+using Wiki.Core.Services.Contracts;
 
 namespace Wiki.Core.Handlers.Company
 {
@@ -14,19 +13,21 @@ namespace Wiki.Core.Handlers.Company
     {
         private readonly DataContext _dataContext;
         private readonly IMediator _mediator;
+        private readonly IQueryService _queryService;
 
-        public CreateCompanyHandler(DataContext dataContext, IMediator mediator)
+        public CreateCompanyHandler(
+            DataContext dataContext,
+            IMediator mediator,
+            IQueryService queryService)
         {
             _dataContext = dataContext;
             _mediator = mediator;
+            _queryService = queryService;
         }
 
         async Task<Unit> IRequestHandler<CreateCompanyHandlerRequest, Unit>.Handle(CreateCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
-            var userId = await _dataContext.User
-                  .Where(u => u.UniqueId == request.CreatorUniqueId)
-                  .Select(u => u.Id)
-                  .FirstAsync(cancellationToken: cancellationToken);
+            var userId = await _queryService.GetUserIdAsync(request.CreatorUniqueId, cancellationToken);
 
             var company = new Models.Company
             {
@@ -38,24 +39,21 @@ namespace Wiki.Core.Handlers.Company
 
             await _dataContext.Company.AddAsync(company, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
-            await CreateCompanyUserCon(userId, company.Id);
+            await CreateCompanyUserCon(userId, company.Id, cancellationToken);
 
             return Unit.Value;
         }
 
-        private async Task CreateCompanyUserCon(int creatorId, int companyId)
+        private async Task CreateCompanyUserCon(int creatorId, int companyId, CancellationToken cancellationToken)
         {
-            var editorRoleId = await _dataContext.CompanyRole
-                .Where(cr => cr.Role == Common.Enums.CompanyRole.Editor)
-                .Select(cr => cr.Id)
-                .FirstAsync();
+            var editorRoleId = await _queryService.GetCompanyRoleIdAsync(Common.Enums.CompanyRole.Editor, cancellationToken);
 
             await _mediator.Send(new CreateCompanyUserConHandlerRequest
             {
                 UserId = creatorId,
                 CompanyId = companyId,
                 CompanyRoleId = editorRoleId
-            });
+            }, cancellationToken);
         }
     }
 }

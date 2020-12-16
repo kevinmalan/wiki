@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Wiki.Common\Wiki.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Queries\" />
-  </ItemGroup>
-
 </Project>
