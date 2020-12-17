@@ -27,5 +27,10 @@
         {
             public const string Create = "api/company/{companyUniqueId}/project/create";
         }
+
+        public static class Document
+        {
+            public const string Create = "api/project/{projectUniqueId}/document/create";
+        }
     }
 }

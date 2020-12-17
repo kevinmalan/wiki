@@ -10,6 +10,7 @@ using System;
 using System.Text;
 using Wiki.Common;
 using Wiki.API.Filters;
+using Wiki.API.Filters.ProjectScope;
 
 namespace Wiki.API
 {
@@ -22,6 +23,8 @@ namespace Wiki.API
 
             // Filters
             services.AddScoped<AllowCreateProjectFilter>();
+            services.AddScoped<HasCompanyConnectionFilter>();
+            services.AddScoped<HasProjectScopePrivilegeFilter>();
 
             // Custom Services
             services.AddTransient<IAuthService, AuthService>();

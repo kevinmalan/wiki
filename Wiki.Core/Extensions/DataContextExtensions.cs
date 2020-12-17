@@ -130,8 +130,21 @@ namespace Wiki.Core.Extensions
         values
         (
             NEWID(),
-           <company_role_id>,
-           <privilege_id>
+           <CompanyRoleId>,
+           <PrivilegeId>
+        )
+
+         */
+
+        /*
+         Seeding ProjectScopePrivilege
+        INSERT INTO [ProjectScopePrivilege]
+        ([UniqueId], [ProjectScopeId], [PrivilegeId])
+        VALUES
+        (
+        NEWID(),
+        <ProjectScopeId>,
+        <PrivilegeId>
         )
 
          */

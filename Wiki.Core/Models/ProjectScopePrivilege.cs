@@ -7,8 +7,8 @@ namespace Wiki.Core.Models
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
         public ProjectScope ProjectScope { get; set; }
-        public Guid ProjectScopeId { get; set; }
+        public int ProjectScopeId { get; set; }
         public Privilege Privilege { get; set; }
-        public Guid PrivilegeId { get; set; }
+        public int PrivilegeId { get; set; }
     }
 }
