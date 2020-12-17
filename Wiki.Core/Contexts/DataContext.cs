@@ -50,5 +50,6 @@ namespace Wiki.Core.Contexts
         public DbSet<ProjectUserCon> ProjectUserCon { get; set; }
         public DbSet<Privilege> Privilege { get; set; }
         public DbSet<CompanyRolePrivilege> CompanyRolePrivilege { get; set; }
+        public DbSet<ProjectScopePrivilege> ProjectScopePrivilege { get; set; }
     }
 }
