@@ -11,7 +11,6 @@ namespace Wiki.Core.Models
         public DateTimeOffset CreatedOn { get; set; }
         public int CreatedById { get; set; }
         public User CreatedBy { get; set; }
-        public ICollection<Group> Groups { get; set; }
         public ICollection<Project> Projects { get; set; }
     }
 }

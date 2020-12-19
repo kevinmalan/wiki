@@ -23,7 +23,7 @@ namespace Wiki.Core.Services.Handlers
 
         public async Task<SignInResponse> Handle(SignInHandlerRequest request, CancellationToken cancellationToken)
         {
-            var user = await _queryService.GetUserAndRoleAsync(request.UserName, cancellationToken);
+            var user = await _queryService.GetUserAsync(request.UserName, cancellationToken);
 
             if (user is null)
             {
@@ -37,7 +37,7 @@ namespace Wiki.Core.Services.Handlers
 
             return new SignInResponse
             {
-                Jwt = _authService.GenerateJwt(user.UniqueId, user.UserName, user.UserRole.Role)
+                Jwt = _authService.GenerateJwt(user.UniqueId, user.UserName)
             };
         }
     }

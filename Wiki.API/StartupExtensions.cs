@@ -9,8 +9,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Wiki.Common;
-using Wiki.API.Filters;
-using Wiki.API.Filters.ProjectScope;
 
 namespace Wiki.API
 {
@@ -20,11 +18,6 @@ namespace Wiki.API
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetSection(Db.Wiki).Value));
             services.AddHttpContextAccessor();
-
-            // Filters
-            services.AddScoped<AllowCreateProjectFilter>();
-            services.AddScoped<HasCompanyConnectionFilter>();
-            services.AddScoped<HasProjectScopePrivilegeFilter>();
 
             // Custom Services
             services.AddTransient<IAuthService, AuthService>();

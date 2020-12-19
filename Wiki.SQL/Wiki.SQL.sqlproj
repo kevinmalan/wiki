@@ -61,21 +61,15 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Company.sql" />
-    <Build Include="dbo\Tables\CompanyRole.sql" />
-    <Build Include="dbo\Tables\CompanyUserCon.sql" />
     <Build Include="dbo\Tables\Project.sql" />
     <Build Include="dbo\Tables\Document.sql" />
     <Build Include="dbo\Tables\Tag.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\UserRole.sql" />
-    <Build Include="dbo\Tables\DocumentGroupCon.sql" />
-    <Build Include="dbo\Tables\DocumentTagCon.sql" />
-    <Build Include="dbo\Tables\ProjectGroupCon.sql" />
     <Build Include="dbo\Tables\Group.sql" />
-    <Build Include="dbo\Tables\ProjectScopePrivilege.sql" />
-    <Build Include="dbo\Tables\ProjectUserCon.sql" />
     <Build Include="dbo\Tables\ProjectScope.sql" />
-    <Build Include="dbo\Tables\Privilege.sql" />
-    <Build Include="dbo\Tables\CompanyRolePrivilege.sql" />
+    <Build Include="dbo\Tables\DocumentTagMap.sql" />
+    <Build Include="dbo\Tables\UserProjectScopeMap.sql" />
+    <Build Include="dbo\Tables\UserRoleCompanyMap.sql" />
   </ItemGroup>
 </Project>

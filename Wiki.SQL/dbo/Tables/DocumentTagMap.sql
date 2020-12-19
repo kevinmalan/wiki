@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[DocumentTagCon]
+﻿CREATE TABLE [dbo].[DocumentTagMap]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[TagId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Tag]([Id]),
@@ -6,7 +6,7 @@
 );
 GO
 CREATE INDEX IX_TagId
-ON [dbo].[DocumentTagCon]([TagId])
+ON [dbo].[DocumentTagMap]([TagId])
 GO
 CREATE INDEX IX_DocumentId
-ON [dbo].[DocumentTagCon]([DocumentId])
+ON [dbo].[DocumentTagMap]([DocumentId])

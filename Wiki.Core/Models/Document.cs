@@ -10,7 +10,8 @@ namespace Wiki.Core.Models
         public DateTimeOffset CreatedOn { get; set; }
         public string Title { get; set; }
         public Uri ContentUri { get; set; }
-        public Project Project { get; set; }
         public Guid ProjectId { get; set; }
+
+        public Project Project { get; set; }
     }
 }

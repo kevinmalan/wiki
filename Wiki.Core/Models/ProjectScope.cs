@@ -1,4 +1,5 @@
 ﻿using System;
+using Wiki.Common.Enums;
 
 namespace Wiki.Core.Models
 {
@@ -6,6 +7,6 @@ namespace Wiki.Core.Models
     {
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
-        public Common.Enums.ProjectScope Scope { get; set; }
+        public ProjectScopeName Name { get; set; }
     }
 }

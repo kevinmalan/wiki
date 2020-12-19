@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Wiki.Common.Enums;
 using Wiki.Core.Contexts;
 using Wiki.Core.Handler_Requests.Project;
 using Wiki.Core.Services.Contracts;
@@ -40,20 +41,24 @@ namespace Wiki.Core.Handlers.Project
 
             await _dataContext.AddAsync(project, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
-            await CreateProjectUserConAsync(userId, project.Id);
+            await CreateUserProjectScopeMapAsync(userId, project.Id);
 
             return Unit.Value;
         }
 
-        private async Task CreateProjectUserConAsync(int userId, int projectId)
+        private async Task CreateUserProjectScopeMapAsync(int userId, int projectId)
         {
-            var editorScopeId = await _queryService.GetProjectScopeIdAsync(Common.Enums.ProjectScope.Editor);
-
-            await _mediator.Send(new CreateProjectUserConHandlerRequest
+            await _mediator.Send(new CreateUserProjectScopeMapHandlerRequest
             {
                 UserId = userId,
                 ProjectId = projectId,
-                ProjectScopeId = editorScopeId
+                ProjectScopeNames = new ProjectScopeName[]
+                {
+                    ProjectScopeName.ReadDocument,
+                    ProjectScopeName.CreateDocument,
+                    ProjectScopeName.EditDocument,
+                    ProjectScopeName.DeleteDocument
+                }
             });
         }
     }

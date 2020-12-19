@@ -10,14 +10,12 @@ namespace Wiki.Core.Services.Contracts
     {
         Task<int> GetUserIdAsync(Guid uniqueId, CancellationToken cancellationToken);
 
+        Task<User> GetUserAsync(string userName, CancellationToken cancellationToken);
+
         Task<int> GetCompanyIdAsync(Guid uniqueId, CancellationToken cancellationToken);
 
-        Task<int> GetCompanyRoleIdAsync(Common.Enums.CompanyRole role, CancellationToken cancellationToken);
+        Task<int> GetUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken);
 
-        Task<UserRole> GetUserRoleAsync(SystemRole role, CancellationToken cancellationToken);
-
-        Task<User> GetUserAndRoleAsync(string username, CancellationToken cancellationToken);
-
-        Task<int> GetProjectScopeIdAsync(Common.Enums.ProjectScope scope);
+        Task<int> GetProjectScopeIdAsync(ProjectScopeName projectScopeName, CancellationToken cancellationToken);
     }
 }

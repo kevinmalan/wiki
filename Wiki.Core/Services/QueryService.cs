@@ -27,6 +27,12 @@ namespace Wiki.Core.Services
                   .FirstAsync(cancellationToken);
         }
 
+        public async Task<User> GetUserAsync(string userName, CancellationToken cancellationToken)
+        {
+            return await _dataContext.User
+                .FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
+        }
+
         public async Task<int> GetCompanyIdAsync(Guid uniqueId, CancellationToken cancellationToken)
         {
             return await _dataContext.Company
@@ -35,33 +41,20 @@ namespace Wiki.Core.Services
                   .FirstAsync(cancellationToken);
         }
 
-        public async Task<int> GetCompanyRoleIdAsync(Common.Enums.CompanyRole role, CancellationToken cancellationToken)
+        public async Task<int> GetUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken)
         {
-            return await _dataContext.CompanyRole
-                .Where(cr => cr.Role == role)
+            return await _dataContext.UserRole
+                .Where(r => r.Name == roleName)
                 .Select(cr => cr.Id)
                 .FirstAsync(cancellationToken);
         }
 
-        public async Task<UserRole> GetUserRoleAsync(SystemRole role, CancellationToken cancellationToken)
-        {
-            return await _dataContext.UserRole
-                .FirstAsync(ur => ur.Role == role, cancellationToken);
-        }
-
-        public async Task<User> GetUserAndRoleAsync(string username, CancellationToken cancellationToken)
-        {
-            return await _dataContext.User
-                .Include(u => u.UserRole)
-                .SingleOrDefaultAsync(u => u.UserName == username, cancellationToken: cancellationToken);
-        }
-
-        public async Task<int> GetProjectScopeIdAsync(Common.Enums.ProjectScope scope)
+        public async Task<int> GetProjectScopeIdAsync(ProjectScopeName scope, CancellationToken cancellationToken)
         {
             return await _dataContext.ProjectScope
-                .Where(ps => ps.Scope == scope)
+                .Where(ps => ps.Name == scope)
                 .Select(ps => ps.Id)
-                .FirstAsync();
+                .FirstAsync(cancellationToken);
         }
     }
 }

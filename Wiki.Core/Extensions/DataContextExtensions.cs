@@ -16,9 +16,7 @@ namespace Wiki.Core.Extensions
             _dataContext = dataContext;
 
             SeedUserRoles();
-            SeedCompanyRoles();
             SeedProjectScopes();
-            SeedPrivileges();
 
             _dataContext.SaveChanges();
         }
@@ -32,43 +30,12 @@ namespace Wiki.Core.Extensions
                 {
                     new UserRole
                     {
-                        Role = SystemRole.Admin,
+                        Name = UserRoleName.Admin,
                         UniqueId = Guid.NewGuid()
                     },
                     new UserRole
                     {
-                        Role = SystemRole.Member,
-                        UniqueId = Guid.NewGuid()
-                    }
-                }
-              );
-        }
-
-        private static void SeedCompanyRoles()
-        {
-            if (_dataContext.CompanyRole.Any()) return;
-
-            _dataContext.CompanyRole.AddRange(
-                new List<Models.CompanyRole>
-                {
-                    new Models.CompanyRole
-                    {
-                        Role = Common.Enums.CompanyRole.Chief,
-                        UniqueId = Guid.NewGuid()
-                    },
-                    new Models.CompanyRole
-                    {
-                        Role = Common.Enums.CompanyRole.Tier3,
-                        UniqueId = Guid.NewGuid()
-                    },
-                    new Models.CompanyRole
-                    {
-                        Role = Common.Enums.CompanyRole.Tier2,
-                        UniqueId = Guid.NewGuid()
-                    },
-                   new Models.CompanyRole
-                    {
-                        Role = Common.Enums.CompanyRole.Tier1,
+                        Name = UserRoleName.Member,
                         UniqueId = Guid.NewGuid()
                     }
                 }
@@ -80,73 +47,30 @@ namespace Wiki.Core.Extensions
             if (_dataContext.ProjectScope.Any()) return;
 
             _dataContext.ProjectScope.AddRange(
-                new List<Models.ProjectScope>
+                new List<ProjectScope>
                 {
-                    new Models.ProjectScope
+                    new ProjectScope
                     {
                         UniqueId = Guid.NewGuid(),
-                        Scope = Common.Enums.ProjectScope.Editor
+                        Name = ProjectScopeName.ReadDocument
                     },
-                    new Models.ProjectScope
+                    new ProjectScope
                     {
                         UniqueId = Guid.NewGuid(),
-                        Scope = Common.Enums.ProjectScope.Contributor
+                        Name = ProjectScopeName.CreateDocument
                     },
-                    new Models.ProjectScope
+                    new ProjectScope
                     {
                         UniqueId = Guid.NewGuid(),
-                        Scope = Common.Enums.ProjectScope.Reader
+                        Name = ProjectScopeName.EditDocument
+                    },
+                    new ProjectScope
+                    {
+                        UniqueId = Guid.NewGuid(),
+                        Name = ProjectScopeName.DeleteDocument
                     }
                 }
              );
         }
-
-        private static void SeedPrivileges()
-        {
-            if (_dataContext.Privilege.Any()) return;
-
-            _dataContext.Privilege.AddRange(
-                new List<Privilege>
-                {
-                    new Privilege
-                    {
-                        UniqueId = Guid.NewGuid(),
-                        Action = Common.Enums.Action.CreateProject
-                    },
-                    new Privilege
-                    {
-                        UniqueId = Guid.NewGuid(),
-                        Action = Common.Enums.Action.CreateDocument
-                    }
-                }
-              );
-        }
-
-        /*
-
-         Seeding CompanyRolePrivilege:
-        insert into [CompanyRolePrivilege]
-        ([UniqueId], [CompanyRoleId], [PrivilegeId])
-        values
-        (
-            NEWID(),
-           <CompanyRoleId>,
-           <PrivilegeId>
-        )
-
-         */
-
-        /*
-         Seeding ProjectScopePrivilege
-        INSERT INTO [ProjectScopePrivilege]
-        ([UniqueId], [ProjectScopeId], [PrivilegeId])
-        VALUES
-        (
-        NEWID(),
-        <ProjectScopeId>,
-        <PrivilegeId>
-        )
-
-         */
     }
 }

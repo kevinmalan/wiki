@@ -8,6 +8,6 @@ namespace Wiki.Core.Models
     {
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
-        public SystemRole Role { get; set; }
+        public UserRoleName Name { get; set; }
     }
 }

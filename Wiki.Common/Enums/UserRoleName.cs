@@ -1,6 +1,6 @@
 ﻿namespace Wiki.Common.Enums
 {
-    public enum SystemRole
+    public enum UserRoleName
     {
         Admin = 1,
         Member

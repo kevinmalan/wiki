@@ -12,29 +12,28 @@ namespace Wiki.Core.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration _configuration;
 
         public AuthService(IConfiguration configuration)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
-        public string GenerateJwt(Guid uniqueId, string userName, SystemRole role)
+        public string GenerateJwt(Guid uniqueId, string userName)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Jwt.SecretKey]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[Jwt.SecretKey]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
                 new Claim(Claims.UniqueId, uniqueId.ToString()),
                 new Claim(Claims.UserName, userName),
-                new Claim(Claims.Role, role.ToString())
             };
 
             var token = new JwtSecurityToken(
-                    issuer: configuration[Jwt.Issuer],
-                    audience: configuration[Jwt.Audiance],
+                    issuer: _configuration[Jwt.Issuer],
+                    audience: _configuration[Jwt.Audiance],
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(int.Parse(configuration[Jwt.ExpiresMinutes])),
+                    expires: DateTime.Now.AddMinutes(int.Parse(_configuration[Jwt.ExpiresMinutes])),
                     signingCredentials: credentials
                 );
 

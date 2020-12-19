@@ -18,13 +18,12 @@ namespace Wiki.Core.Services.Handlers.User
 
         public async Task<UserResponse> Handle(GetUserDetailHandlerRequest request, CancellationToken cancellationToken)
         {
-            var user = await _queryService.GetUserAndRoleAsync(request.Username, cancellationToken);
+            var user = await _queryService.GetUserAsync(request.Username, cancellationToken);
 
             return user is null ? null : new UserResponse
             {
                 UniqueId = user.UniqueId,
                 UserName = user.UserName,
-                Role = user.UserRole.Role
             };
         }
     }

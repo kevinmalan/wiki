@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Wiki.Common.Enums;
 using Wiki.Core.Contexts;
 using Wiki.Core.Handler_Requests.Company;
 using Wiki.Core.HandlerRequests.Company;
@@ -39,21 +40,19 @@ namespace Wiki.Core.Handlers.Company
 
             await _dataContext.Company.AddAsync(company, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
-            await CreateCompanyUserCon(userId, company.Id, cancellationToken);
+            await CreateUserRoleCompanyMapAsync(userId, company.Id);
 
             return Unit.Value;
         }
 
-        private async Task CreateCompanyUserCon(int creatorId, int companyId, CancellationToken cancellationToken)
+        private async Task CreateUserRoleCompanyMapAsync(int creatorId, int companyId)
         {
-            var chiefRoleId = await _queryService.GetCompanyRoleIdAsync(Common.Enums.CompanyRole.Chief, cancellationToken);
-
-            await _mediator.Send(new CreateCompanyUserConHandlerRequest
+            await _mediator.Send(new CreateUserRoleCompanyMapHandlerRequest
             {
                 UserId = creatorId,
                 CompanyId = companyId,
-                CompanyRoleId = chiefRoleId
-            }, cancellationToken);
+                UserRoleName = UserRoleName.Admin
+            });
         }
     }
 }

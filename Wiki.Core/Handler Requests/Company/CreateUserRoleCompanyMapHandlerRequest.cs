@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using Wiki.Common.Enums;
 
 namespace Wiki.Core.Handler_Requests.Company
 {
-    public class CreateCompanyUserConHandlerRequest : IRequest
+    public class CreateUserRoleCompanyMapHandlerRequest : IRequest
     {
         public int UserId { get; set; }
         public int CompanyId { get; set; }
-        public int CompanyRoleId { get; set; }
+        public UserRoleName UserRoleName { get; set; }
     }
 }

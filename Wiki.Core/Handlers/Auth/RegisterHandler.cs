@@ -40,19 +40,17 @@ namespace Wiki.Core.Services.Handlers
             }
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            var userRole = await _queryService.GetUserRoleAsync(SystemRole.Member, cancellationToken);
-            var userCreated = await AddUserAsync(request.UserName, passwordHash, userRole, cancellationToken);
+            var userCreated = await AddUserAsync(request.UserName, passwordHash, cancellationToken);
 
             return new SignInResponse
             {
-                Jwt = _authService.GenerateJwt(userCreated.UniqueId, userCreated.UserName, userCreated.Role)
+                Jwt = _authService.GenerateJwt(userCreated.UniqueId, userCreated.UserName)
             };
         }
 
         private async Task<UserCreatedResponse> AddUserAsync(
             string userName,
             string password,
-            UserRole userRole,
             CancellationToken cancellationToken)
         {
             var uniqueId = Guid.NewGuid();
@@ -62,7 +60,6 @@ namespace Wiki.Core.Services.Handlers
                 UniqueId = uniqueId,
                 UserName = userName,
                 Password = password,
-                UserRole = userRole
             }, cancellationToken);
 
             await _dataContext.SaveChangesAsync(cancellationToken);
@@ -70,7 +67,6 @@ namespace Wiki.Core.Services.Handlers
             return new UserCreatedResponse
             {
                 UserName = userName,
-                Role = userRole.Role,
                 UniqueId = uniqueId
             };
         }
