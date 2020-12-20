@@ -10,11 +10,11 @@ namespace Wiki.Core.Services.Handlers
 {
     public class SignInHandler : IRequestHandler<SignInHandlerRequest, SignInResponse>
     {
-        private readonly IAuthService _authService;
+        private readonly ITokenService _authService;
         private readonly IQueryService _queryService;
 
         public SignInHandler(
-            IAuthService authService,
+            ITokenService authService,
             IQueryService queryService)
         {
             _authService = authService;
@@ -37,7 +37,7 @@ namespace Wiki.Core.Services.Handlers
 
             return new SignInResponse
             {
-                Jwt = _authService.GenerateJwt(user.UniqueId, user.UserName)
+                Jwt = _authService.GenerateJwt(user.UniqueId)
             };
         }
     }

@@ -1,13 +1,13 @@
 ﻿CREATE TABLE [dbo].[CompanySignInHistory]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100,1),
-	[UserUniqueId] UNIQUEIDENTIFIER NOT NULL,
-	[CompanyUniqueId] UNIQUEIDENTIFIER NOT NULL,
+	[UniqueUserId] UNIQUEIDENTIFIER NOT NULL,
+	[UniqueCompanyId] UNIQUEIDENTIFIER NOT NULL,
 	[CreatedOn] DATETIMEOFFSET NOT NULL
 );
 GO
 CREATE INDEX IX_UserUniqueId
-ON [dbo].[CompanySignInHistory]([UserUniqueId])
+ON [dbo].[CompanySignInHistory]([UniqueUserId])
 GO
 CREATE INDEX IX_CompanyUniqueId
-ON [dbo].[CompanySignInHistory]([CompanyUniqueId])
+ON [dbo].[CompanySignInHistory]([UniqueCompanyId])

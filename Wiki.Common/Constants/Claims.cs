@@ -4,7 +4,6 @@
     {
         public static string UniqueUserId => "uniqueUserId";
         public static string UniqueCompanyId => "uniqueCompanyId";
-        public static string UserName => "userName";
         public static string Role => "role";
     }
 }

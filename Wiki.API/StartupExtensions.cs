@@ -20,7 +20,7 @@ namespace Wiki.API
             services.AddHttpContextAccessor();
 
             // Custom Services
-            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IQueryService, QueryService>();
             services.AddTransient<IValidationService, ValidationService>();
         }

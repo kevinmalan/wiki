@@ -15,12 +15,12 @@ namespace Wiki.Core.Services.Handlers
 {
     public class RegisterHandler : IRequestHandler<RegisterHandlerRequest, SignInResponse>
     {
-        private readonly IAuthService _authService;
+        private readonly ITokenService _authService;
         private readonly DataContext _dataContext;
         private readonly IQueryService _queryService;
 
         public RegisterHandler(
-           IAuthService authService,
+           ITokenService authService,
            DataContext dataContext,
            IQueryService queryService)
         {
@@ -44,7 +44,7 @@ namespace Wiki.Core.Services.Handlers
 
             return new SignInResponse
             {
-                Jwt = _authService.GenerateJwt(userCreated.UniqueId, userCreated.UserName)
+                Jwt = _authService.GenerateJwt(userCreated.UniqueId)
             };
         }
 
@@ -66,7 +66,6 @@ namespace Wiki.Core.Services.Handlers
 
             return new UserCreatedResponse
             {
-                UserName = userName,
                 UniqueId = uniqueId
             };
         }

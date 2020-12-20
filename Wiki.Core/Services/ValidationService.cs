@@ -21,12 +21,12 @@ namespace Wiki.Core.Services
         public async Task<bool> HasClaimsLatestCompanySignedInAsync(Guid uniqueUserId, Guid uniqueCompanyId)
         {
             var signInHistory = await _dataContext.CompanySignInHistory
-                .Where(c => c.UserUniqueId == uniqueUserId)
+                .Where(c => c.UniqueUserId == uniqueUserId)
                 .OrderBy(c => c.CreatedOn)
-                .Select(c => new { c.CompanyUniqueId })
+                .Select(c => new { c.UniqueCompanyId })
                 .LastOrDefaultAsync();
 
-            return signInHistory != null && signInHistory.CompanyUniqueId == uniqueCompanyId;
+            return signInHistory != null && signInHistory.UniqueCompanyId == uniqueCompanyId;
         }
     }
 }

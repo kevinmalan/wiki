@@ -1,13 +1,13 @@
-﻿using Wiki.Common;
-using Wiki.Common.Requests.Company;
-using Wiki.Common.Responses;
-using Wiki.Core.HandlerRequests.Company;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Wiki.Common;
+using Wiki.Common.Requests.Company;
+using Wiki.Common.Responses;
+using Wiki.Core.HandlerRequests.Company;
 
 namespace Wiki.API.Controllers
 {
@@ -22,12 +22,12 @@ namespace Wiki.API.Controllers
         }
 
         [HttpPost(Routes.Company.Create)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCompanyAsync(
             [FromBody] CreateCompanyRequest request,
             CancellationToken cancellationToken)
         {
-            await _mediator.Send(
+            var response = await _mediator.Send(
                 new CreateCompanyHandlerRequest
                 {
                     Name = request.Name,
@@ -36,7 +36,7 @@ namespace Wiki.API.Controllers
                 cancellationToken
               );
 
-            return OkEmptyApiResponse();
+            return OkApiResponse(response);
         }
     }
 }

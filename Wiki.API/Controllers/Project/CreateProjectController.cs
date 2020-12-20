@@ -13,9 +13,8 @@ using Wiki.API.Attributes;
 
 namespace Wiki.API.Controllers.Project
 {
-    // HasClaimsLatestCompanySignedIn
+    [Authorize(Policy = Policies.Admin)]
     [HasClaimsLatestCompanySignedIn]
-    //[Authorize(Policy = Policies.Admin)]
     public class CreateProjectController : BaseController
     {
         private readonly IMediator _mediator;
