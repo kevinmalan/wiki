@@ -7,6 +7,6 @@ namespace Wiki.Core.HandlerRequests.Company
     public class CreateCompanyHandlerRequest : IRequest<SignInResponse>
     {
         public string Name { get; set; }
-        public Guid CreatorUniqueId { get; set; }
+        public Guid UniqueUserId { get; set; }
     }
 }

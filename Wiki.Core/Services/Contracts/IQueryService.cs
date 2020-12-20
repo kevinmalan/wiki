@@ -16,6 +16,8 @@ namespace Wiki.Core.Services.Contracts
 
         Task<int> GetUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken);
 
+        Task<UserRoleName?> GetUserCompanyRoleAsync(Guid uniqueUserId, Guid uniqueCompanyId, CancellationToken cancellationToken);
+
         Task<int> GetProjectScopeIdAsync(ProjectScopeName projectScopeName, CancellationToken cancellationToken);
     }
 }

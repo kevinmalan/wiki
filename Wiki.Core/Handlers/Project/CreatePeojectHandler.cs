@@ -28,8 +28,8 @@ namespace Wiki.Core.Handlers.Project
 
         public async Task<Unit> Handle(CreateProjectHandlerRequest request, CancellationToken cancellationToken)
         {
-            var userId = await _queryService.GetUserIdAsync(request.CreatorUniqueId, cancellationToken);
-            var companyId = await _queryService.GetCompanyIdAsync(request.CompanyUniqeId, cancellationToken);
+            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId, cancellationToken);
+            var companyId = await _queryService.GetCompanyIdAsync(request.UniqueCompanyId, cancellationToken);
             var project = new Models.Project
             {
                 UniqueId = Guid.NewGuid(),

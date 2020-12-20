@@ -49,6 +49,19 @@ namespace Wiki.Core.Services
                 .FirstAsync(cancellationToken);
         }
 
+        public async Task<UserRoleName?> GetUserCompanyRoleAsync(Guid uniqueUserId, Guid uniqueCompanyId, CancellationToken cancellationToken)
+        {
+            var userId = await GetUserIdAsync(uniqueUserId, cancellationToken);
+            var companyid = await GetCompanyIdAsync(uniqueCompanyId, cancellationToken);
+
+            var companyRole = await _dataContext.UserRoleCompanyMap
+                .Where(x => x.UserId == userId && x.CompanyId == companyid)
+                .Select(x => new { x.UserRole.Name })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return companyRole?.Name;
+        }
+
         public async Task<int> GetProjectScopeIdAsync(ProjectScopeName scope, CancellationToken cancellationToken)
         {
             return await _dataContext.ProjectScope

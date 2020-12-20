@@ -21,16 +21,17 @@
         public static class Company
         {
             public const string Create = "api/company/create";
+            public const string SignIn = "api/company/{uniqueCompanyId}/signin";
         }
 
         public static class Project
         {
-            public const string Create = "api/company/{companyUniqueId}/project/create";
+            public const string Create = "api/company/{uniqueCompanyId}/project/create";
         }
 
         public static class Document
         {
-            public const string Create = "api/project/{projectUniqueId}/document/create";
+            public const string Create = "api/project/{uniqueProjectId}/document/create";
         }
     }
 }

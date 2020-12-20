@@ -2,35 +2,35 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Wiki.Common;
-using Wiki.Common.Requests.Company;
 using Wiki.Common.Responses;
-using Wiki.Core.HandlerRequests.Company;
+using Wiki.Core.Handler_Requests.Company;
 
-namespace Wiki.API.Controllers
+namespace Wiki.API.Controllers.Company
 {
     [Authorize]
-    public class CreateCompanyController : BaseController
+    public class SignInCompanyController : BaseController
     {
         private readonly IMediator _mediator;
 
-        public CreateCompanyController(IMediator mediator)
+        public SignInCompanyController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost(Routes.Company.Create)]
+        [HttpPost(Routes.Company.SignIn)]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateCompanyAsync(
-            [FromBody] CreateCompanyRequest request,
+        public async Task<IActionResult> SignInCompanyAsync(
+            [FromRoute] Guid uniqueCompanyId,
             CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(
-                new CreateCompanyHandlerRequest
+                new SignInCompanyHandlerRequest
                 {
-                    Name = request.Name,
+                    UniqueCompanyId = uniqueCompanyId,
                     UniqueUserId = GetUniqueUserId()
                 },
                 cancellationToken

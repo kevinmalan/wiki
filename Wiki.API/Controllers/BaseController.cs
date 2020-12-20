@@ -26,7 +26,7 @@ namespace Wiki.API.Controllers
             return BadRequest(ApiResponse.ToError(message));
         }
 
-        protected Guid GetUserUniqueId()
+        protected Guid GetUniqueUserId()
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;
 

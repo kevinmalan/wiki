@@ -24,8 +24,9 @@ namespace Wiki.API.Controllers.Document
 
         [HttpPost(Routes.Document.Create)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateDocumentAsync([FromRoute] Guid projectUniqueId)
+        public async Task<IActionResult> CreateDocumentAsync([FromRoute] Guid uniqueProjectId)
         {
+            // TODO
             return OkEmptyApiResponse();
         }
     }

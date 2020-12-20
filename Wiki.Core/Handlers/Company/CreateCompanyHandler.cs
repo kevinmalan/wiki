@@ -32,14 +32,14 @@ namespace Wiki.Core.Handlers.Company
 
         public async Task<SignInResponse> Handle(CreateCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
-            var userId = await _queryService.GetUserIdAsync(request.CreatorUniqueId, cancellationToken);
+            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId, cancellationToken);
             var created = await CreateCompanyAsync(request.Name, userId, cancellationToken);
             await CreateUserRoleCompanyMapAsync(userId, created.Item1);
-            await CreateCompanySignInHistoryAsync(request.CreatorUniqueId, created.Item2);
+            await CreateCompanySignInHistoryAsync(request.UniqueUserId, created.Item2);
 
             return new SignInResponse
             {
-                Jwt = _tokenService.GenerateJwt(request.CreatorUniqueId, created.Item2, UserRoleName.Admin)
+                Jwt = _tokenService.GenerateJwt(request.UniqueUserId, created.Item2, UserRoleName.Admin)
             };
         }
 
@@ -59,11 +59,11 @@ namespace Wiki.Core.Handlers.Company
             return (company.Id, company.UniqueId);
         }
 
-        private async Task CreateUserRoleCompanyMapAsync(int creatorId, int companyId)
+        private async Task CreateUserRoleCompanyMapAsync(int userId, int companyId)
         {
             await _mediator.Send(new CreateUserRoleCompanyMapHandlerRequest
             {
-                UserId = creatorId,
+                UserId = userId,
                 CompanyId = companyId,
                 UserRoleName = UserRoleName.Admin
             });
