@@ -9,10 +9,13 @@ using Wiki.Core.Handler_Requests.Project;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading;
+using Wiki.API.Attributes;
 
 namespace Wiki.API.Controllers.Project
 {
-    [Authorize]
+    // HasClaimsLatestCompanySignedIn
+    [HasClaimsLatestCompanySignedIn]
+    //[Authorize(Policy = Policies.Admin)]
     public class CreateProjectController : BaseController
     {
         private readonly IMediator _mediator;

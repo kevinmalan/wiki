@@ -35,5 +35,6 @@ namespace Wiki.Core.Contexts
         public DbSet<ProjectScope> ProjectScope { get; set; }
         public DbSet<UserRoleCompanyMap> UserRoleCompanyMap { get; set; }
         public DbSet<UserProjectScopeMap> UserProjectScopeMap { get; set; }
+        public DbSet<CompanySignInHistory> CompanySignInHistory { get; set; }
     }
 }

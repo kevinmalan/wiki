@@ -71,5 +71,6 @@
     <Build Include="dbo\Tables\DocumentTagMap.sql" />
     <Build Include="dbo\Tables\UserProjectScopeMap.sql" />
     <Build Include="dbo\Tables\UserRoleCompanyMap.sql" />
+    <Build Include="dbo\Tables\CompanySignInHistory.sql" />
   </ItemGroup>
 </Project>

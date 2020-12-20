@@ -22,6 +22,7 @@ namespace Wiki.API
             // Custom Services
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IQueryService, QueryService>();
+            services.AddTransient<IValidationService, ValidationService>();
         }
 
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration config)

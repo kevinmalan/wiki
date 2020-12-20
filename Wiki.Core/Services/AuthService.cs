@@ -25,7 +25,7 @@ namespace Wiki.Core.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(Claims.UniqueId, uniqueId.ToString()),
+                new Claim(Claims.UniqueUserId, uniqueId.ToString()),
                 new Claim(Claims.UserName, userName),
             };
 

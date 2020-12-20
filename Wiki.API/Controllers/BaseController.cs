@@ -30,7 +30,7 @@ namespace Wiki.API.Controllers
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;
 
-            return Guid.Parse(claims.FindFirst(Claims.UniqueId).Value);
+            return Guid.Parse(claims.FindFirst(Claims.UniqueUserId).Value);
         }
     }
 }
