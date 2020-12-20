@@ -23,8 +23,10 @@ namespace Wiki.API.Attributes
             if (!isValid)
             {
                 logger.LogError($"Token Claims for unique user id: '{uniqueUserId}' and unique company id: '{uniqueCompanyId}' does not match the latest company signed into.");
-                throw new UnAuthorizedException(null);
+                throw new UnAuthorizedException("An outdated bearer token has been passed.");
             }
+
+            await next();
         }
     }
 }

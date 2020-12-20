@@ -9,7 +9,6 @@ namespace Wiki.Core.Models
         public Guid UniqueId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public int UserRoleId { get; set; }
 
         public ICollection<UserRoleCompanyMap> UserCompanyRoleMap { get; set; }
         public ICollection<UserProjectScopeMap> UserProjectScopeMap { get; set; }

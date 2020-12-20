@@ -10,13 +10,16 @@ namespace Wiki.Core.Handlers.Company
 {
     public class SignInCompanyHandler : IRequestHandler<SignInCompanyHandlerRequest, SignInResponse>
     {
+        private readonly IMediator _mediator;
         private readonly IQueryService _queryService;
         private readonly ITokenService _tokenService;
 
         public SignInCompanyHandler(
+            IMediator mediator,
             IQueryService queryService,
             ITokenService tokenService)
         {
+            _mediator = mediator;
             _queryService = queryService;
             _tokenService = tokenService;
         }
@@ -30,10 +33,21 @@ namespace Wiki.Core.Handlers.Company
                 throw new UnauthorizedAccessException($"The user has no connection to this company.");
             }
 
+            await CreateCompanySignInHistoryAsync(request.UniqueUserId, request.UniqueCompanyId);
+
             return new SignInResponse
             {
                 Jwt = _tokenService.GenerateJwt(request.UniqueUserId, request.UniqueCompanyId, companyRole.Value)
             };
+        }
+
+        private async Task CreateCompanySignInHistoryAsync(Guid uniqueUserId, Guid uniqueCompanyId)
+        {
+            await _mediator.Send(new CreateCompanySignInHistoryHandlerRequest
+            {
+                UniqueUserId = uniqueUserId,
+                UniqueCompanyId = uniqueCompanyId
+            });
         }
     }
 }

@@ -5,7 +5,7 @@
         public static class Auth
         {
             public const string Register = "api/auth/register";
-            public const string Login = "api/auth/login";
+            public const string SignIn = "api/auth/signin";
         }
 
         public static class Health

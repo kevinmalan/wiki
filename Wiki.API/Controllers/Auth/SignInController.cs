@@ -20,7 +20,7 @@ namespace Wiki.API.Controllers.Auth
             _mediator = mediator;
         }
 
-        [HttpPost(Routes.Auth.Login)]
+        [HttpPost(Routes.Auth.SignIn)]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { Swagger.Auth })]
         public async Task<IActionResult> SignInAsync(
