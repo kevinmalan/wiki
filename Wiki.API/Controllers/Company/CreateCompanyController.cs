@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
+using Wiki.API.Attributes;
 using Wiki.Common;
 using Wiki.Common.Requests.Company;
 using Wiki.Common.Responses;
@@ -22,6 +23,7 @@ namespace Wiki.API.Controllers
         }
 
         [HttpPost(Routes.Company.Create)]
+        [NotSignedIntoCompany]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCompanyAsync(
             [FromBody] CreateCompanyRequest request,

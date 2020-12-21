@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Wiki.API.Attributes;
 using Wiki.Common;
 using Wiki.Common.Responses;
 using Wiki.Core.Handler_Requests.Company;
@@ -22,6 +23,7 @@ namespace Wiki.API.Controllers.Company
         }
 
         [HttpPost(Routes.Company.SignIn)]
+        [NotSignedIntoCompany]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SignInCompanyAsync(
             [FromRoute] Guid uniqueCompanyId,

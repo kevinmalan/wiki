@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
 using System.Threading;
+using Wiki.API.Attributes;
 
 namespace Wiki.API.Controllers.Auth
 {
@@ -21,6 +22,7 @@ namespace Wiki.API.Controllers.Auth
         }
 
         [HttpPost(Routes.Auth.SignIn)]
+        [NotSignedIntoCompany]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { Swagger.Auth })]
         public async Task<IActionResult> SignInAsync(

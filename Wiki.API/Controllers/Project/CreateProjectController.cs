@@ -14,7 +14,6 @@ using Wiki.API.Attributes;
 namespace Wiki.API.Controllers.Project
 {
     [Authorize(Policy = Policies.Admin)]
-    [HasClaimsLatestCompanySignedIn]
     public class CreateProjectController : BaseController
     {
         private readonly IMediator _mediator;

@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Wiki.Common;
+using Wiki.API.Filters;
 
 namespace Wiki.API
 {
@@ -18,6 +19,9 @@ namespace Wiki.API
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetSection(Db.Wiki).Value));
             services.AddHttpContextAccessor();
+
+            // Custom Filters
+            services.AddScoped<RequireLatestCompanySignInClaimsFilter>();
 
             // Custom Services
             services.AddTransient<ITokenService, TokenService>();
