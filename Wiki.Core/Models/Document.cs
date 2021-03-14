@@ -4,8 +4,12 @@ namespace Wiki.Core.Models
 {
     public class Document
     {
-        public int Id { get; set; }
-        public Guid UniqueId { get; set; }
+        public Document()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
         public string Title { get; set; }

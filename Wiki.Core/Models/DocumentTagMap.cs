@@ -4,7 +4,12 @@ namespace Wiki.Core.Models
 {
     public class DocumentTagMap
     {
-        public int Id { get; set; }
+        public DocumentTagMap()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public Guid DocumentId { get; set; }
         public Guid TagId { get; set; }
 

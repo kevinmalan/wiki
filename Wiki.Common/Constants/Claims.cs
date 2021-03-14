@@ -2,8 +2,8 @@
 {
     public static class Claims
     {
-        public static string UniqueUserId => "uniqueUserId";
-        public static string UniqueCompanyId => "uniqueCompanyId";
+        public static string UserId => "userId";
+        public static string CompanyId => "companyId";
         public static string Role => "role";
     }
 }

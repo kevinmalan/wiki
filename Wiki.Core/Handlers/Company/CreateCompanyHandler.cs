@@ -32,22 +32,20 @@ namespace Wiki.Core.Handlers.Company
 
         public async Task<SignInResponse> Handle(CreateCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
-            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId, cancellationToken);
-            var created = await CreateCompanyAsync(request.Name, userId, cancellationToken);
-            await CreateUserRoleCompanyMapAsync(userId, created.Item1);
-            await CreateCompanySignInHistoryAsync(request.UniqueUserId, created.Item2);
+            var companyId = await CreateCompanyAsync(request.Name, request.UserId, cancellationToken);
+            await CreateUserRoleCompanyMapAsync(request.UserId, companyId);
+            await CreateCompanySignInHistoryAsync(request.UserId, companyId);
 
             return new SignInResponse
             {
-                Jwt = _tokenService.GenerateJwt(request.UniqueUserId, created.Item2, UserRoleName.Admin)
+                Jwt = _tokenService.GenerateJwt(request.UserId, companyId, UserRoleName.Admin)
             };
         }
 
-        private async Task<(int, Guid)> CreateCompanyAsync(string name, int userId, CancellationToken cancellationToken)
+        private async Task<Guid> CreateCompanyAsync(string name, Guid userId, CancellationToken cancellationToken)
         {
             var company = new Models.Company
             {
-                UniqueId = Guid.NewGuid(),
                 CreatedOn = DateTimeOffset.UtcNow,
                 Name = name,
                 CreatedById = userId
@@ -56,10 +54,10 @@ namespace Wiki.Core.Handlers.Company
             await _dataContext.Company.AddAsync(company, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
 
-            return (company.Id, company.UniqueId);
+            return company.Id;
         }
 
-        private async Task CreateUserRoleCompanyMapAsync(int userId, int companyId)
+        private async Task CreateUserRoleCompanyMapAsync(Guid userId, Guid companyId)
         {
             await _mediator.Send(new CreateUserRoleCompanyMapHandlerRequest
             {
@@ -69,12 +67,12 @@ namespace Wiki.Core.Handlers.Company
             });
         }
 
-        private async Task CreateCompanySignInHistoryAsync(Guid uniqueUserId, Guid uniqueCompanyId)
+        private async Task CreateCompanySignInHistoryAsync(Guid userId, Guid companyId)
         {
             await _mediator.Send(new CreateCompanySignInHistoryHandlerRequest
             {
-                UniqueUserId = uniqueUserId,
-                UniqueCompanyId = uniqueCompanyId
+                UserId = userId,
+                CompanyId = companyId
             });
         }
     }

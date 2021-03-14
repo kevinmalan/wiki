@@ -5,6 +5,6 @@ namespace Wiki.Common.Responses
 {
     public class UserCreatedResponse
     {
-        public Guid UniqueId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

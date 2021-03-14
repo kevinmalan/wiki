@@ -23,17 +23,16 @@ namespace Wiki.API.Controllers.Company
         }
 
         [HttpPost(Routes.Company.SignIn)]
-        [NotSignedIntoCompany]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SignInCompanyAsync(
-            [FromRoute] Guid uniqueCompanyId,
+            [FromRoute] Guid companyId,
             CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(
                 new SignInCompanyHandlerRequest
                 {
-                    UniqueCompanyId = uniqueCompanyId,
-                    UniqueUserId = GetUniqueUserId()
+                    CompanyId = companyId,
+                    UserId = GetUserId()
                 },
                 cancellationToken
               );

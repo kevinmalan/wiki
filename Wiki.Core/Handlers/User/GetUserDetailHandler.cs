@@ -22,7 +22,7 @@ namespace Wiki.Core.Services.Handlers.User
 
             return user is null ? null : new UserResponse
             {
-                UniqueId = user.UniqueId,
+                UserId = user.Id,
                 UserName = user.UserName,
             };
         }

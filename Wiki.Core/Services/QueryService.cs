@@ -19,29 +19,13 @@ namespace Wiki.Core.Services
             _dataContext = dataContext;
         }
 
-        public async Task<int> GetUserIdAsync(Guid uniqueId, CancellationToken cancellationToken)
-        {
-            return await _dataContext.User
-                  .Where(u => u.UniqueId == uniqueId)
-                  .Select(u => u.Id)
-                  .FirstAsync(cancellationToken);
-        }
-
         public async Task<User> GetUserAsync(string userName, CancellationToken cancellationToken)
         {
             return await _dataContext.User
                 .FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
         }
 
-        public async Task<int> GetCompanyIdAsync(Guid uniqueId, CancellationToken cancellationToken)
-        {
-            return await _dataContext.Company
-                  .Where(c => c.UniqueId == uniqueId)
-                  .Select(c => c.Id)
-                  .FirstAsync(cancellationToken);
-        }
-
-        public async Task<int> GetUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken)
+        public async Task<Guid> GetUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken)
         {
             return await _dataContext.UserRole
                 .Where(r => r.Name == roleName)
@@ -49,20 +33,17 @@ namespace Wiki.Core.Services
                 .FirstAsync(cancellationToken);
         }
 
-        public async Task<UserRoleName?> GetUserCompanyRoleAsync(Guid uniqueUserId, Guid uniqueCompanyId, CancellationToken cancellationToken)
+        public async Task<UserRoleName?> GetUserCompanyRoleAsync(Guid userId, Guid companyId, CancellationToken cancellationToken)
         {
-            var userId = await GetUserIdAsync(uniqueUserId, cancellationToken);
-            var companyid = await GetCompanyIdAsync(uniqueCompanyId, cancellationToken);
-
             var companyRole = await _dataContext.UserRoleCompanyMap
-                .Where(x => x.UserId == userId && x.CompanyId == companyid)
+                .Where(x => x.UserId == userId && x.CompanyId == companyId)
                 .Select(x => new { x.UserRole.Name })
                 .FirstOrDefaultAsync(cancellationToken);
 
             return companyRole?.Name;
         }
 
-        public async Task<int> GetProjectScopeIdAsync(ProjectScopeName scope, CancellationToken cancellationToken)
+        public async Task<Guid> GetProjectScopeIdAsync(ProjectScopeName scope, CancellationToken cancellationToken)
         {
             return await _dataContext.ProjectScope
                 .Where(ps => ps.Name == scope)

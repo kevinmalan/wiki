@@ -22,7 +22,7 @@ namespace Wiki.API.Controllers.Auth
         }
 
         [HttpPost(Routes.Auth.SignIn)]
-        [NotSignedIntoCompany]
+        [CompanySignInNotRequired]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { Swagger.Auth })]
         public async Task<IActionResult> SignInAsync(

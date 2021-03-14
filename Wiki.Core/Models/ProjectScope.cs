@@ -5,8 +5,12 @@ namespace Wiki.Core.Models
 {
     public class ProjectScope
     {
-        public int Id { get; set; }
-        public Guid UniqueId { get; set; }
+        public ProjectScope()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public ProjectScopeName Name { get; set; }
     }
 }

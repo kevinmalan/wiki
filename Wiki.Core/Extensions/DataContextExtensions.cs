@@ -30,13 +30,11 @@ namespace Wiki.Core.Extensions
                 {
                     new UserRole
                     {
-                        Name = UserRoleName.Admin,
-                        UniqueId = Guid.NewGuid()
+                        Name = UserRoleName.Admin
                     },
                     new UserRole
                     {
-                        Name = UserRoleName.Member,
-                        UniqueId = Guid.NewGuid()
+                        Name = UserRoleName.Member
                     }
                 }
               );
@@ -51,22 +49,18 @@ namespace Wiki.Core.Extensions
                 {
                     new ProjectScope
                     {
-                        UniqueId = Guid.NewGuid(),
                         Name = ProjectScopeName.ReadDocument
                     },
                     new ProjectScope
                     {
-                        UniqueId = Guid.NewGuid(),
                         Name = ProjectScopeName.CreateDocument
                     },
                     new ProjectScope
                     {
-                        UniqueId = Guid.NewGuid(),
                         Name = ProjectScopeName.EditDocument
                     },
                     new ProjectScope
                     {
-                        UniqueId = Guid.NewGuid(),
                         Name = ProjectScopeName.DeleteDocument
                     }
                 }

@@ -6,7 +6,7 @@ namespace Wiki.Core.Handler_Requests.Project
     public class CreateProjectHandlerRequest : IRequest
     {
         public string Name { get; set; }
-        public Guid UniqueCompanyId { get; set; }
-        public Guid UniqueUserId { get; set; }
+        public Guid CompanyId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

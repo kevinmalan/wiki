@@ -6,8 +6,12 @@ namespace Wiki.Core.Models
 {
     public class UserRole
     {
-        public int Id { get; set; }
-        public Guid UniqueId { get; set; }
+        public UserRole()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public UserRoleName Name { get; set; }
     }
 }

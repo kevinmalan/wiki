@@ -28,11 +28,11 @@ namespace Wiki.API.Controllers
             return BadRequest(ApiResponse.ToError(message));
         }
 
-        protected Guid GetUniqueUserId()
+        protected Guid GetUserId()
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;
 
-            return Guid.Parse(claims.FindFirst(Claims.UniqueUserId).Value);
+            return Guid.Parse(claims.FindFirst(Claims.UserId).Value);
         }
     }
 }

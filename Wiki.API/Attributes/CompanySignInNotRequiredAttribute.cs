@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Wiki.API.Attributes
 {
-    public class NotSignedIntoCompanyAttribute : Attribute
+    public class CompanySignInNotRequiredAttribute : Attribute
     {
+        // Intentionally left blank.
     }
 }

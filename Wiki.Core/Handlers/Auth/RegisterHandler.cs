@@ -44,7 +44,7 @@ namespace Wiki.Core.Services.Handlers
 
             return new SignInResponse
             {
-                Jwt = _authService.GenerateJwt(userCreated.UniqueId)
+                Jwt = _authService.GenerateJwt(userCreated.UserId)
             };
         }
 
@@ -53,20 +53,19 @@ namespace Wiki.Core.Services.Handlers
             string password,
             CancellationToken cancellationToken)
         {
-            var uniqueId = Guid.NewGuid();
-
-            await _dataContext.User.AddAsync(new Models.User
+            var user = new Models.User
             {
-                UniqueId = uniqueId,
                 UserName = userName,
                 Password = password,
-            }, cancellationToken);
+            };
+
+            await _dataContext.User.AddAsync(user, cancellationToken);
 
             await _dataContext.SaveChangesAsync(cancellationToken);
 
             return new UserCreatedResponse
             {
-                UniqueId = uniqueId
+                UserId = user.Id
             };
         }
     }

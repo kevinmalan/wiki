@@ -22,7 +22,7 @@ namespace Wiki.API.Controllers.Auth
         }
 
         [HttpPost(Routes.Auth.Register)]
-        [NotSignedIntoCompany]
+        [CompanySignInNotRequired]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { Swagger.Auth })]
         public async Task<IActionResult> RegisterAsync(

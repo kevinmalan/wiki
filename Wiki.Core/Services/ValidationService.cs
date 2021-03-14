@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Wiki.Core.Contexts;
 using Wiki.Core.Services.Contracts;
@@ -18,15 +16,15 @@ namespace Wiki.Core.Services
             _dataContext = dataContext;
         }
 
-        public async Task<bool> HasLatestCompanySignInClaimsAsync(Guid uniqueUserId, Guid uniqueCompanyId)
+        public async Task<bool> HasLatestCompanySignInClaimsAsync(Guid userId, Guid companyId)
         {
             var signInHistory = await _dataContext.CompanySignInHistory
-                .Where(c => c.UniqueUserId == uniqueUserId)
+                .Where(c => c.UserId == userId)
                 .OrderBy(c => c.CreatedOn)
-                .Select(c => new { c.UniqueCompanyId })
+                .Select(c => new { c.CompanyId })
                 .LastOrDefaultAsync();
 
-            return signInHistory != null && signInHistory.UniqueCompanyId == uniqueCompanyId;
+            return signInHistory != null && signInHistory.CompanyId == companyId;
         }
     }
 }

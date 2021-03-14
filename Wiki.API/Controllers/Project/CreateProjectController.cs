@@ -26,7 +26,7 @@ namespace Wiki.API.Controllers.Project
         [HttpPost(Routes.Project.Create)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateProjectAsync(
-            [FromRoute] Guid uniqueCompanyId,
+            [FromRoute] Guid companyId,
             [FromBody] CreateProjectRequest request,
             CancellationToken cancellationToken)
         {
@@ -34,8 +34,8 @@ namespace Wiki.API.Controllers.Project
                 new CreateProjectHandlerRequest
                 {
                     Name = request.Name,
-                    UniqueCompanyId = uniqueCompanyId,
-                    UniqueUserId = GetUniqueUserId()
+                    CompanyId = companyId,
+                    UserId = GetUserId()
                 },
                 cancellationToken
               );

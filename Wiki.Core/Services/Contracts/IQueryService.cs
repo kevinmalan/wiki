@@ -8,16 +8,12 @@ namespace Wiki.Core.Services.Contracts
 {
     public interface IQueryService
     {
-        Task<int> GetUserIdAsync(Guid uniqueId, CancellationToken cancellationToken);
-
         Task<User> GetUserAsync(string userName, CancellationToken cancellationToken);
 
-        Task<int> GetCompanyIdAsync(Guid uniqueId, CancellationToken cancellationToken);
+        Task<Guid> GetUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken);
 
-        Task<int> GetUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken);
+        Task<UserRoleName?> GetUserCompanyRoleAsync(Guid userId, Guid companyId, CancellationToken cancellationToken);
 
-        Task<UserRoleName?> GetUserCompanyRoleAsync(Guid uniqueUserId, Guid uniqueCompanyId, CancellationToken cancellationToken);
-
-        Task<int> GetProjectScopeIdAsync(ProjectScopeName projectScopeName, CancellationToken cancellationToken);
+        Task<Guid> GetProjectScopeIdAsync(ProjectScopeName projectScopeName, CancellationToken cancellationToken);
     }
 }

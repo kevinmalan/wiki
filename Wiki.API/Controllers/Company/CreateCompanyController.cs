@@ -23,7 +23,7 @@ namespace Wiki.API.Controllers
         }
 
         [HttpPost(Routes.Company.Create)]
-        [NotSignedIntoCompany]
+        [CompanySignInNotRequired]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCompanyAsync(
             [FromBody] CreateCompanyRequest request,
@@ -33,7 +33,7 @@ namespace Wiki.API.Controllers
                 new CreateCompanyHandlerRequest
                 {
                     Name = request.Name,
-                    UniqueUserId = GetUniqueUserId()
+                    UserId = GetUserId()
                 },
                 cancellationToken
               );

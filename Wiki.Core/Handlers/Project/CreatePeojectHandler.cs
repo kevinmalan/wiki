@@ -28,25 +28,22 @@ namespace Wiki.Core.Handlers.Project
 
         public async Task<Unit> Handle(CreateProjectHandlerRequest request, CancellationToken cancellationToken)
         {
-            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId, cancellationToken);
-            var companyId = await _queryService.GetCompanyIdAsync(request.UniqueCompanyId, cancellationToken);
             var project = new Models.Project
             {
-                UniqueId = Guid.NewGuid(),
                 CreatedOn = DateTimeOffset.UtcNow,
-                CreatedById = userId,
+                CreatedById = request.UserId,
                 Name = request.Name,
-                CompanyId = companyId
+                CompanyId = request.CompanyId
             };
 
             await _dataContext.AddAsync(project, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
-            await CreateUserProjectScopeMapAsync(userId, project.Id);
+            await CreateUserProjectScopeMapAsync(request.UserId, project.Id);
 
             return Unit.Value;
         }
 
-        private async Task CreateUserProjectScopeMapAsync(int userId, int projectId)
+        private async Task CreateUserProjectScopeMapAsync(Guid userId, Guid projectId)
         {
             await _mediator.Send(new CreateUserProjectScopeMapHandlerRequest
             {

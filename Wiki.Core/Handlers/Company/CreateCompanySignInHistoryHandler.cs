@@ -22,8 +22,8 @@ namespace Wiki.Core.Handlers.Company
             await _dataContext.CompanySignInHistory.AddAsync(
                  new CompanySignInHistory
                  {
-                     UniqueUserId = request.UniqueUserId,
-                     UniqueCompanyId = request.UniqueCompanyId,
+                     UserId = request.UserId,
+                     CompanyId = request.CompanyId,
                      CreatedOn = DateTimeOffset.UtcNow
                  }, cancellationToken
               );
