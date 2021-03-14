@@ -112,7 +112,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{bearer}}",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FmMmNmZS00OWQyLTQ4N2UtYWFlNC0wYzZhNzg5NDQ3NTAiLCJjb21wYW55SWQiOiIxMDBlN2UyNS04MWRjLTQ2MTItOTVlMC0yOTQ5NzI0MWE3NmIiLCJyb2xlIjoiQWRtaW4iLCJleHAiOjE2MTU3NTc4MjEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0Mzg4LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0Mzg4LyJ9.gU1Zm13vDP-tQQjd0H7VYhHCHrwGDu4enZYmioI_N_s",
 									"type": "string"
 								}
 							]
@@ -120,13 +120,13 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}api/company/{{uniqueCompanyId}}/signin",
+							"raw": "{{base_url}}api/company/{{companyId}}/signin",
 							"host": [
 								"{{base_url}}api"
 							],
 							"path": [
 								"company",
-								"{{uniqueCompanyId}}",
+								"{{companyId}}",
 								"signin"
 							]
 						}
@@ -163,13 +163,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}api/company/{{uniqueCompanyId}}/project/create",
+							"raw": "{{base_url}}api/company/{{companyId}}/project/create",
 							"host": [
 								"{{base_url}}api"
 							],
 							"path": [
 								"company",
-								"{{uniqueCompanyId}}",
+								"{{companyId}}",
 								"project",
 								"create"
 							]

@@ -23,6 +23,7 @@ namespace Wiki.API.Controllers.Company
         }
 
         [HttpPost(Routes.Company.SignIn)]
+        [CompanySignInNotRequired]
         [ProducesResponseType(typeof(ApiResponse<SignInResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SignInCompanyAsync(
             [FromRoute] Guid companyId,
