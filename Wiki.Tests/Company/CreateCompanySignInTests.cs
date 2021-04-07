@@ -1,40 +1,35 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Wiki.Core.Contexts;
 using Wiki.Core.Handler_Requests.Company;
 using Wiki.Core.Handlers.Company;
 using Xunit;
-using Shouldly;
 
 namespace Wiki.Tests.Company
 {
-    public class CompanySignInTests : BaseTest
+    public class CreateCompanySignInTests : BaseTest
     {
         [Fact]
-        public async Task CreateCompanySignIn()
+        public async Task CreateCompanySignIn_WhenValidRequest_ShouldCreateDbRecord()
         {
+            // Arrange
             var db = Db();
-
+            var handler = new CreateCompanySignInHistoryHandler(db);
             var request = new CreateCompanySignInHistoryHandlerRequest
             {
                 CompanyId = Guid.NewGuid(),
                 UserId = Guid.NewGuid()
             };
 
-            var handler = new CreateCompanySignInHistoryHandler(db);
+            // Act
             await handler.Handle(request, new CancellationToken());
 
+            // Assert
             var signInHistory =
                 db.CompanySignInHistory
-                .Where(c => c.CompanyId == request.CompanyId && c.UserId == request.UserId)
-                .FirstOrDefault();
+                .FirstOrDefault(c => c.CompanyId == request.CompanyId && c.UserId == request.UserId);
 
             signInHistory.ShouldNotBeNull();
             signInHistory.CompanyId.ShouldBe(request.CompanyId);

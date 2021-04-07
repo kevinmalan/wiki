@@ -14,7 +14,7 @@ namespace Wiki.Core.Services.Handlers
         private readonly IQueryService _queryService;
 
         public SignInHandler(
-            ITokenService authService, // Instead of injecting there. Should they not be Mediator handlers ?
+            ITokenService authService,
             IQueryService queryService)
         {
             _authService = authService;
