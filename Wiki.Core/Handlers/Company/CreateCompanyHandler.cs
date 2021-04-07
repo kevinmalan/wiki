@@ -15,18 +15,15 @@ namespace Wiki.Core.Handlers.Company
     {
         private readonly DataContext _dataContext;
         private readonly IMediator _mediator;
-        private readonly IQueryService _queryService;
         private readonly ITokenService _tokenService;
 
         public CreateCompanyHandler(
             DataContext dataContext,
             IMediator mediator,
-            IQueryService queryService,
             ITokenService tokenService)
         {
             _dataContext = dataContext;
             _mediator = mediator;
-            _queryService = queryService;
             _tokenService = tokenService;
         }
 
