@@ -32,7 +32,12 @@ namespace Wiki.Core.Handlers.Company
         {
             if (string.IsNullOrWhiteSpace(request.Name))
             {
-                throw new BadRequestException("No name has been specified for the company.");
+                throw new BadRequestException("No company name specified in request.");
+            }
+
+            if (request.UserId == Guid.Empty)
+            {
+                throw new BadRequestException("No userId specified in request.");
             }
 
             var companyId = await CreateCompanyAsync(request.Name, request.UserId, cancellationToken);

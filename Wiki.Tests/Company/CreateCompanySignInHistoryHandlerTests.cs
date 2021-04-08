@@ -9,13 +9,14 @@ using Xunit;
 
 namespace Wiki.Tests.Company
 {
-    public class CreateCompanySignInTests : BaseTest
+    public class CreateCompanySignInHistoryHandlerTests : BaseTest
     {
         [Fact]
         public async Task CreateCompanySignIn_WhenValidRequest_ShouldCreateDbRecord()
         {
             // Arrange
             var db = Db();
+            var now = DateTimeOffset.UtcNow;
             var handler = new CreateCompanySignInHistoryHandler(db);
             var request = new CreateCompanySignInHistoryHandlerRequest
             {
@@ -34,7 +35,7 @@ namespace Wiki.Tests.Company
             signInHistory.ShouldNotBeNull();
             signInHistory.CompanyId.ShouldBe(request.CompanyId);
             signInHistory.UserId.ShouldBe(request.UserId);
-            signInHistory.CreatedOn.ShouldBeGreaterThan(new DateTimeOffset());
+            signInHistory.CreatedOn.ShouldBeGreaterThan(now);
         }
     }
 }
