@@ -17,16 +17,13 @@ namespace Wiki.Core.Services.Handlers
     {
         private readonly ITokenService _authService;
         private readonly DataContext _dataContext;
-        private readonly IQueryService _queryService;
 
         public RegisterHandler(
            ITokenService authService,
-           DataContext dataContext,
-           IQueryService queryService)
+           DataContext dataContext)
         {
             _authService = authService;
             _dataContext = dataContext;
-            _queryService = queryService;
         }
 
         public async Task<SignInResponse> Handle(RegisterHandlerRequest request, CancellationToken cancellationToken)
