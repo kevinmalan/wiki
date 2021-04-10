@@ -22,7 +22,7 @@ namespace Wiki.Tests.Company
             var db = Db();
             var adminRoleId = Guid.NewGuid();
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Admin, new CancellationToken()).Returns(Task.FromResult(adminRoleId));
+            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Admin, Arg.Any<CancellationToken>()).Returns(Task.FromResult(adminRoleId));
 
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
@@ -50,7 +50,7 @@ namespace Wiki.Tests.Company
             var db = Db();
             var memberRoleId = Guid.NewGuid();
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Member, new CancellationToken()).Returns(Task.FromResult(memberRoleId));
+            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Member, Arg.Any<CancellationToken>()).Returns(Task.FromResult(memberRoleId));
 
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest

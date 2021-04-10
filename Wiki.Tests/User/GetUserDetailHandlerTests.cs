@@ -19,7 +19,7 @@ namespace Wiki.Tests.User
             var userId = Guid.NewGuid();
             var userName = "Test username";
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserAsync(userName, new CancellationToken()).Returns(Task.FromResult(new Core.Models.User
+            queryServiceMock.GetUserAsync(userName, Arg.Any<CancellationToken>()).Returns(Task.FromResult(new Core.Models.User
             {
                 Id = userId,
                 UserName = userName
@@ -34,6 +34,7 @@ namespace Wiki.Tests.User
             var userResponse = await handler.Handle(request, new CancellationToken());
 
             // Assert
+            userResponse.ShouldNotBeNull();
             userResponse.UserId.ShouldBe(userId);
             userResponse.UserName.ShouldBe(userName);
         }
