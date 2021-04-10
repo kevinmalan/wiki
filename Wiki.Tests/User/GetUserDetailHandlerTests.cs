@@ -19,11 +19,11 @@ namespace Wiki.Tests.User
             var userId = Guid.NewGuid();
             var userName = "Test username";
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserAsync(userName, new CancellationToken()).Returns(new Core.Models.User
+            queryServiceMock.GetUserAsync(userName, new CancellationToken()).Returns(Task.FromResult(new Core.Models.User
             {
                 Id = userId,
                 UserName = userName
-            });
+            }));
             var request = new GetUserDetailHandlerRequest
             {
                 Username = userName
