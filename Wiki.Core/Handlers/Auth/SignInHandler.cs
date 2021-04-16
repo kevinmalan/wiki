@@ -37,7 +37,7 @@ namespace Wiki.Core.Services.Handlers
 
             return new SignInResponse
             {
-                Jwt = _authService.GenerateJwt(user.Id)
+                Jwt = _authService.GenerateJwt(user.UniqueId)
             };
         }
     }

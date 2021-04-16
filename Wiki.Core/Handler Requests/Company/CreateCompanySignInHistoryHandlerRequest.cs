@@ -5,7 +5,7 @@ namespace Wiki.Core.Handler_Requests.Company
 {
     public class CreateCompanySignInHistoryHandlerRequest : IRequest
     {
-        public Guid UserId { get; set; }
-        public Guid CompanyId { get; set; }
+        public int UserId { get; set; }
+        public int CompanyId { get; set; }
     }
 }

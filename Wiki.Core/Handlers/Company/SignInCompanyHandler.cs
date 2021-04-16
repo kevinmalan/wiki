@@ -26,18 +26,18 @@ namespace Wiki.Core.Handlers.Company
 
         public async Task<SignInResponse> Handle(SignInCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
-            var companyRole = await _queryService.GetUserCompanyRoleAsync(request.UserId, request.CompanyId, cancellationToken);
+            var companyRole = await _queryService.GetUserCompanyRoleAsync(userId, request.UniqueCompanyId, cancellationToken);
 
             if (companyRole is null)
             {
                 throw new UnauthorizedAccessException($"The user has no connection to this company.");
             }
 
-            await CreateCompanySignInHistoryAsync(request.UserId, request.CompanyId);
+            await CreateCompanySignInHistoryAsync(request.UniqueUserId, request.UniqueCompanyId);
 
             return new SignInResponse
             {
-                Jwt = _tokenService.GenerateJwt(request.UserId, request.CompanyId, companyRole.Value)
+                Jwt = _tokenService.GenerateJwt(request.UniqueUserId, request.UniqueCompanyId, companyRole.Value)
             };
         }
 

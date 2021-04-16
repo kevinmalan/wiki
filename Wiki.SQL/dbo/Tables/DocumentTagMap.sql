@@ -1,12 +1,10 @@
 ﻿CREATE TABLE [dbo].[DocumentTagMap]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-	[TagId] UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES [dbo].[Tag]([Id]),
-	[DocumentId] UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES [dbo].[Document]([Id]),
+	[Id] INT NOT NULL PRIMARY KEY,
+	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
+	[UniqueTagId] UNIQUEIDENTIFIER NOT NULL,
+	[UniqueDocumentId] UNIQUEIDENTIFIER NOT NULL,
 );
 GO
-CREATE INDEX IX_TagId
-ON [dbo].[DocumentTagMap]([TagId])
-GO
-CREATE INDEX IX_DocumentId
-ON [dbo].[DocumentTagMap]([DocumentId])
+CREATE INDEX IX_UniqueId
+ON [dbo].[DocumentTagMap] ([UniqueId])

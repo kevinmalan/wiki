@@ -6,12 +6,13 @@ namespace Wiki.Core.Models
     {
         public CompanySignInHistory()
         {
-            Id = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public Guid CompanyId { get; set; }
+        public int Id { get; set; }
+        public Guid UniqueId { get; set; }
+        public int UserId { get; set; }
+        public int CompanyId { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
     }
 }

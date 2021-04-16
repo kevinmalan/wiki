@@ -16,7 +16,7 @@ namespace Wiki.Core.Services
             _dataContext = dataContext;
         }
 
-        public async Task<bool> HasLatestCompanySignInClaimsAsync(Guid userId, Guid companyId)
+        public async Task<bool> HasLatestCompanySignInClaimsAsync(Guid uniqueUserId, Guid uniqueCompanyId)
         {
             var signInHistory = await _dataContext.CompanySignInHistory
                 .Where(c => c.UserId == userId)

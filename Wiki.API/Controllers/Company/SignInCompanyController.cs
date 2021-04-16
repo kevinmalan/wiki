@@ -32,8 +32,8 @@ namespace Wiki.API.Controllers.Company
             var response = await _mediator.Send(
                 new SignInCompanyHandlerRequest
                 {
-                    CompanyId = companyId,
-                    UserId = GetUserId()
+                    UniqueCompanyId = companyId,
+                    UniqueUserId = GetUserId()
                 },
                 cancellationToken
               );

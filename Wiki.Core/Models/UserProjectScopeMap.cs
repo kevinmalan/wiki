@@ -6,16 +6,13 @@ namespace Wiki.Core.Models
     {
         public UserProjectScopeMap()
         {
-            Id = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public Guid ProjectId { get; set; }
-        public Guid ProjectScopeId { get; set; }
-
-        public User User { get; set; }
-        public Project Project { get; set; }
-        public ProjectScope ProjectScope { get; set; }
+        public int Id { get; set; }
+        public Guid UniqueId { get; set; }
+        public Guid UniqueUserId { get; set; }
+        public Guid UniqueProjectId { get; set; }
+        public Guid UniqueProjectScopeId { get; set; }
     }
 }

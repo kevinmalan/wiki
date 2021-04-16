@@ -17,15 +17,18 @@ namespace Wiki.Core.Handlers.Company
         private readonly DataContext _dataContext;
         private readonly IMediator _mediator;
         private readonly ITokenService _tokenService;
+        private readonly IQueryService _queryService;
 
         public CreateCompanyHandler(
             DataContext dataContext,
             IMediator mediator,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            IQueryService queryService)
         {
             _dataContext = dataContext;
             _mediator = mediator;
             _tokenService = tokenService;
+            _queryService = queryService;
         }
 
         public async Task<SignInResponse> Handle(CreateCompanyHandlerRequest request, CancellationToken cancellationToken)
@@ -35,22 +38,24 @@ namespace Wiki.Core.Handlers.Company
                 throw new BadRequestException("No company name specified in request.");
             }
 
-            if (request.UserId == Guid.Empty)
+            if (request.UniqueUserId == Guid.Empty)
             {
-                throw new BadRequestException("No userId specified in request.");
+                throw new BadRequestException("No UniqueUserId specified in request.");
             }
 
-            var companyId = await CreateCompanyAsync(request.Name, request.UserId, cancellationToken);
-            await CreateUserRoleCompanyMapAsync(request.UserId, companyId);
-            await CreateCompanySignInHistoryAsync(request.UserId, companyId);
+            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId);
+            var company = await CreateCompanyAsync(request.Name, userId, cancellationToken);
+
+            await CreateUserRoleCompanyMapAsync(userId, company.Id);
+            await CreateCompanySignInHistoryAsync(userId, company.Id);
 
             return new SignInResponse
             {
-                Jwt = _tokenService.GenerateJwt(request.UserId, companyId, UserRoleName.Admin)
+                Jwt = _tokenService.GenerateJwt(request.UniqueUserId, company.UniqueId, UserRoleName.Admin)
             };
         }
 
-        private async Task<Guid> CreateCompanyAsync(string name, Guid userId, CancellationToken cancellationToken)
+        private async Task<Models.Company> CreateCompanyAsync(string name, int userId, CancellationToken cancellationToken)
         {
             var company = new Models.Company
             {
@@ -62,20 +67,20 @@ namespace Wiki.Core.Handlers.Company
             await _dataContext.Company.AddAsync(company, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
 
-            return company.Id;
+            return company;
         }
 
-        private async Task CreateUserRoleCompanyMapAsync(Guid userId, Guid companyId)
+        private async Task CreateUserRoleCompanyMapAsync(int userId, int companyId)
         {
             await _mediator.Send(new CreateUserRoleCompanyMapHandlerRequest
             {
-                UserId = userId,
-                CompanyId = companyId,
+                UniqueUserId = userId,
+                UniqueCompanyId = companyId,
                 UserRoleName = UserRoleName.Admin
             });
         }
 
-        private async Task CreateCompanySignInHistoryAsync(Guid userId, Guid companyId)
+        private async Task CreateCompanySignInHistoryAsync(int userId, int companyId)
         {
             await _mediator.Send(new CreateCompanySignInHistoryHandlerRequest
             {

@@ -31,12 +31,12 @@ namespace Wiki.Core.Handlers.Project
                 throw new BadRequestException("No project name specified in request.");
             }
 
-            if (request.UserId == Guid.Empty)
+            if (request.UniqueUserId == Guid.Empty)
             {
                 throw new BadRequestException("No userId specified in request.");
             }
 
-            if (request.CompanyId == Guid.Empty)
+            if (request.UniqueCompanyId == Guid.Empty)
             {
                 throw new BadRequestException("No CompanyId specified in request.");
             }
@@ -44,14 +44,14 @@ namespace Wiki.Core.Handlers.Project
             var project = new Models.Project
             {
                 CreatedOn = DateTimeOffset.UtcNow,
-                CreatedById = request.UserId,
+                CreatedById = request.UniqueUserId,
                 Name = request.Name,
-                CompanyId = request.CompanyId
+                CompanyId = request.UniqueCompanyId
             };
 
             await _dataContext.AddAsync(project, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
-            await CreateUserProjectScopeMapAsync(request.UserId, project.Id);
+            await CreateUserProjectScopeMapAsync(request.UniqueUserId, project.Id);
 
             return Unit.Value;
         }
@@ -60,8 +60,8 @@ namespace Wiki.Core.Handlers.Project
         {
             await _mediator.Send(new CreateUserProjectScopeMapHandlerRequest
             {
-                UserId = userId,
-                ProjectId = projectId,
+                UniqueUserId = userId,
+                UniqueProjectId = projectId,
                 ProjectScopeNames = new ProjectScopeName[]
                 {
                     ProjectScopeName.ReadDocument,

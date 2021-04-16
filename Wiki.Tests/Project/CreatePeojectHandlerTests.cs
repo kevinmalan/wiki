@@ -24,8 +24,8 @@ namespace Wiki.Tests.Project
             var request = new CreateProjectHandlerRequest
             {
                 Name = "Test Project",
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid()
+                UniqueCompanyId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid()
             };
             var handler = new CreatePeojectHandler(db, mediatorMock);
 
@@ -36,9 +36,9 @@ namespace Wiki.Tests.Project
             var project = db.Project.FirstOrDefault();
             project.ShouldNotBeNull();
             project.CreatedOn.ShouldBeGreaterThan(now);
-            project.CreatedById.ShouldBe(request.UserId);
+            project.CreatedById.ShouldBe(request.UniqueUserId);
             project.Name.ShouldBe(request.Name);
-            project.CompanyId.ShouldBe(request.CompanyId);
+            project.CompanyId.ShouldBe(request.UniqueCompanyId);
         }
 
         [Theory]
@@ -54,8 +54,8 @@ namespace Wiki.Tests.Project
             var request = new CreateProjectHandlerRequest
             {
                 Name = projectName,
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid()
+                UniqueCompanyId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid()
             };
 
             // Act
@@ -77,7 +77,7 @@ namespace Wiki.Tests.Project
             var request = new CreateProjectHandlerRequest
             {
                 Name = "Test Project",
-                CompanyId = Guid.NewGuid()
+                UniqueCompanyId = Guid.NewGuid()
             };
 
             // Act
@@ -99,7 +99,7 @@ namespace Wiki.Tests.Project
             var request = new CreateProjectHandlerRequest
             {
                 Name = "Test Project",
-                UserId = Guid.NewGuid()
+                UniqueUserId = Guid.NewGuid()
             };
 
             // Act

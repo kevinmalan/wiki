@@ -6,16 +6,13 @@ namespace Wiki.Core.Models
     {
         public UserRoleCompanyMap()
         {
-            Id = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
-        public Guid CompanyId { get; set; }
-        public Guid UserId { get; set; }
-        public Guid UserRoleId { get; set; }
-
-        public Company Company { get; set; }
-        public User User { get; set; }
-        public UserRole UserRole { get; set; }
+        public int Id { get; set; }
+        public Guid UniqueId { get; set; }
+        public Guid UniqueCompanyId { get; set; }
+        public Guid UniqueUserId { get; set; }
+        public Guid UniqueUserRoleId { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Wiki.Tests.Company
             var request = new CreateCompanyHandlerRequest
             {
                 Name = "Test Company",
-                UserId = Guid.NewGuid()
+                UniqueUserId = Guid.NewGuid()
             };
 
             // Act
@@ -41,7 +41,7 @@ namespace Wiki.Tests.Company
             company.ShouldNotBeNull();
             company.Name.ShouldBe(request.Name);
             company.CreatedOn.ShouldBeGreaterThan(now);
-            company.CreatedById.ShouldBe(request.UserId);
+            company.CreatedById.ShouldBe(request.UniqueUserId);
             result.ShouldNotBeNull();
         }
 
@@ -59,7 +59,7 @@ namespace Wiki.Tests.Company
             var request = new CreateCompanyHandlerRequest
             {
                 Name = companyName,
-                UserId = Guid.NewGuid()
+                UniqueUserId = Guid.NewGuid()
             };
 
             // Act
@@ -82,7 +82,7 @@ namespace Wiki.Tests.Company
             var request = new CreateCompanyHandlerRequest
             {
                 Name = "Test Company",
-                UserId = Guid.Empty
+                UniqueUserId = Guid.Empty
             };
 
             // Act

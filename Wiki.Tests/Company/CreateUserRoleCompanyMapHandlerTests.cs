@@ -22,13 +22,13 @@ namespace Wiki.Tests.Company
             var db = Db();
             var adminRoleId = Guid.NewGuid();
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Admin, Arg.Any<CancellationToken>()).Returns(Task.FromResult(adminRoleId));
+            queryServiceMock.GetUniqueUserRoleIdAsync(UserRoleName.Admin, Arg.Any<CancellationToken>()).Returns(Task.FromResult(adminRoleId));
 
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UniqueCompanyId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid(),
                 UserRoleName = UserRoleName.Admin
             };
 
@@ -38,9 +38,9 @@ namespace Wiki.Tests.Company
             // Assert
             var userRoleCompanyMap = db.UserRoleCompanyMap.FirstOrDefault();
             userRoleCompanyMap.ShouldNotBeNull();
-            userRoleCompanyMap.CompanyId.ShouldBe(request.CompanyId);
-            userRoleCompanyMap.UserId.ShouldBe(request.UserId);
-            userRoleCompanyMap.UserRoleId.ShouldBe(adminRoleId);
+            userRoleCompanyMap.UniqueCompanyId.ShouldBe(request.UniqueCompanyId);
+            userRoleCompanyMap.UniqueUserId.ShouldBe(request.UniqueUserId);
+            userRoleCompanyMap.UniqueUserRoleId.ShouldBe(adminRoleId);
         }
 
         [Fact]
@@ -50,13 +50,13 @@ namespace Wiki.Tests.Company
             var db = Db();
             var memberRoleId = Guid.NewGuid();
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Member, Arg.Any<CancellationToken>()).Returns(Task.FromResult(memberRoleId));
+            queryServiceMock.GetUniqueUserRoleIdAsync(UserRoleName.Member, Arg.Any<CancellationToken>()).Returns(Task.FromResult(memberRoleId));
 
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UniqueCompanyId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid(),
                 UserRoleName = UserRoleName.Member
             };
 
@@ -66,9 +66,9 @@ namespace Wiki.Tests.Company
             // Assert
             var userRoleCompanyMap = db.UserRoleCompanyMap.FirstOrDefault();
             userRoleCompanyMap.ShouldNotBeNull();
-            userRoleCompanyMap.CompanyId.ShouldBe(request.CompanyId);
-            userRoleCompanyMap.UserId.ShouldBe(request.UserId);
-            userRoleCompanyMap.UserRoleId.ShouldBe(memberRoleId);
+            userRoleCompanyMap.UniqueCompanyId.ShouldBe(request.UniqueCompanyId);
+            userRoleCompanyMap.UniqueUserId.ShouldBe(request.UniqueUserId);
+            userRoleCompanyMap.UniqueUserRoleId.ShouldBe(memberRoleId);
         }
 
         [Fact]
@@ -82,8 +82,8 @@ namespace Wiki.Tests.Company
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UniqueCompanyId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid(),
             };
 
             // Act
@@ -106,7 +106,7 @@ namespace Wiki.Tests.Company
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
+                UniqueCompanyId = Guid.NewGuid(),
                 UserRoleName = UserRoleName.Admin
             };
 
@@ -130,7 +130,7 @@ namespace Wiki.Tests.Company
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                UserId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid(),
                 UserRoleName = UserRoleName.Admin
             };
 

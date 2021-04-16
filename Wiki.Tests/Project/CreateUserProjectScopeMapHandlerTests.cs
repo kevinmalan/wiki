@@ -30,8 +30,8 @@ namespace Wiki.Tests.Project
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.DeleteDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(deleteDocumentProjectScopeId));
             var request = new CreateUserProjectScopeMapHandlerRequest
             {
-                ProjectId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UniqueProjectId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid(),
                 ProjectScopeNames = new ProjectScopeName[]
                 {
                     ProjectScopeName.ReadDocument,
@@ -48,11 +48,11 @@ namespace Wiki.Tests.Project
             // Assert
             var userProjectScopeMaps = db.UserProjectScopeMap.ToList();
             userProjectScopeMaps.Count.ShouldBe(4);
-            userProjectScopeMaps.Where(upsm => upsm.ProjectId == request.ProjectId && request.UserId == request.UserId).Count().ShouldBe(4);
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == readDocumentProjectScopeId).ShouldBeTrue();
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == createDocumentPorjectScopeId).ShouldBeTrue();
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == editDocumentProjectScopeId).ShouldBeTrue();
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == deleteDocumentProjectScopeId).ShouldBeTrue();
+            userProjectScopeMaps.Where(upsm => upsm.UniqueProjectId == request.UniqueProjectId && request.UniqueUserId == request.UniqueUserId).Count().ShouldBe(4);
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == readDocumentProjectScopeId).ShouldBeTrue();
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == createDocumentPorjectScopeId).ShouldBeTrue();
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == editDocumentProjectScopeId).ShouldBeTrue();
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == deleteDocumentProjectScopeId).ShouldBeTrue();
         }
 
         [Fact]
@@ -71,8 +71,8 @@ namespace Wiki.Tests.Project
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.DeleteDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(deleteDocumentProjectScopeId));
             var request = new CreateUserProjectScopeMapHandlerRequest
             {
-                ProjectId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UniqueProjectId = Guid.NewGuid(),
+                UniqueUserId = Guid.NewGuid(),
                 ProjectScopeNames = new ProjectScopeName[]
                 {
                     ProjectScopeName.ReadDocument,
@@ -88,11 +88,11 @@ namespace Wiki.Tests.Project
             // Assert
             var userProjectScopeMaps = db.UserProjectScopeMap.ToList();
             userProjectScopeMaps.Count.ShouldBe(3);
-            userProjectScopeMaps.Where(upsm => upsm.ProjectId == request.ProjectId && request.UserId == request.UserId).Count().ShouldBe(3);
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == readDocumentProjectScopeId).ShouldBeTrue();
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == createDocumentPorjectScopeId).ShouldBeTrue();
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == editDocumentProjectScopeId).ShouldBeTrue();
-            userProjectScopeMaps.Any(upsm => upsm.ProjectScopeId == deleteDocumentProjectScopeId).ShouldBeFalse();
+            userProjectScopeMaps.Where(upsm => upsm.UniqueProjectId == request.UniqueProjectId && request.UniqueUserId == request.UniqueUserId).Count().ShouldBe(3);
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == readDocumentProjectScopeId).ShouldBeTrue();
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == createDocumentPorjectScopeId).ShouldBeTrue();
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == editDocumentProjectScopeId).ShouldBeTrue();
+            userProjectScopeMaps.Any(upsm => upsm.UniqueProjectScopeId == deleteDocumentProjectScopeId).ShouldBeFalse();
         }
     }
 }

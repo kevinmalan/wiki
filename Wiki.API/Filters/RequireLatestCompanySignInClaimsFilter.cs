@@ -35,14 +35,14 @@ namespace Wiki.API.Filters
                 return;
             }
 
-            var userId = new Guid(context.HttpContext.User.FindFirst(Claims.UserId).Value);
-            var companyId = new Guid(context.HttpContext.User.FindFirst(Claims.CompanyId).Value);
+            var uniqueUserId = new Guid(context.HttpContext.User.FindFirst(Claims.UniqueUserId).Value);
+            var uniqueCompanyId = new Guid(context.HttpContext.User.FindFirst(Claims.UniqueCompanyId).Value);
 
-            var isValid = await _validationService.HasLatestCompanySignInClaimsAsync(userId, companyId);
+            var isValid = await _validationService.HasLatestCompanySignInClaimsAsync(uniqueUserId, uniqueCompanyId);
 
             if (!isValid)
             {
-                _logger.LogError($"Token Claims for user id: '{userId}' and company id: '{companyId}' does not match the latest company signed into.");
+                _logger.LogError($"Token Claims for user id: '{uniqueUserId}' and company id: '{uniqueCompanyId}' does not match the latest company signed into.");
                 throw new UnAuthorizedException("An outdated bearer token has been passed.");
             }
 
