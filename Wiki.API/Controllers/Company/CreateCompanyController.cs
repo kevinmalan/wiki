@@ -33,7 +33,7 @@ namespace Wiki.API.Controllers
                 new CreateCompanyHandlerRequest
                 {
                     Name = request.Name,
-                    UserId = GetUserId()
+                    UniqueUserId = GetUserId()
                 },
                 cancellationToken
               );

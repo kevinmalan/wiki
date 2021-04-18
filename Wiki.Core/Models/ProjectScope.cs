@@ -7,10 +7,11 @@ namespace Wiki.Core.Models
     {
         public ProjectScope()
         {
-            Id = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+        public Guid UniqueId { get; set; }
         public ProjectScopeName Name { get; set; }
     }
 }

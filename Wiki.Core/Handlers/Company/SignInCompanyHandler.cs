@@ -26,22 +26,25 @@ namespace Wiki.Core.Handlers.Company
 
         public async Task<SignInResponse> Handle(SignInCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
-            var companyRole = await _queryService.GetUserCompanyRoleAsync(request.UserId, request.CompanyId, cancellationToken);
+            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId);
+            var companyId = await _queryService.GetCompanyIdAsync(request.UniqueCompanyId);
+
+            var companyRole = await _queryService.GetUserCompanyRoleAsync(userId, companyId, cancellationToken);
 
             if (companyRole is null)
             {
-                throw new UnauthorizedAccessException($"The user has no connection to this company.");
+                throw new UnauthorizedAccessException($"User with uniqueId '{request.UniqueUserId}' has no connection to company with uniqueId '{request.UniqueCompanyId}'");
             }
 
-            await CreateCompanySignInHistoryAsync(request.UserId, request.CompanyId);
+            await CreateCompanySignInHistoryAsync(userId, companyId);
 
             return new SignInResponse
             {
-                Jwt = _tokenService.GenerateJwt(request.UserId, request.CompanyId, companyRole.Value)
+                Jwt = _tokenService.GenerateJwt(request.UniqueUserId, request.UniqueCompanyId, companyRole.Value)
             };
         }
 
-        private async Task CreateCompanySignInHistoryAsync(Guid userId, Guid companyId)
+        private async Task CreateCompanySignInHistoryAsync(int userId, int companyId)
         {
             await _mediator.Send(new CreateCompanySignInHistoryHandlerRequest
             {

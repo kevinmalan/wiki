@@ -14,29 +14,35 @@ namespace Wiki.Core.Handlers.Project
     {
         private readonly DataContext _dataContext;
         private readonly IMediator _mediator;
+        private readonly IQueryService _queryService;
 
         public CreatePeojectHandler(
             DataContext dataContext,
-            IMediator mediator
+            IMediator mediator,
+            IQueryService queryService
             )
         {
             _dataContext = dataContext;
             _mediator = mediator;
+            _queryService = queryService;
         }
 
         public async Task<Unit> Handle(CreateProjectHandlerRequest request, CancellationToken cancellationToken)
         {
+            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId);
+            var companyId = await _queryService.GetCompanyIdAsync(request.UniqueCompanyId);
+
             if (string.IsNullOrWhiteSpace(request.Name))
             {
                 throw new BadRequestException("No project name specified in request.");
             }
 
-            if (request.UserId == Guid.Empty)
+            if (request.UniqueUserId == Guid.Empty)
             {
                 throw new BadRequestException("No userId specified in request.");
             }
 
-            if (request.CompanyId == Guid.Empty)
+            if (request.UniqueCompanyId == Guid.Empty)
             {
                 throw new BadRequestException("No CompanyId specified in request.");
             }
@@ -44,19 +50,19 @@ namespace Wiki.Core.Handlers.Project
             var project = new Models.Project
             {
                 CreatedOn = DateTimeOffset.UtcNow,
-                CreatedById = request.UserId,
+                CreatedById = userId,
                 Name = request.Name,
-                CompanyId = request.CompanyId
+                CompanyId = companyId
             };
 
             await _dataContext.AddAsync(project, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
-            await CreateUserProjectScopeMapAsync(request.UserId, project.Id);
+            await CreateUserProjectScopeMapAsync(userId, project.Id);
 
             return Unit.Value;
         }
 
-        private async Task CreateUserProjectScopeMapAsync(Guid userId, Guid projectId)
+        private async Task CreateUserProjectScopeMapAsync(int userId, int projectId)
         {
             await _mediator.Send(new CreateUserProjectScopeMapHandlerRequest
             {

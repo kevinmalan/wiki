@@ -1,6 +1,5 @@
 ﻿using NSubstitute;
 using Shouldly;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,10 +18,10 @@ namespace Wiki.Tests.Project
         {
             // Arrange
             var db = Db();
-            var readDocumentProjectScopeId = Guid.NewGuid();
-            var createDocumentPorjectScopeId = Guid.NewGuid();
-            var editDocumentProjectScopeId = Guid.NewGuid();
-            var deleteDocumentProjectScopeId = Guid.NewGuid();
+            var readDocumentProjectScopeId = 1;
+            var createDocumentPorjectScopeId = 2;
+            var editDocumentProjectScopeId = 3;
+            var deleteDocumentProjectScopeId = 4;
             var queryServiceMock = Substitute.For<IQueryService>();
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.ReadDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(readDocumentProjectScopeId));
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.CreateDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(createDocumentPorjectScopeId));
@@ -30,8 +29,8 @@ namespace Wiki.Tests.Project
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.DeleteDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(deleteDocumentProjectScopeId));
             var request = new CreateUserProjectScopeMapHandlerRequest
             {
-                ProjectId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                ProjectId = 13,
+                UserId = 29,
                 ProjectScopeNames = new ProjectScopeName[]
                 {
                     ProjectScopeName.ReadDocument,
@@ -60,10 +59,10 @@ namespace Wiki.Tests.Project
         {
             // Arrange
             var db = Db();
-            var readDocumentProjectScopeId = Guid.NewGuid();
-            var createDocumentPorjectScopeId = Guid.NewGuid();
-            var editDocumentProjectScopeId = Guid.NewGuid();
-            var deleteDocumentProjectScopeId = Guid.NewGuid();
+            var readDocumentProjectScopeId = 1;
+            var createDocumentPorjectScopeId = 2;
+            var editDocumentProjectScopeId = 3;
+            var deleteDocumentProjectScopeId = 4;
             var queryServiceMock = Substitute.For<IQueryService>();
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.ReadDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(readDocumentProjectScopeId));
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.CreateDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(createDocumentPorjectScopeId));
@@ -71,8 +70,8 @@ namespace Wiki.Tests.Project
             queryServiceMock.GetProjectScopeIdAsync(ProjectScopeName.DeleteDocument, Arg.Any<CancellationToken>()).Returns(Task.FromResult(deleteDocumentProjectScopeId));
             var request = new CreateUserProjectScopeMapHandlerRequest
             {
-                ProjectId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                ProjectId = 13,
+                UserId = 29,
                 ProjectScopeNames = new ProjectScopeName[]
                 {
                     ProjectScopeName.ReadDocument,

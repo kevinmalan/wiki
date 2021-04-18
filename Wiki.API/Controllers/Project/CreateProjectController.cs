@@ -34,8 +34,8 @@ namespace Wiki.API.Controllers.Project
                 new CreateProjectHandlerRequest
                 {
                     Name = request.Name,
-                    CompanyId = companyId,
-                    UserId = GetUserId()
+                    UniqueCompanyId = companyId,
+                    UniqueUserId = GetUserId()
                 },
                 cancellationToken
               );

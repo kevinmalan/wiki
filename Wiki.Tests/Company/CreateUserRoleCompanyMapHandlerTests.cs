@@ -20,15 +20,15 @@ namespace Wiki.Tests.Company
         {
             // Arrange
             var db = Db();
-            var adminRoleId = Guid.NewGuid();
+            var adminRoleId = 15;
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Admin, Arg.Any<CancellationToken>()).Returns(Task.FromResult(adminRoleId));
+            queryServiceMock.GetUniqueUserRoleIdAsync(UserRoleName.Admin, Arg.Any<CancellationToken>()).Returns(Task.FromResult(adminRoleId));
 
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                CompanyId = 25,
+                UserId = 60,
                 UserRoleName = UserRoleName.Admin
             };
 
@@ -48,15 +48,15 @@ namespace Wiki.Tests.Company
         {
             // Arrange
             var db = Db();
-            var memberRoleId = Guid.NewGuid();
+            var memberRoleId = 16;
             var queryServiceMock = Substitute.For<IQueryService>();
-            queryServiceMock.GetUserRoleIdAsync(UserRoleName.Member, Arg.Any<CancellationToken>()).Returns(Task.FromResult(memberRoleId));
+            queryServiceMock.GetUniqueUserRoleIdAsync(UserRoleName.Member, Arg.Any<CancellationToken>()).Returns(Task.FromResult(memberRoleId));
 
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                CompanyId = 25,
+                UserId = 60,
                 UserRoleName = UserRoleName.Member
             };
 
@@ -82,8 +82,8 @@ namespace Wiki.Tests.Company
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                CompanyId = 25,
+                UserId = 60,
             };
 
             // Act
@@ -106,7 +106,7 @@ namespace Wiki.Tests.Company
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
+                CompanyId = 25,
                 UserRoleName = UserRoleName.Admin
             };
 
@@ -114,7 +114,7 @@ namespace Wiki.Tests.Company
             var exception = await Should.ThrowAsync<BadRequestException>(async () => await handler.Handle(request, new CancellationToken()));
 
             // Assert
-            exception.Message.ShouldBe("No UserId specified in request.");
+            exception.Message.ShouldBe("No valid UserId specified in request.");
             var company = db.UserRoleCompanyMap.FirstOrDefault();
             company.ShouldBeNull();
         }
@@ -130,7 +130,7 @@ namespace Wiki.Tests.Company
             var handler = new CreateUserRoleCompanyMapHandler(db, queryServiceMock);
             var request = new CreateUserRoleCompanyMapHandlerRequest
             {
-                UserId = Guid.NewGuid(),
+                UserId = 60,
                 UserRoleName = UserRoleName.Admin
             };
 
@@ -138,7 +138,7 @@ namespace Wiki.Tests.Company
             var exception = await Should.ThrowAsync<BadRequestException>(async () => await handler.Handle(request, new CancellationToken()));
 
             // Assert
-            exception.Message.ShouldBe("No CompanyId specified in request.");
+            exception.Message.ShouldBe("No valid CompanyId specified in request.");
             var company = db.UserRoleCompanyMap.FirstOrDefault();
             company.ShouldBeNull();
         }

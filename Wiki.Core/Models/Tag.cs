@@ -6,10 +6,11 @@ namespace Wiki.Core.Models
     {
         public Tag()
         {
-            Id = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+        public Guid UniqueId { get; set; }
         public string Name { get; set; }
     }
 }

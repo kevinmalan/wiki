@@ -41,7 +41,7 @@ namespace Wiki.Core.Services.Handlers
 
             return new SignInResponse
             {
-                Jwt = _authService.GenerateJwt(userCreated.UserId)
+                Jwt = _authService.GenerateJwt(userCreated.UniqueUserId)
             };
         }
 
@@ -62,7 +62,7 @@ namespace Wiki.Core.Services.Handlers
 
             return new UserCreatedResponse
             {
-                UserId = user.Id
+                UniqueUserId = user.UniqueId
             };
         }
     }

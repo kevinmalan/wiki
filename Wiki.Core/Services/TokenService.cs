@@ -19,22 +19,22 @@ namespace Wiki.Core.Services
             _configuration = configuration;
         }
 
-        public string GenerateJwt(Guid userId)
+        public string GenerateJwt(Guid uniqueUserId)
         {
             var token = GetToken(new[]
             {
-                new Claim(Claims.UserId, userId.ToString()),
+                new Claim(Claims.UniqueUserId, uniqueUserId.ToString()),
             });
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string GenerateJwt(Guid userId, Guid companyId, UserRoleName role)
+        public string GenerateJwt(Guid uniqueUserId, Guid uniqueCompanyId, UserRoleName role)
         {
             var token = GetToken(new[]
             {
-                new Claim(Claims.UserId, userId.ToString()),
-                new Claim(Claims.CompanyId, companyId.ToString()),
+                new Claim(Claims.UniqueUserId, uniqueUserId.ToString()),
+                new Claim(Claims.UniqueCompanyId, uniqueCompanyId.ToString()),
                 new Claim(Claims.Role, role.ToString())
             });
 

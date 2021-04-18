@@ -5,8 +5,8 @@ namespace Wiki.Core.Services.Contracts
 {
     public interface ITokenService
     {
-        string GenerateJwt(Guid userId);
+        string GenerateJwt(Guid uniqueUserId);
 
-        string GenerateJwt(Guid userId, Guid companyId, UserRoleName role);
+        string GenerateJwt(Guid uniqueUserId, Guid uniqueCompanyId, UserRoleName role);
     }
 }

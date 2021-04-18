@@ -1,8 +1,9 @@
 ﻿CREATE TABLE [dbo].[CompanySignInHistory]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-	[UserId] UNIQUEIDENTIFIER NOT NULL,
-	[CompanyId] UNIQUEIDENTIFIER NOT NULL,
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[UniqueId] UNIQUEIDENTIFIER NOT NULL,
+	[UserId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[User]([Id]),
+	[CompanyId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Company]([Id]),
 	[CreatedOn] DATETIMEOFFSET NOT NULL
 );
 GO
@@ -11,3 +12,6 @@ ON [dbo].[CompanySignInHistory]([UserId])
 GO
 CREATE INDEX IX_CompanyId
 ON [dbo].[CompanySignInHistory]([CompanyId])
+GO
+CREATE INDEX IX_UniqueId
+ON [dbo].[CompanySignInHistory] ([UniqueId])

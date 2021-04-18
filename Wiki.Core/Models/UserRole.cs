@@ -8,10 +8,11 @@ namespace Wiki.Core.Models
     {
         public UserRole()
         {
-            Id = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+        public Guid UniqueId { get; set; }
         public UserRoleName Name { get; set; }
     }
 }
