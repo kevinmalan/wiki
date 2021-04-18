@@ -55,7 +55,7 @@ namespace Wiki.Core.Handlers.Project
                 CompanyId = companyId
             };
 
-            await _dataContext.AddAsync(project, cancellationToken);
+            await _dataContext.Project.AddAsync(project, cancellationToken);
             await _dataContext.SaveChangesAsync(cancellationToken);
             await CreateUserProjectScopeMapAsync(userId, project.Id);
 

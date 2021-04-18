@@ -16,7 +16,9 @@ namespace Wiki.Core.Models
         public string Title { get; set; }
         public Uri ContentUri { get; set; }
         public int ProjectId { get; set; }
+        public int CreatedById { get; set; }
 
+        public User CreatedBy { get; set; }
         public Project Project { get; set; }
     }
 }
