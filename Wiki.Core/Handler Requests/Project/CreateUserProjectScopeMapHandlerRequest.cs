@@ -6,8 +6,8 @@ namespace Wiki.Core.Handler_Requests.Project
 {
     public class CreateUserProjectScopeMapHandlerRequest : IRequest
     {
-        public Guid UniqueUserId { get; set; }
-        public Guid UniqueProjectId { get; set; }
+        public int UserId { get; set; }
+        public int ProjectId { get; set; }
         public ProjectScopeName[] ProjectScopeNames { get; set; }
     }
 }

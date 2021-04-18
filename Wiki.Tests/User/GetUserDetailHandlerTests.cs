@@ -16,12 +16,12 @@ namespace Wiki.Tests.User
         public async Task GetUserDetail_WhenUserExists_ShouldReturnUserResponse()
         {
             // Arrange
-            var userId = Guid.NewGuid();
+            var uniqueUserId = Guid.NewGuid();
             var userName = "Test username";
             var queryServiceMock = Substitute.For<IQueryService>();
             queryServiceMock.GetUserAsync(userName, Arg.Any<CancellationToken>()).Returns(Task.FromResult(new Core.Models.User
             {
-                Id = userId,
+                UniqueId = uniqueUserId,
                 UserName = userName
             }));
             var request = new GetUserDetailHandlerRequest
@@ -35,7 +35,7 @@ namespace Wiki.Tests.User
 
             // Assert
             userResponse.ShouldNotBeNull();
-            userResponse.UserId.ShouldBe(userId);
+            userResponse.UniqueUserId.ShouldBe(uniqueUserId);
             userResponse.UserName.ShouldBe(userName);
         }
 
@@ -43,7 +43,6 @@ namespace Wiki.Tests.User
         public async Task GetUserDetail_WhenUserDoesNotExists_ShouldReturnNull()
         {
             // Arrange
-            var userId = Guid.NewGuid();
             var userName = "Test username";
             var queryServiceMock = Substitute.For<IQueryService>();
             var request = new GetUserDetailHandlerRequest

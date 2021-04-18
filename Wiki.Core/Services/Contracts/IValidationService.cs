@@ -8,6 +8,6 @@ namespace Wiki.Core.Services.Contracts
 {
     public interface IValidationService
     {
-        Task<bool> HasLatestCompanySignInClaimsAsync(Guid uniqueUserId, Guid uniqueCompanyId);
+        Task<bool> HasLatestCompanySignInClaimsAsync(int userId, int companyId);
     }
 }

@@ -26,14 +26,17 @@ namespace Wiki.Core.Handlers.Company
 
         public async Task<SignInResponse> Handle(SignInCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
-            var companyRole = await _queryService.GetUserCompanyRoleAsync(userId, request.UniqueCompanyId, cancellationToken);
+            var userId = await _queryService.GetUserIdAsync(request.UniqueUserId);
+            var companyId = await _queryService.GetCompanyIdAsync(request.UniqueCompanyId);
+
+            var companyRole = await _queryService.GetUserCompanyRoleAsync(userId, companyId, cancellationToken);
 
             if (companyRole is null)
             {
-                throw new UnauthorizedAccessException($"The user has no connection to this company.");
+                throw new UnauthorizedAccessException($"User with uniqueId '{request.UniqueUserId}' has no connection to company with uniqueId '{request.UniqueCompanyId}'");
             }
 
-            await CreateCompanySignInHistoryAsync(request.UniqueUserId, request.UniqueCompanyId);
+            await CreateCompanySignInHistoryAsync(userId, companyId);
 
             return new SignInResponse
             {
@@ -41,7 +44,7 @@ namespace Wiki.Core.Handlers.Company
             };
         }
 
-        private async Task CreateCompanySignInHistoryAsync(Guid userId, Guid companyId)
+        private async Task CreateCompanySignInHistoryAsync(int userId, int companyId)
         {
             await _mediator.Send(new CreateCompanySignInHistoryHandlerRequest
             {

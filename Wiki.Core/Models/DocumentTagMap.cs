@@ -11,8 +11,8 @@ namespace Wiki.Core.Models
 
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
-        public int UniqueDocumentId { get; set; }
-        public int UniqueTagId { get; set; }
+        public int DocumentId { get; set; }
+        public int TagId { get; set; }
 
         public Document Document { get; set; }
         public Tag Tag { get; set; }

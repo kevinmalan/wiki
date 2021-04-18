@@ -30,14 +30,14 @@ namespace Wiki.Core.Handlers.Company
                 throw new BadRequestException("No UserRole specified in request.");
             }
 
-            if (request.UniqueCompanyId == Guid.Empty)
+            if (request.CompanyId < 1)
             {
-                throw new BadRequestException("No Unique CompanyId specified in request.");
+                throw new BadRequestException("No valid CompanyId specified in request.");
             }
 
-            if (request.UniqueUserId == Guid.Empty)
+            if (request.UserId < 1)
             {
-                throw new BadRequestException("No Unique UserId specified in request.");
+                throw new BadRequestException("No valid UserId specified in request.");
             }
 
             var roleId = await _queryService.GetUniqueUserRoleIdAsync(request.UserRoleName, cancellationToken);
@@ -45,9 +45,9 @@ namespace Wiki.Core.Handlers.Company
             await _dataContext.UserRoleCompanyMap.AddAsync(
                 new UserRoleCompanyMap
                 {
-                    UniqueCompanyId = request.UniqueCompanyId,
-                    UniqueUserId = request.UniqueUserId,
-                    UniqueUserRoleId = roleId
+                    CompanyId = request.CompanyId,
+                    UserId = request.UserId,
+                    UserRoleId = roleId
                 },
                 cancellationToken
             );

@@ -11,8 +11,12 @@ namespace Wiki.Core.Models
 
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
-        public Guid UniqueCompanyId { get; set; }
-        public Guid UniqueUserId { get; set; }
-        public Guid UniqueUserRoleId { get; set; }
+        public int CompanyId { get; set; }
+        public int UserId { get; set; }
+        public int UserRoleId { get; set; }
+
+        public Company Company { get; set; }
+        public User User { get; set; }
+        public UserRole UserRole { get; set; }
     }
 }

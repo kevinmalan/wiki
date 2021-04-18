@@ -11,8 +11,12 @@ namespace Wiki.Core.Models
 
         public int Id { get; set; }
         public Guid UniqueId { get; set; }
-        public Guid UniqueUserId { get; set; }
-        public Guid UniqueProjectId { get; set; }
-        public Guid UniqueProjectScopeId { get; set; }
+        public int UserId { get; set; }
+        public int ProjectId { get; set; }
+        public int ProjectScopeId { get; set; }
+
+        public User User { get; set; }
+        public Project Project { get; set; }
+        public ProjectScope ProjectScope { get; set; }
     }
 }

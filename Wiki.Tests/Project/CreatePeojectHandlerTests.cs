@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Wiki.Common.Exceptions;
 using Wiki.Core.Handler_Requests.Project;
 using Wiki.Core.Handlers.Project;
+using Wiki.Core.Services.Contracts;
 using Xunit;
 
 namespace Wiki.Tests.Project
@@ -20,14 +21,20 @@ namespace Wiki.Tests.Project
             // Arrange
             var db = Db();
             var now = DateTimeOffset.UtcNow;
+            var userId = 17;
+            var companyId = 29;
             var mediatorMock = Substitute.For<IMediator>();
+            var queryServiceMock = Substitute.For<IQueryService>();
+            queryServiceMock.GetUserIdAsync(Arg.Any<Guid>()).Returns(Task.FromResult(userId));
+            queryServiceMock.GetCompanyIdAsync(Arg.Any<Guid>()).Returns(Task.FromResult(companyId));
+
             var request = new CreateProjectHandlerRequest
             {
                 Name = "Test Project",
                 UniqueCompanyId = Guid.NewGuid(),
                 UniqueUserId = Guid.NewGuid()
             };
-            var handler = new CreatePeojectHandler(db, mediatorMock);
+            var handler = new CreatePeojectHandler(db, mediatorMock, queryServiceMock);
 
             // Act
             await handler.Handle(request, new CancellationToken());
@@ -36,9 +43,9 @@ namespace Wiki.Tests.Project
             var project = db.Project.FirstOrDefault();
             project.ShouldNotBeNull();
             project.CreatedOn.ShouldBeGreaterThan(now);
-            project.CreatedById.ShouldBe(request.UniqueUserId);
+            project.CreatedById.ShouldBe(userId);
             project.Name.ShouldBe(request.Name);
-            project.CompanyId.ShouldBe(request.UniqueCompanyId);
+            project.CompanyId.ShouldBe(companyId);
         }
 
         [Theory]
@@ -50,7 +57,8 @@ namespace Wiki.Tests.Project
             // Arrange
             var db = Db();
             var mediatorMock = Substitute.For<IMediator>();
-            var handler = new CreatePeojectHandler(db, mediatorMock);
+            var queryServiceMock = Substitute.For<IQueryService>();
+            var handler = new CreatePeojectHandler(db, mediatorMock, queryServiceMock);
             var request = new CreateProjectHandlerRequest
             {
                 Name = projectName,
@@ -73,7 +81,8 @@ namespace Wiki.Tests.Project
             // Arrange
             var db = Db();
             var mediatorMock = Substitute.For<IMediator>();
-            var handler = new CreatePeojectHandler(db, mediatorMock);
+            var queryServiceMock = Substitute.For<IQueryService>();
+            var handler = new CreatePeojectHandler(db, mediatorMock, queryServiceMock);
             var request = new CreateProjectHandlerRequest
             {
                 Name = "Test Project",
@@ -95,7 +104,8 @@ namespace Wiki.Tests.Project
             // Arrange
             var db = Db();
             var mediatorMock = Substitute.For<IMediator>();
-            var handler = new CreatePeojectHandler(db, mediatorMock);
+            var queryServiceMock = Substitute.For<IQueryService>();
+            var handler = new CreatePeojectHandler(db, mediatorMock, queryServiceMock);
             var request = new CreateProjectHandlerRequest
             {
                 Name = "Test Project",

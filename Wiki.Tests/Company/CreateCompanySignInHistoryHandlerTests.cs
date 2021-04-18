@@ -20,8 +20,8 @@ namespace Wiki.Tests.Company
             var handler = new CreateCompanySignInHistoryHandler(db);
             var request = new CreateCompanySignInHistoryHandlerRequest
             {
-                CompanyId = Guid.NewGuid(),
-                UserId = Guid.NewGuid()
+                CompanyId = 50,
+                UserId = 900
             };
 
             // Act

@@ -6,8 +6,8 @@ namespace Wiki.Core.Handler_Requests.Company
 {
     public class CreateUserRoleCompanyMapHandlerRequest : IRequest
     {
-        public Guid UniqueUserId { get; set; }
-        public Guid UniqueCompanyId { get; set; }
+        public int UserId { get; set; }
+        public int CompanyId { get; set; }
         public UserRoleName UserRoleName { get; set; }
     }
 }

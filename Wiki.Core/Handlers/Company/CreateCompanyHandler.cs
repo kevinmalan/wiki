@@ -74,8 +74,8 @@ namespace Wiki.Core.Handlers.Company
         {
             await _mediator.Send(new CreateUserRoleCompanyMapHandlerRequest
             {
-                UniqueUserId = userId,
-                UniqueCompanyId = companyId,
+                UserId = userId,
+                CompanyId = companyId,
                 UserRoleName = UserRoleName.Admin
             });
         }

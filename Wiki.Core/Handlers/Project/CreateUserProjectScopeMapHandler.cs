@@ -29,9 +29,9 @@ namespace Wiki.Core.Handlers.Project
 
                 await _dataContext.UserProjectScopeMap.AddAsync(new UserProjectScopeMap
                 {
-                    UniqueUserId = request.UniqueUserId,
-                    UniqueProjectId = request.UniqueProjectId,
-                    UniqueProjectScopeId = projectScopeId
+                    UserId = request.UserId,
+                    ProjectId = request.ProjectId,
+                    ProjectScopeId = projectScopeId
                 }, cancellationToken);
             }
 

@@ -24,9 +24,13 @@ namespace Wiki.Tests.Company
             // Arrange
             var db = Db();
             var now = DateTimeOffset.UtcNow;
+            var userId = 17;
             var mediatorMock = Substitute.For<IMediator>();
             var tokenMock = Substitute.For<ITokenService>();
-            var handler = new CreateCompanyHandler(db, mediatorMock, tokenMock);
+            var queryServiceMock = Substitute.For<IQueryService>();
+            queryServiceMock.GetUserIdAsync(Arg.Any<Guid>()).Returns(Task.FromResult(userId));
+
+            var handler = new CreateCompanyHandler(db, mediatorMock, tokenMock, queryServiceMock);
             var request = new CreateCompanyHandlerRequest
             {
                 Name = "Test Company",
@@ -41,7 +45,7 @@ namespace Wiki.Tests.Company
             company.ShouldNotBeNull();
             company.Name.ShouldBe(request.Name);
             company.CreatedOn.ShouldBeGreaterThan(now);
-            company.CreatedById.ShouldBe(request.UniqueUserId);
+            company.CreatedById.ShouldBe(userId);
             result.ShouldNotBeNull();
         }
 
@@ -55,7 +59,8 @@ namespace Wiki.Tests.Company
             var db = Db();
             var mediatorMock = Substitute.For<IMediator>();
             var tokenMock = Substitute.For<ITokenService>();
-            var handler = new CreateCompanyHandler(db, mediatorMock, tokenMock);
+            var queryServiceMock = Substitute.For<IQueryService>();
+            var handler = new CreateCompanyHandler(db, mediatorMock, tokenMock, queryServiceMock);
             var request = new CreateCompanyHandlerRequest
             {
                 Name = companyName,
@@ -78,7 +83,8 @@ namespace Wiki.Tests.Company
             var db = Db();
             var mediatorMock = Substitute.For<IMediator>();
             var tokenMock = Substitute.For<ITokenService>();
-            var handler = new CreateCompanyHandler(db, mediatorMock, tokenMock);
+            var queryServiceMock = Substitute.For<IQueryService>();
+            var handler = new CreateCompanyHandler(db, mediatorMock, tokenMock, queryServiceMock);
             var request = new CreateCompanyHandlerRequest
             {
                 Name = "Test Company",
@@ -89,7 +95,7 @@ namespace Wiki.Tests.Company
             var exception = await Should.ThrowAsync<BadRequestException>(async () => await handler.Handle(request, new CancellationToken()));
 
             // Assert
-            exception.Message.ShouldBe("No userId specified in request.");
+            exception.Message.ShouldBe("No UniqueUserId specified in request.");
             var company = db.Company.FirstOrDefault();
             company.ShouldBeNull();
         }

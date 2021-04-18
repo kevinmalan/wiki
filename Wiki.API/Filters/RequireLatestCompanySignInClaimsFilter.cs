@@ -14,13 +14,16 @@ namespace Wiki.API.Filters
     public class RequireLatestCompanySignInClaimsFilter : IAsyncActionFilter
     {
         private readonly IValidationService _validationService;
+        private readonly IQueryService _queryService;
         private readonly ILogger<RequireLatestCompanySignInClaimsFilter> _logger;
 
         public RequireLatestCompanySignInClaimsFilter(
             IValidationService validationService,
+            IQueryService queryService,
             ILogger<RequireLatestCompanySignInClaimsFilter> logger)
         {
             _validationService = validationService;
+            _queryService = queryService;
             _logger = logger;
         }
 
@@ -37,8 +40,10 @@ namespace Wiki.API.Filters
 
             var uniqueUserId = new Guid(context.HttpContext.User.FindFirst(Claims.UniqueUserId).Value);
             var uniqueCompanyId = new Guid(context.HttpContext.User.FindFirst(Claims.UniqueCompanyId).Value);
+            var userId = await _queryService.GetUserIdAsync(uniqueUserId);
+            var companyId = await _queryService.GetCompanyIdAsync(uniqueCompanyId);
 
-            var isValid = await _validationService.HasLatestCompanySignInClaimsAsync(uniqueUserId, uniqueCompanyId);
+            var isValid = await _validationService.HasLatestCompanySignInClaimsAsync(userId, companyId);
 
             if (!isValid)
             {

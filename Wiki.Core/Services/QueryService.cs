@@ -26,11 +26,12 @@ namespace Wiki.Core.Services
                 .FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
         }
 
-        private async Task<int> GetUserIdAsync(Guid uniqueUserId)
+        public async Task<int> GetUserIdAsync(Guid uniqueUserId)
         {
             var user = await _dataContext.User
                 .Where(u => u.UniqueId == uniqueUserId)
                 .Select(u => new { u.Id })
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             if (user is null)
@@ -41,34 +42,50 @@ namespace Wiki.Core.Services
             return user.Id;
         }
 
-        public async Task<Guid> GetUniqueUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken)
+        public async Task<int> GetCompanyIdAsync(Guid uniqueCompanyId)
+        {
+            var user = await _dataContext.Company
+                .Where(c => c.UniqueId == uniqueCompanyId)
+                .Select(c => new { c.Id })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (user is null)
+            {
+                throw new NotFoundException($"No company found with uniqueid '{uniqueCompanyId}'");
+            }
+
+            return user.Id;
+        }
+
+        public async Task<int> GetUniqueUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken)
         {
             return await _dataContext.UserRole
                 .Where(r => r.Name == roleName)
-                .Select(cr => cr.UniqueId)
+                .Select(cr => cr.Id)
                 .FirstAsync(cancellationToken);
         }
 
-        public async Task<UserRoleName?> GetUserCompanyRoleAsync(Guid uniqueUserId, Guid uniqueCompanyId, CancellationToken cancellationToken)
+        public async Task<UserRoleName?> GetUserCompanyRoleAsync(int userId, int companyId, CancellationToken cancellationToken)
         {
             var userCompanyRoleMap = await _dataContext.UserRoleCompanyMap
-                .Where(x => x.UniqueUserId == uniqueUserId && x.UniqueCompanyId == uniqueCompanyId)
-                .Select(x => new { x.UniqueUserRoleId })
+                .Where(x => x.UserId == userId && x.CompanyId == companyId)
+                .Select(x => new { x.UserRoleId })
                 .FirstOrDefaultAsync(cancellationToken);
 
             var userRoleName = await _dataContext.UserRole
-                .Where(x => x.UniqueId == userCompanyRoleMap.UniqueUserRoleId)
+                .Where(x => x.Id == userCompanyRoleMap.UserRoleId)
                 .Select(x => x.Name)
                 .FirstOrDefaultAsync();
 
             return userRoleName;
         }
 
-        public async Task<Guid> GetProjectScopeIdAsync(ProjectScopeName scope, CancellationToken cancellationToken)
+        public async Task<int> GetProjectScopeIdAsync(ProjectScopeName scope, CancellationToken cancellationToken)
         {
             return await _dataContext.ProjectScope
                 .Where(ps => ps.Name == scope)
-                .Select(ps => ps.UniqueId)
+                .Select(ps => ps.Id)
                 .FirstAsync(cancellationToken);
         }
     }

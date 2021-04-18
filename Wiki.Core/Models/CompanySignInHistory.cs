@@ -14,5 +14,8 @@ namespace Wiki.Core.Models
         public int UserId { get; set; }
         public int CompanyId { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
+
+        public User User { get; set; }
+        public Company Company { get; set; }
     }
 }
