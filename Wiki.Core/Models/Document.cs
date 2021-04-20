@@ -14,7 +14,8 @@ namespace Wiki.Core.Models
         public string Name { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
         public string Title { get; set; }
-        public Uri ContentUri { get; set; }
+        public string Content { get; set; }
+        public Uri MediaUri { get; set; }
         public int ProjectId { get; set; }
         public int CreatedById { get; set; }
 

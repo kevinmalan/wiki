@@ -5,7 +5,8 @@
 	[Name] NVARCHAR(100) NOT NULL,
 	[CreatedOn] DATETIMEOFFSET NOT NULL,
 	[Title] NVARCHAR(255) NULL,
-	[ContentUri] NVARCHAR(1000) NULL,
+	[Content] NVARCHAR(MAX) NULL,
+	[MediaUri] NVARCHAR(1000) NULL,
 	[ProjectId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Project] ([Id]),
 	[CreatedById] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[User]([Id])
 );

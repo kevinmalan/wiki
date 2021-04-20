@@ -42,6 +42,22 @@ namespace Wiki.Core.Services
             return user.Id;
         }
 
+        public async Task<int> GetProjectIdAsync(Guid uniqueProjectId)
+        {
+            var project = await _dataContext.Project
+                .Where(p => p.UniqueId == uniqueProjectId)
+                .Select(p => new { p.Id })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (project is null)
+            {
+                throw new NotFoundException($"No project found with uniqueid '{uniqueProjectId}'");
+            }
+
+            return project.Id;
+        }
+
         public async Task<int> GetCompanyIdAsync(Guid uniqueCompanyId)
         {
             var user = await _dataContext.Company

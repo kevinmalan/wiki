@@ -12,6 +12,8 @@ namespace Wiki.Core.Services.Contracts
 
         Task<int> GetUserIdAsync(Guid uniqueUserId);
 
+        Task<int> GetProjectIdAsync(Guid uniqueProjectId);
+
         Task<int> GetCompanyIdAsync(Guid uniqueCompanyId);
 
         Task<int> GetUniqueUserRoleIdAsync(UserRoleName roleName, CancellationToken cancellationToken);
