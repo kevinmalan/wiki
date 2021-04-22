@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using System;
+using Wiki.Common.Responses.Document;
 
 namespace Wiki.Core.Handler_Requests.Document
 {
-    public class CreateDocumentHandlerRequest : IRequest<Guid>
+    public class CreateDocumentHandlerRequest : IRequest<DocumentCreatedResponse>
     {
         public string Name { get; set; }
         public string Title { get; set; }

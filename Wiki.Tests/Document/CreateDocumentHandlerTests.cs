@@ -40,7 +40,7 @@ namespace Wiki.Tests.Document
             // Assert
             var doc = db.Document.FirstOrDefault();
             doc.ShouldNotBeNull();
-            doc.UniqueId.ShouldBe(result);
+            doc.UniqueId.ShouldBe(result.UniqueId);
             doc.Title.ShouldBe(request.Title);
             doc.Name.ShouldBe(request.Name);
             doc.Content.ShouldBe(request.Content);

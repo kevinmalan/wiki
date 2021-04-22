@@ -12,7 +12,7 @@ using Wiki.Core.Services.Contracts;
 
 namespace Wiki.Core.Handlers.Company
 {
-    public class CreateCompanyHandler : IRequestHandler<CreateCompanyHandlerRequest, SignInResponse>
+    public class CreateCompanyHandler : IRequestHandler<CreateCompanyHandlerRequest, CompanySignInResponse>
     {
         private readonly DataContext _dataContext;
         private readonly IMediator _mediator;
@@ -31,7 +31,7 @@ namespace Wiki.Core.Handlers.Company
             _queryService = queryService;
         }
 
-        public async Task<SignInResponse> Handle(CreateCompanyHandlerRequest request, CancellationToken cancellationToken)
+        public async Task<CompanySignInResponse> Handle(CreateCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(request.Name))
             {
@@ -49,8 +49,9 @@ namespace Wiki.Core.Handlers.Company
             await CreateUserRoleCompanyMapAsync(userId, company.Id);
             await CreateCompanySignInHistoryAsync(userId, company.Id);
 
-            return new SignInResponse
+            return new CompanySignInResponse
             {
+                UniqueId = company.UniqueId,
                 Jwt = _tokenService.GenerateJwt(request.UniqueUserId, company.UniqueId, UserRoleName.Admin)
             };
         }

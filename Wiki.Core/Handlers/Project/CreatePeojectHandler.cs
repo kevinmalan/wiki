@@ -4,13 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Wiki.Common.Enums;
 using Wiki.Common.Exceptions;
+using Wiki.Common.Responses.Project;
 using Wiki.Core.Contexts;
 using Wiki.Core.Handler_Requests.Project;
 using Wiki.Core.Services.Contracts;
 
 namespace Wiki.Core.Handlers.Project
 {
-    public class CreatePeojectHandler : IRequestHandler<CreateProjectHandlerRequest>
+    public class CreatePeojectHandler : IRequestHandler<CreateProjectHandlerRequest, CreateProjectResponse>
     {
         private readonly DataContext _dataContext;
         private readonly IMediator _mediator;
@@ -27,7 +28,7 @@ namespace Wiki.Core.Handlers.Project
             _queryService = queryService;
         }
 
-        public async Task<Unit> Handle(CreateProjectHandlerRequest request, CancellationToken cancellationToken)
+        public async Task<CreateProjectResponse> Handle(CreateProjectHandlerRequest request, CancellationToken cancellationToken)
         {
             var userId = await _queryService.GetUserIdAsync(request.UniqueUserId);
             var companyId = await _queryService.GetCompanyIdAsync(request.UniqueCompanyId);
@@ -59,7 +60,10 @@ namespace Wiki.Core.Handlers.Project
             await _dataContext.SaveChangesAsync(cancellationToken);
             await CreateUserProjectScopeMapAsync(userId, project.Id);
 
-            return Unit.Value;
+            return new CreateProjectResponse
+            {
+                UniqueId = project.UniqueId
+            };
         }
 
         private async Task CreateUserProjectScopeMapAsync(int userId, int projectId)

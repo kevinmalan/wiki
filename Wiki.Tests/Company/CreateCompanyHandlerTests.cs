@@ -43,6 +43,7 @@ namespace Wiki.Tests.Company
             // Assert
             var company = db.Company.FirstOrDefault();
             company.ShouldNotBeNull();
+            company.UniqueId.ShouldBe((Guid)result.UniqueId);
             company.Name.ShouldBe(request.Name);
             company.CreatedOn.ShouldBeGreaterThan(now);
             company.CreatedById.ShouldBe(userId);

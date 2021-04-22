@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using System;
+using Wiki.Common.Responses.Project;
 
 namespace Wiki.Core.Handler_Requests.Project
 {
-    public class CreateProjectHandlerRequest : IRequest
+    public class CreateProjectHandlerRequest : IRequest<CreateProjectResponse>
     {
         public string Name { get; set; }
         public Guid UniqueCompanyId { get; set; }

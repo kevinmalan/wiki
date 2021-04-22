@@ -30,7 +30,7 @@ namespace Wiki.API.Controllers.Project
             [FromBody] CreateProjectRequest request,
             CancellationToken cancellationToken)
         {
-            await _mediator.Send(
+            var response = await _mediator.Send(
                 new CreateProjectHandlerRequest
                 {
                     Name = request.Name,
@@ -40,7 +40,7 @@ namespace Wiki.API.Controllers.Project
                 cancellationToken
               );
 
-            return OkEmptyApiResponse();
+            return OkApiResponse(response);
         }
     }
 }

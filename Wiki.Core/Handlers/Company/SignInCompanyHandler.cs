@@ -8,7 +8,7 @@ using Wiki.Core.Services.Contracts;
 
 namespace Wiki.Core.Handlers.Company
 {
-    public class SignInCompanyHandler : IRequestHandler<SignInCompanyHandlerRequest, SignInResponse>
+    public class SignInCompanyHandler : IRequestHandler<SignInCompanyHandlerRequest, CompanySignInResponse>
     {
         private readonly IMediator _mediator;
         private readonly IQueryService _queryService;
@@ -24,7 +24,7 @@ namespace Wiki.Core.Handlers.Company
             _tokenService = tokenService;
         }
 
-        public async Task<SignInResponse> Handle(SignInCompanyHandlerRequest request, CancellationToken cancellationToken)
+        public async Task<CompanySignInResponse> Handle(SignInCompanyHandlerRequest request, CancellationToken cancellationToken)
         {
             var userId = await _queryService.GetUserIdAsync(request.UniqueUserId);
             var companyId = await _queryService.GetCompanyIdAsync(request.UniqueCompanyId);
@@ -38,7 +38,7 @@ namespace Wiki.Core.Handlers.Company
 
             await CreateCompanySignInHistoryAsync(userId, companyId);
 
-            return new SignInResponse
+            return new CompanySignInResponse
             {
                 Jwt = _tokenService.GenerateJwt(request.UniqueUserId, request.UniqueCompanyId, companyRole.Value)
             };

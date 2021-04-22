@@ -37,11 +37,12 @@ namespace Wiki.Tests.Project
             var handler = new CreatePeojectHandler(db, mediatorMock, queryServiceMock);
 
             // Act
-            await handler.Handle(request, new CancellationToken());
+            var result = await handler.Handle(request, new CancellationToken());
 
             // Assert
             var project = db.Project.FirstOrDefault();
             project.ShouldNotBeNull();
+            project.UniqueId.ShouldBe(result.UniqueId);
             project.CreatedOn.ShouldBeGreaterThan(now);
             project.CreatedById.ShouldBe(userId);
             project.Name.ShouldBe(request.Name);

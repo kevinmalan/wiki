@@ -26,7 +26,7 @@ namespace Wiki.API.Controllers.Document
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateDocumentAsync([FromRoute] Guid projectId, [FromBody] CreateDocumentRequest request)
         {
-            var docId = await _mediator.Send(new CreateDocumentHandlerRequest
+            var response = await _mediator.Send(new CreateDocumentHandlerRequest
             {
                 Name = request.Name,
                 Title = request.Title,
@@ -35,10 +35,7 @@ namespace Wiki.API.Controllers.Document
                 UniqueUserId = GetUserId()
             });
 
-            return OkApiResponse(new DocumentCreatedResponse
-            {
-                UniqueId = docId
-            });
+            return OkApiResponse(response);
         }
     }
 }

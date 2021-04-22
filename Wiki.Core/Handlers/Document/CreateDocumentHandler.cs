@@ -2,13 +2,14 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Wiki.Common.Responses.Document;
 using Wiki.Core.Contexts;
 using Wiki.Core.Handler_Requests.Document;
 using Wiki.Core.Services.Contracts;
 
 namespace Wiki.Core.Handlers.Document
 {
-    public class CreateDocumentHandler : IRequestHandler<CreateDocumentHandlerRequest, Guid>
+    public class CreateDocumentHandler : IRequestHandler<CreateDocumentHandlerRequest, DocumentCreatedResponse>
     {
         private readonly IQueryService _queryService;
         private readonly DataContext _dataContext;
@@ -22,7 +23,7 @@ namespace Wiki.Core.Handlers.Document
             _dataContext = dataContext;
         }
 
-        public async Task<Guid> Handle(CreateDocumentHandlerRequest request, CancellationToken cancellationToken)
+        public async Task<DocumentCreatedResponse> Handle(CreateDocumentHandlerRequest request, CancellationToken cancellationToken)
         {
             var userId = await _queryService.GetUserIdAsync(request.UniqueUserId);
             var projectId = await _queryService.GetProjectIdAsync(request.UniqueProjectId);
@@ -41,7 +42,10 @@ namespace Wiki.Core.Handlers.Document
 
             await _dataContext.SaveChangesAsync(cancellationToken);
 
-            return doc.UniqueId;
+            return new DocumentCreatedResponse
+            {
+                UniqueId = doc.UniqueId
+            };
         }
     }
 }
