@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Wiki.Common.Exceptions;
+using Wiki.API.Attributes;
 
 namespace Wiki.API.Controllers
 {
@@ -17,6 +18,7 @@ namespace Wiki.API.Controllers
             _logger = logger;
         }
 
+        [CompanySignInNotRequired]
         [HttpGet(Routes.Health.Get)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         public IActionResult Get()
