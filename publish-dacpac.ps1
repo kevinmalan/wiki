@@ -1,8 +1,8 @@
 $SourceFile = "./Wiki.SQL/bin/Debug/Wiki.SQL.dacpac"
 $Database = "wikiDb"
-$SourceServer = "localhost"
+$SourceServer = "localhost,5433"
 $UserId = "sa"
-$Password = 'DevDbP@ssword'
+$Password = "DevDbP@ssword"
 
 # Add Env var if not exists
 $path = "C:\Program Files (x86)\Microsoft SQL Server\140\DAC\bin"
