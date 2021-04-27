@@ -1,0 +1,4 @@
+1. Add User Secrets to Wiki.API
+2. Build solution
+3. Run SetupEnv.ps1
+4. Run Wiki.API Docker container
