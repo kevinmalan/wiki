@@ -10,6 +10,8 @@ services:
       MSSQL_SA_PASSWORD: DevDbP@ssword
     ports: 
       - "5433:1433"
+    volumes: 
+      - "C:/data/wikiserver/data:/var/opt/mssql/data"
 
   wiki.api:
     container_name: wikiapi
