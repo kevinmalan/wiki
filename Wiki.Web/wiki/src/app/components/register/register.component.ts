@@ -13,9 +13,14 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  register() {
-    console.log("clicked register button");
-    this.webClient.register();
-  }
+  username: string = "";
+  password: string = "";
 
+  register() {
+    console.log(this.username);
+    this.webClient.register({
+      userName: this.username,
+      password: this.password
+    });
+  }
 }
