@@ -28,6 +28,7 @@ namespace Wiki.API
             {
                 c.EnableAnnotations();
             });
+            services.AddCors();
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(RegisterHandler).Assembly);
 
             // Use the built in JSON serialization.
@@ -41,6 +42,10 @@ namespace Wiki.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:4200").AllowAnyHeader()
+            );
+
             app.UseHttpsRedirection();
 
             app.UseSwagger();
