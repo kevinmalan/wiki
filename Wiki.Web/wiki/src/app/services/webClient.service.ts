@@ -19,4 +19,9 @@ export class WebClient {
       console.log(data);
     });
   }
+
+  signIn() {
+    console.log("Not Implemented");
+  }
+
 }

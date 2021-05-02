@@ -1,1 +1,27 @@
-<p>sign-in works!</p>
+<div fxLayout="row" fxLayout.xs="column">
+    <div class="inputs">
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput type="text" [(ngModel)]="username">
+            <button mat-button *ngIf="username" matSuffix mat-icon-button aria-label="Clear" (click)="username=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <div class="inputs">
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="text" [(ngModel)]="password">
+            <button mat-button *ngIf="password" matSuffix mat-icon-button aria-label="Clear" (click)="password=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+</div>
+
+<div fxLayout="row" fxLayout.xs="column">
+    <div class="submit">
+        <button class="btn-main-2" mat-raised-button color="accent" (click)="signIn()">Sign In</button>
+    </div>
+</div>
