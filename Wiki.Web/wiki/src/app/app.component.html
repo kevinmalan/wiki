@@ -1,5 +1,11 @@
-<h1>Wiki</h1>
-<a routerLink="/register">Register</a>
-<br>
-<a routerLink="/signin">SignIn</a>
+<div fxLayout="row" fxLayout.xs="column">
+  <div class="navigation">
+    <button mat-fab color="primary" routerLink="/register">Register</button>
+  </div>
+
+  <div class="navigation">
+    <button mat-fab color="accent" routerLink="/signin">Sign In</button>
+  </div>
+</div>
+
 <router-outlet></router-outlet>
