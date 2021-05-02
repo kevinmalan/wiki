@@ -17,7 +17,6 @@ export class RegisterComponent implements OnInit {
   password: string = "";
 
   register() {
-    console.log(this.username);
     this.webClient.register({
       userName: this.username,
       password: this.password

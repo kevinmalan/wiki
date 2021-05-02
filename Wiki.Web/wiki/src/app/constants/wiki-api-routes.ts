@@ -1,6 +1,6 @@
-let base = "https://localhost:5001/api";
+import {environment} from '../../environments/environment';
 
 export const WikiApiRoutes = {
-    register: `${base}/auth/register`,
-    signIn: `${base}/auth/signin"`
+    register: `${environment.wikiApiUri}/auth/register`,
+    signIn: `${environment.wikiApiUri}/auth/signin"`
 }
